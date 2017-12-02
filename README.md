@@ -1,2 +1,15 @@
-# scala-aoc-2017
-Doing the Advent of Code - 2017
+# Doing the [Advent of Code](https://adventofcode.com) - 2017
+
+This is a JVM/Native crossproject.
+
+To make this work you need to ...
+
+* install git (`brew install git`)
+* install sbt (`brew install sbt`)
+* clone the repo (`git clone ...`)
+* run the tests (`sbt aocJVM/test`)
+* run the JVM main (`sbt aocJVM/run`)
+* run the Native main (`sbt aocNative/run`)
+
+Have fun!!!
+
