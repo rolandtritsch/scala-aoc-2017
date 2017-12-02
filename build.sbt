@@ -1,6 +1,30 @@
-enablePlugins(ScalaNativePlugin)
+import sbtcrossproject.{crossProject, CrossType}
 
-scalaVersion := "2.11.11"
+val sharedSettings = Seq(
+  name := "advent-of-code",
+  organization := "org.tritsch",
+  version := "0.1.0-SNAPSHOT",
 
-nativeMode := "debug"
-nativeGC := "boehm" // Note: Setting this to none, will make the run fail with a core dump
+  scalaVersion := "2.11.11"
+)
+
+val jvmSettings = Seq(
+  libraryDependencies += "org.scalactic" %% "scalactic" % "3.0.4",
+  libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.4" % "test",
+  libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.13.4" % "test"
+)
+
+val nativeSettings = Seq(
+  nativeMode := "debug",
+  nativeGC := "boehm"
+)
+
+lazy val aoc = crossProject(JVMPlatform, NativePlatform)
+  .crossType(CrossType.Pure)
+  .in(file("."))
+  .settings(sharedSettings)
+  .jvmSettings(jvmSettings)
+  .nativeSettings(nativeSettings)
+
+lazy val aocJVM    = aoc.jvm
+lazy val aocNative = aoc.native
