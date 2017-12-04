@@ -2,125 +2,30 @@ package aoc
 
 /** Day3 - building circular arrays and doing stuff with them/in them.
   *
-  * Part 1
+  * Part 1 - build a circular array (with monoton increasing numbers),
+  * find a number/location in it and calculate the manhatten distance
+  * to the access port/the center.
   *
+  * Part 2 - build a circular array (calc the numbers based on the sum
+  * of all cells around a given cell) and find the first value that is
+  * bigger than a given value.
+  *
+  * To make this work, I am using a slightly unorthodox approach.
+  *
+  * First I am creating a grid (NxN, where N needs to be >= N && isOdd).
+  *
+  * Then I am creating a Stream of moves/coordinates that walk from the
+  * center of the grid in spirals to the outside of the grid and put the
+  * approbriate values into the fields.
+  *
+  * I am then using the resulting/initialized grids to solve the problems.
   */
 object Day3 {
 
   val in = 368078
 
-  type Location = Int
-  type Distance = Int
   type Grid = Array[Array[Int]]
-
-  /** The x and y coordinates of a cell.
-    *
-    * The center is 0, 0 and will always contain 0.
-    *
-    * @param x - x coordinate
-    * @param y - y coordinate
-    */
-  case class Coordinates(x: Int, y: Int)
-
-  object Circular2DArray {
-
-    def build(location: Location): Circular2DArray = {
-      val dimension = calcDimensions(location)
-      new Circular2DArray(dimension)
-    }
-
-    /** Calculate the dimension (the size of the NxN array)
-      * that we need to hold an array that contains loc.
-      *
-      * e.g. for 25 we need a 5x5 array. For 26 we need 7x7.
-      *
-      * @param loc the loc we need to find
-      * @return the number of dimensions we need
-      */
-    def calcDimensions(loc: Location): Int = {
-      require(loc >= 1, s"loc >= 1 failed; with n = ${loc}")
-
-      def nearestSqrt(n: Int): Int = {
-        require(n >= 1, s"n >= 1 failed; with n = ${n}")
-
-        def go(n: Int, r: Int): Int = {
-          if (r * r >= n) r
-          else go(n, r + 1)
-        }
-
-        go(n, 1)
-      }
-
-      val n = nearestSqrt(loc)
-      if (n % 2 == 0) n + 1 else n
-    }
-
-    def rotateLeft(a: Grid): Grid = {
-      a.transpose.map(_.reverse)
-    }
-
-    def rotateRight(a: Grid): Grid = {
-      rotateLeft(rotateLeft(rotateLeft(a)))
-    }
-  }
-
-  /** Build a/the NxN circular array.
-    *
-    * @param dimension the dimensions of the array
-    */
-  class Circular2DArray(dimension: Int) {
-    require(dimension >= 1, s"dimension >= 1 failed; with dimension = ${dimension}")
-    require(dimension % 2 == 1, s"dimension % 2 == 1 failed; with dimension = ${dimension}")
-
-    var grid = Array.ofDim[Int](dimension, dimension)
-
-    /** The algorithm goes like this ...
-      *
-      * - start from the outside (and with n = maximum value)
-      * - go backwards writing values into cells
-      * - and everytime you hit the corner
-      * - rotate the 2D array and keep on writing
-      * - until you have rotated 4 times
-      * - and then go one ring down and do it again
-      * - until you hit the middle of the array
-      */
-    var n = dimension * dimension
-    var downTo = 0
-    var startFrom = dimension - 1
-    for (ring <- dimension to 1 by (-2)) {
-      grid(startFrom)(startFrom) = n
-      n = n - 1
-      for (rotate <- 0 to 3) {
-        downTo = if (rotate == 3) downTo + 1 else downTo
-        for (i <- startFrom - 1 to downTo by (-1)) {
-          grid(startFrom)(i) = n
-          n = n - 1
-        }
-        grid = Circular2DArray.rotateRight(grid)
-      }
-      startFrom = startFrom - 1
-    }
-
-    /** Find the coordinate for a given location.
-      *
-      * @param location the location to find
-      * @return the coordinates of the location
-      */
-    def find(location: Location): Coordinates = {
-      val row = grid.indexWhere(a => a.contains(location))
-      val col = grid(row).indexOf(location)
-      val offset = (dimension / 2).toInt
-      Coordinates(row - offset, col - offset)
-    }
-  }
-
-  def distance(start: Location): Distance = {
-    require(start >= 1, s"square >= 1 failed; with square = ${start}")
-
-    val grid = Circular2DArray.build(start)
-    val coordinates = grid.find(start)
-    Math.abs(coordinates.x) + Math.abs(coordinates.y)
-  }
+  type Moves = List[List[Move]]
 
   case class Move(x: Int, y: Int)
 
@@ -139,7 +44,7 @@ object Day3 {
     List(Move.right, Move.right)
   )
 
-  def nextLevelLoop(loop: List[List[Move]]): List[List[Move]] = List(
+  def nextLevelLoop(loop: Moves): Moves = List(
     loop(0),
     loop(1) ++ List(Move.up, Move.up),
     loop(2) ++ List(Move.left, Move.left),
@@ -147,53 +52,98 @@ object Day3 {
     loop(4) ++ List(Move.right, Move.right)
   )
 
-  val grid = Array.ofDim[Int](101, 101)
-
-  def moves: List[Move] = {
-    def go(current: List[Move], sofar: List[List[Move]], level: Int): List[Move] = {
-      if(level <= 0) current
+  def moves(seed: Moves): List[Move] = {
+    def go(current: List[Move], sofar: Moves, level: Int): List[Move] = {
+      if (level <= 0) current
       else {
         val next = nextLevelLoop(sofar)
         go(current ++ next.flatten.toList, next, level - 1)
       }
     }
-    go(initalLoop.flatten.toList, initalLoop, 399)
+
+    // Note: This needs to be 399b
+    go(seed.flatten.toList, seed, 99)
   }
 
-  class ArrayIterator(start: (Int, Int), moves: List[Move]) {
-    var currentField = start
-    var currentMoves = moves
+  val ms = moves(initalLoop)
 
-    def next: (Int, Int) = {
-      currentField = (currentField._1 + currentMoves.head.x, currentField._2 + currentMoves.head.y)
-      currentMoves = currentMoves.tail
-      currentField
+  def positions(center: (Int, Int), moves: List[Move]): List[(Int, Int)] = {
+    def go(ms: List[Move], ps: List[(Int, Int)]): List[(Int, Int)] = {
+      if (ms.isEmpty) ps
+      else go(ms.tail, ps :+ (ms.head.x + ps.last._1, ms.head.y + ps.last._2))
+    }
+
+    go(moves.tail, List((moves.head.x + center._1, moves.head.y + center._2)))
+  }
+
+  object Part1 {
+
+    def calcDimensions(loc: Int): Int = {
+      require(loc >= 1, s"loc >= 1 failed; with n = ${loc}")
+
+      def nearestSqrt(n: Int): Int = {
+        require(n >= 1, s"n >= 1 failed; with n = ${n}")
+
+        def go(n: Int, r: Int): Int = {
+          if (r * r >= n) r
+          else go(n, r + 1)
+        }
+
+        go(n, 1)
+      }
+
+      val n = nearestSqrt(loc)
+      if (n % 2 == 0) n + 1 else n
+    }
+
+    def initGrid(loc: Int): Grid = {
+      val dimension = calcDimensions(loc)
+      val grid = Array.ofDim[Int](dimension, dimension)
+
+      val center = (grid.size / 2, grid.size / 2)
+      grid(center._1)(center._2) = 1
+
+      //val ms = moves(initalLoop)
+      val ps = positions(center, ms)
+
+      for (n <- 2 to dimension * dimension) {
+        val pos = ps(n - 2)
+        grid(pos._1)(pos._2) = n
+      }
+      grid
+    }
+
+    def calcDistanceFromLocToCenter(location: Int, grid: Grid): Int = {
+      val row = grid.indexWhere(a => a.contains(location))
+      val col = grid(row).indexOf(location)
+      val offset = (grid.size / 2).toInt
+      Math.abs(row - offset) + Math.abs(col - offset)
     }
   }
 
-  def initCircular2DArray(loc: Location): Grid = {
-    val dimension = Circular2DArray.calcDimensions(loc)
-    val grid = Array.ofDim[Int](dimension, dimension)
-    val start = (dimension/2, dimension/2)
-    grid(start._1)(start._2) = 1
-    val iter = new ArrayIterator(start, moves)
+  object Part2 {
 
-    for(n <- 2 to dimension * dimension) {
-      val pos = iter.next
-      grid(pos._1)(pos._2) = n
+    def findNextBiggestNumber(number: Int): Int = {
+      val grid = Array.ofDim[Int](101, 101)
+      val center = (grid.size / 2, grid.size / 2)
+      grid(center._1)(center._2) = 1
+
+      //val ms = moves(initalLoop)
+      val ps = positions(center, ms)
+
+      var done = false
+      var i = 0
+      var n = 0
+      while (!done) {
+        val p = ps(i)
+        n = grid(p._1 + 1)(p._2 + 0) + grid(p._1 + 1)(p._2 + 1) + grid(p._1 + 0)(p._2 + 1) + grid(p._1 + 1)(p._2 - 1) + grid(p._1 - 1)(p._2 - 0) + grid(p._1 - 1)(p._2 - 1) + grid(p._1 - 0)(p._2 - 1) + grid(p._1 - 1)(p._2 + 1)
+        grid(p._1)(p._2) = n
+
+        i = i + 1
+        if (n > number) done = true
+      }
+      n
     }
-    grid
   }
 
-  def findPos(location: Location, grid: Grid): (Int, Int) = {
-    val row = grid.indexWhere(a => a.contains(location))
-    val col = grid(row).indexOf(location)
-    val offset = (grid.size / 2).toInt
-    (row - offset, col - offset)
-  }
-
-  def distanceToPort(pos: (Int, Int)): Int = {
-    Math.abs(pos._1) + Math.abs(pos._2)
-  }
 }
-
