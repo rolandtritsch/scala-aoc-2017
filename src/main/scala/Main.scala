@@ -10,5 +10,7 @@ object Main {
     println(s"Day3: FindNumber -> ${Day3.Part2.findNextBiggestNumber(Day3.in)}")
     println(s"Day4: CountValid -> ${Day4.Part1.countValid(Day4.in)}")
     println(s"Day4: CountValid2 -> ${Day4.Part2.countValid(Day4.in)}")
+    println(s"Day5: CountSteps -> ${Day5.Part1.countSteps(Day5.in, 0)}")
+    println(s"Day5: CountSteps2 -> ${Day5.Part2.countSteps(Day5.in, 0)}")
   }
 }
