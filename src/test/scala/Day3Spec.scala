@@ -1,6 +1,7 @@
 package aoc
 
 import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.tagobjects.Slow
 
 class Day3Spec extends FlatSpec with Matchers {
 
@@ -16,10 +17,6 @@ class Day3Spec extends FlatSpec with Matchers {
     Day3.moves(Day3.initalLoop).take(8) should be (Day3.initalLoop.flatten)
   }
 
-  "init" should "return the test grid" in {
-    Day3.Part1.initGrid(25) should be (testGrid)
-  }
-
   "calcDimension" should "return the required dimension to accomodate n" in {
     val results = List(
       (1, 1),
@@ -29,6 +26,10 @@ class Day3Spec extends FlatSpec with Matchers {
       (50, 8)
     )
     results.forall(r => Day3.Part1.calcDimensions(r._1) == r._2)
+  }
+
+  "init" should "return the test grid" in {
+    Day3.Part1.initGrid(25) should be (testGrid)
   }
 
   "Part 1 - calcDistance" should "return the correct result(s)" in {

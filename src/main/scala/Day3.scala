@@ -52,32 +52,23 @@ object Day3 {
     loop(4) ++ List(Move.right, Move.right)
   )
 
-  def moves(seed: Moves): List[Move] = {
-    def go(current: List[Move], sofar: Moves, level: Int): List[Move] = {
-      if (level <= 0) current
-      else {
-        val next = nextLevelLoop(sofar)
-        go(current ++ next.flatten.toList, next, level - 1)
-      }
-    }
-
-    // Note: This needs to be 399b
-    go(seed.flatten.toList, seed, 99)
+  def moves(seed: Moves): Stream[Move] = {
+    def go(ms: Moves): Stream[Move] = ms.flatten.toStream #::: go(nextLevelLoop(ms))
+    go(seed)
   }
 
-  val ms = moves(initalLoop)
-
-  def positions(center: (Int, Int), moves: List[Move]): List[(Int, Int)] = {
-    def go(ms: List[Move], ps: List[(Int, Int)]): List[(Int, Int)] = {
-      if (ms.isEmpty) ps
-      else go(ms.tail, ps :+ (ms.head.x + ps.last._1, ms.head.y + ps.last._2))
+  def positions(center: (Int, Int), msi: Iterator[Move]): Stream[(Int, Int)] = {
+    def go(p: (Int, Int)): Stream[(Int, Int)] = {
+      val m = msi.next
+      val (x, y) = p
+      (x, y) #:: go((x + m.x, y + m.y))
     }
-
-    go(moves.tail, List((moves.head.x + center._1, moves.head.y + center._2)))
+    go(center)
   }
+
+  def center(grid: Grid): (Int, Int) = (grid.size / 2, grid.size / 2)
 
   object Part1 {
-
     def calcDimensions(loc: Int): Int = {
       require(loc >= 1, s"loc >= 1 failed; with n = ${loc}")
 
@@ -100,50 +91,45 @@ object Day3 {
       val dimension = calcDimensions(loc)
       val grid = Array.ofDim[Int](dimension, dimension)
 
-      val center = (grid.size / 2, grid.size / 2)
-      grid(center._1)(center._2) = 1
+      lazy val msi = moves(initalLoop).iterator
+      lazy val psi = positions(center(grid), msi).iterator
 
-      //val ms = moves(initalLoop)
-      val ps = positions(center, ms)
-
-      for (n <- 2 to dimension * dimension) {
-        val pos = ps(n - 2)
-        grid(pos._1)(pos._2) = n
+      for (n <- 1 to dimension * dimension) {
+        val (x, y) = psi.next
+        grid(x)(y) = n
       }
       grid
     }
 
     def calcDistanceFromLocToCenter(location: Int, grid: Grid): Int = {
-      val row = grid.indexWhere(a => a.contains(location))
-      val col = grid(row).indexOf(location)
-      val offset = (grid.size / 2).toInt
-      Math.abs(row - offset) + Math.abs(col - offset)
+      val x = grid.indexWhere(a => a.contains(location))
+      val y = grid(x).indexOf(location)
+      val offset = (grid.size / 2)
+      Math.abs(x - offset) + Math.abs(y - offset)
     }
   }
 
   object Part2 {
-
     def findNextBiggestNumber(number: Int): Int = {
-      val grid = Array.ofDim[Int](101, 101)
-      val center = (grid.size / 2, grid.size / 2)
-      grid(center._1)(center._2) = 1
+      val grid = Array.ofDim[Int](11, 11)
 
-      //val ms = moves(initalLoop)
-      val ps = positions(center, ms)
+      lazy val msi = moves(initalLoop).iterator
+      lazy val psi = positions(center(grid), msi).iterator
 
       var done = false
-      var i = 0
       var n = 0
       while (!done) {
-        val p = ps(i)
-        n = grid(p._1 + 1)(p._2 + 0) + grid(p._1 + 1)(p._2 + 1) + grid(p._1 + 0)(p._2 + 1) + grid(p._1 + 1)(p._2 - 1) + grid(p._1 - 1)(p._2 - 0) + grid(p._1 - 1)(p._2 - 1) + grid(p._1 - 0)(p._2 - 1) + grid(p._1 - 1)(p._2 + 1)
-        grid(p._1)(p._2) = n
+        val (x, y) = psi.next
 
-        i = i + 1
-        if (n > number) done = true
+        if((x, y) == center(grid)) grid(x)(y) = 1
+        else grid(x)(y) = grid(x + 1)(y + 0) + grid(x + 1)(y + 1) + grid(x + 0)(y + 1) + grid(x + 1)(y - 1) + grid(x - 1)(y - 0) + grid(x - 1)(y - 1) + grid(x - 0)(y - 1) + grid(x - 1)(y + 1)
+
+        if (grid(x)(y) > number) {
+          done = true
+          n = grid(x)(y)
+        }
       }
       n
     }
   }
-
 }

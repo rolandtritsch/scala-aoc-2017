@@ -19,6 +19,5 @@ Have fun!!!
 * use Part1/Part2 consistently/everywhere
 * make test run fast (by excluding long-running test until a full test is requested)
 * add property based testing for all days
-* optimize implementations for performance (especially Day3)
-* make Day3 use a stream for the moves
+* optimize implementations for performance (especially Day5 and Day6)
 
