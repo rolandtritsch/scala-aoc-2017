@@ -13,3 +13,12 @@ To make this work you need to ...
 
 Have fun!!!
 
+## Todos
+
+* add pre-/post-conditions
+* use Part1/Part2 consistently/everywhere
+* make test run fast (by excluding long-running test until a full test is requested)
+* add property based testing for all days
+* optimize implementations for performance (especially Day3)
+* make Day3 use a stream for the moves
+
