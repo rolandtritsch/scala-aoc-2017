@@ -11,7 +11,7 @@ object Main {
     println(s"Day4: CountValid -> ${Day4.Part1.countValid(Day4.in)}")
     println(s"Day4: CountValid2 -> ${Day4.Part2.countValid(Day4.in)}")
     println(s"Day5: CountSteps -> ${Day5.Part1.countSteps(Day5.in, 0)}")
-    println(s"Day5: CountSteps2 -> ${Day5.Part2.countSteps(Day5.in, 0)}")
+    println(s"Day5: CountSteps2 -> ${Day5.Part2.countSteps(Day5.in, 0)._1}")
     println(s"Day6: DetectLoops -> ${Day6.Part1.detectLoop(Day6.in)._1}")
     println(s"Day6: DetectLoops2 -> ${Day6.Part1.detectLoop(Day6.in)._2}")
   }
