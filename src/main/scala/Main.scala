@@ -13,6 +13,6 @@ object Main {
     println(s"Day5: CountSteps -> ${Day5.Part1.countSteps(Day5.in, 0)}")
     println(s"Day5: CountSteps2 -> ${Day5.Part2.countSteps(Day5.in, 0)}")
     println(s"Day6: DetectLoops -> ${Day6.Part1.detectLoop(Day6.in)._1}")
-    println(s"Day6: DetectLoops -> ${Day6.Part1.detectLoop(Day6.in)._2}")
+    println(s"Day6: DetectLoops2 -> ${Day6.Part1.detectLoop(Day6.in)._2}")
   }
 }

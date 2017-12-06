@@ -31,9 +31,4 @@ object Day6 {
       go(banks, List(List()), 0)
     }
   }
-
-  object Part2 {
-
-  }
-
 }
