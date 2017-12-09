@@ -3,7 +3,7 @@ package aoc
 import scala.annotation.tailrec
 
 object Day5 {
-  //val fileName = getClass.getResource(".") + "/Day4input.txt"
+  //val fileName = getClass.getResource(".") + "/Day5input.txt"
   val fileName = "./src/main/resources" + "/Day5input.txt"
 
   def readInput(fileName: String): List[Int] = {
