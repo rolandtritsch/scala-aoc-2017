@@ -69,10 +69,9 @@ object Day8 {
   }
 
   def runProgram(instructions: List[Instruction], registers: Map[String, Int]): List[Map[String, Int]] = {
-    var currentRegisters = registers
-    instructions.foldLeft(List.empty[Map[String, Int]])((acc, i) => {
-      currentRegisters = executeInstruction(i, currentRegisters)
-      currentRegisters :: acc
+    instructions.foldLeft(List(registers))((acc, i) => {
+      val newRegisters = executeInstruction(i, acc.head)
+      newRegisters :: acc
     })
   }
 
