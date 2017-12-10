@@ -3,17 +3,8 @@ package aoc
 import scala.annotation.tailrec
 
 object Day5 {
-  //val fileName = getClass.getResource(".") + "/Day5input.txt"
-  val fileName = "./src/main/resources" + "/Day5input.txt"
-
-  def readInput(fileName: String): List[Int] = {
-    require(fileName.nonEmpty, s"fileName.nonEmpty failed; with >${fileName}<")
-    require(new java.io.File(fileName).exists, s"java.io.File(fileName).exists failed; with >${fileName}<")
-
-    scala.io.Source.fromFile(fileName).getLines().toList.map(_.toInt)
-  }
-
-  val in = readInput(fileName)
+  val fileURL = getClass.getResource(".") + "/Day5input.txt"
+  val in = Util.readInputURL(fileURL).map(_.toInt)
 
   object Part1 {
     @tailrec

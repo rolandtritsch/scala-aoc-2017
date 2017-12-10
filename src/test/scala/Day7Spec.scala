@@ -54,7 +54,7 @@ class Day7Spec extends FlatSpec with Matchers {
 
   "readInput" should "read the input" in {
     val input = List("occxa (60)")
-    Day7.readInput(Day7.fileName).take(1) should be(input)
+    Day7.in.take(1) should be(input)
   }
 
   "parseInput" should "return a/the list of nodes" in {

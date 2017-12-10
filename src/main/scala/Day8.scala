@@ -1,17 +1,8 @@
 package aoc
 
 object Day8 {
-  //val fileName = getClass.getResource(".") + "/Day8input.txt"
-  val fileName = "./src/main/resources" + "/Day8input.txt"
-
-  def readInput(fileName: String): List[String] = {
-    require(fileName.nonEmpty, s"fileName.nonEmpty failed; with >${fileName}<")
-    require(new java.io.File(fileName).exists, s"java.io.File(fileName).exists failed; with >${fileName}<")
-
-    scala.io.Source.fromFile(fileName).getLines().toList
-  }
-
-  val in = readInput(fileName)
+  val fileURL = getClass.getResource(".") + "/Day8input.txt"
+  val in = Util.readInputURL(fileURL)
 
   case class Instruction(register: String, operation: String, operand: Int, conditionRegister: String, condition: String, conditionOperand: Int)
 

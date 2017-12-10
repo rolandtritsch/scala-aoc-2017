@@ -6,7 +6,7 @@ class Day5Spec extends FlatSpec with Matchers {
 
   "readInput" should "read the instructions" in {
     val inputFirstTen = List(0, 1, 0, 0, 1, -3, 0, 0, 2, -2)
-    Day5.readInput(Day5.fileName).take(10) should be (inputFirstTen)
+    Day5.in.take(10) should be (inputFirstTen)
   }
 
   val testStack = List(0, 3, 0, 1, -3)

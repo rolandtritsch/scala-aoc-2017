@@ -18,5 +18,7 @@ object Main {
     println(s"Day7: FindBadNode -> ${Day7.Tree.solve(Day7.in)}")
     println(s"Day8: FindMaxRegister -> ${Day8.findMaxRegister(Day8.in)}")
     println(s"Day8: FindMaxStack -> ${Day8.findMaxStack(Day8.in)}")
+    println(s"Day9: StreamScore -> ${Day9.score(Day9.in)._1.sum}")
+    println(s"Day9: StreamGarbageCounter -> ${Day9.score(Day9.in)._2}")
   }
 }

@@ -1,18 +1,8 @@
 package aoc
 
 object Day4 {
-
-  //val fileName = getClass.getResource(".") + "/Day4input.txt"
-  val fileName = "./src/main/resources" + "/Day4input.txt"
-
-  def readInput(fileName: String): List[String] = {
-    require(fileName.nonEmpty, s"fileName.nonEmpty failed; with >${fileName}<")
-    require(new java.io.File(fileName).exists, s"java.io.File(fileName).exists failed; with >${fileName}<")
-
-    scala.io.Source.fromFile(fileName).getLines().toList
-  }
-
-  val in = readInput(fileName)
+  val fileURL = getClass.getResource(".") + "/Day4input.txt"
+  val in = Util.readInputURL(fileURL)
 
   object Part1 {
     def isValid(passPhrase: String): Boolean = {
