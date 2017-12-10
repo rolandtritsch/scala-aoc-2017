@@ -19,5 +19,6 @@ Have fun!!!
 * use Part1/Part2 consistently/everywhere
 * make test run fast (by excluding long-running test until a full test is requested)
 * add property based testing for all days
-* optimize implementations for performance (especially Day5 and Day6)
+* optimize implementations for performance (especially Day5)
+* refactor the readInput into a package/utility object
 
