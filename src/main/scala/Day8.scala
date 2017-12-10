@@ -78,4 +78,8 @@ object Day8 {
   def maxRegister(registers: Map[String, Int]): Int = {
     registers.values.max
   }
+
+  def maxStack(stack: List[Map[String, Int]]): Int = {
+    stack.flatMap(_.values).max
+  }
 }

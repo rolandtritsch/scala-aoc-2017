@@ -41,4 +41,18 @@ class Day8Spec extends FlatSpec with Matchers {
     val stack = Day8.runProgram(instructions, registers)
     Day8.maxRegister(stack.head) shouldBe 4163
   }
+
+  "maxStack" should "return the max of all register values in the stack" in {
+    val instructions = Day8.parseInput(testInput)
+    val registers = Day8.buildRegisters(instructions)
+    val stack = Day8.runProgram(instructions, registers)
+    Day8.maxStack(stack) shouldBe 10
+  }
+
+  it should "should solve the puzzle" in {
+    val instructions = Day8.parseInput(Day8.in)
+    val registers = Day8.buildRegisters(instructions)
+    val stack = Day8.runProgram(instructions, registers)
+    Day8.maxStack(stack) shouldBe 5347
+  }
 }
