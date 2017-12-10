@@ -82,4 +82,18 @@ object Day8 {
   def maxStack(stack: List[Map[String, Int]]): Int = {
     stack.flatMap(_.values).max
   }
+
+  def findMaxRegister(in: List[String]): Int = {
+    val instructions = parseInput(in)
+    val registers = buildRegisters(instructions)
+    val stack = runProgram(instructions, registers)
+    maxRegister(stack.head)
+  }
+
+  def findMaxStack(in: List[String]): Int = {
+    val instructions = parseInput(in)
+    val registers = buildRegisters(instructions)
+    val stack = runProgram(instructions, registers)
+    maxStack(stack)
+  }
 }
