@@ -37,6 +37,7 @@ class Day3Spec extends FlatSpec with Matchers {
     Day3.Part1.calcDistanceFromLocToCenter(12, Day3.Part1.initGrid(12)) shouldBe 3
     Day3.Part1.calcDistanceFromLocToCenter(23, Day3.Part1.initGrid(23)) shouldBe 2
     Day3.Part1.calcDistanceFromLocToCenter(1024, Day3.Part1.initGrid(1024)) shouldBe 31
+    Day3.Part1.calcDistanceFromLocToCenter(1000000, Day3.Part1.initGrid(1000000)) shouldBe 999
   }
 
   it should "solve the puzzle" in {
@@ -45,6 +46,7 @@ class Day3Spec extends FlatSpec with Matchers {
 
   "Part 2 - findTheBiggestNumber" should "return the correct result(s)" in {
     Day3.Part2.findNextBiggestNumber(747) shouldBe 806
+    Day3.Part2.findNextBiggestNumber(1000000) shouldBe 1009457
   }
 
   it should "solve the puzzle" in {
