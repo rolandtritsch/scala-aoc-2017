@@ -15,7 +15,7 @@ object Day12 {
 
   type Mesh = Map[Int, List[Int]]
 
-  def countPrograms(start: Int, graph: Mesh): Int = {
+  def findPrograms(start: Int, graph: Mesh): List[Int] = {
     def go(node: Int, graph: Mesh, seenAlready: List[Int]): List[Int] = {
       if(seenAlready.contains(node)) seenAlready
       else {
@@ -25,6 +25,19 @@ object Day12 {
         })
       }
     }
-    go(start, graph, List.empty[Int]).size
+    go(start, graph, List.empty[Int])
+  }
+
+  def findGroups(graph: Mesh): List[List[Int]] = {
+    def go(nodes: List[Int], graph: Mesh, groups: List[List[Int]]): List[List[Int]] = {
+      if(nodes.isEmpty) groups
+      else {
+        val nextGroup = findPrograms(nodes.head, graph)
+        go(nodes.diff(nextGroup), graph, nextGroup :: groups)
+      }
+    }
+    val nodes = graph.keys.toList
+    val groupZero = findPrograms(0, graph)
+    go(nodes.diff(groupZero), graph, List(groupZero))
   }
 }

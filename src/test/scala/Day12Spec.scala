@@ -27,11 +27,19 @@ class Day12Spec extends FlatSpec with Matchers {
     Day12.parseInput(Day12.in)(40) should be (List(183, 333, 1032, 1405, 1587, 1649))
   }
 
-  "countPrograms" should "return the right result(s)" in {
-    Day12.countPrograms(0, Day12.parseInput(testInput)) shouldBe 6
+  "findPrograms" should "return the right result(s)" in {
+    Day12.findPrograms(0, Day12.parseInput(testInput)).size shouldBe 6
   }
 
   it should "solve the puzzle" in {
-    Day12.countPrograms(0, Day12.parseInput(Day12.in)) shouldBe 152
+    Day12.findPrograms(0, Day12.parseInput(Day12.in)).size shouldBe 152
+  }
+
+  "findGroups" should "return the right result(s)" in {
+    Day12.findGroups(Day12.parseInput(testInput)).size shouldBe 2
+  }
+
+  it should "solve the puzzle" in {
+    Day12.findGroups(Day12.parseInput(Day12.in)).size shouldBe 186
   }
 }
