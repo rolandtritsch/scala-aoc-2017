@@ -20,5 +20,11 @@ object Main {
     println(s"Day8: FindMaxStack -> ${Day8.findMaxStack(Day8.in)}")
     println(s"Day9: StreamScore -> ${Day9.score(Day9.in)._1.sum}")
     println(s"Day9: StreamGarbageCounter -> ${Day9.score(Day9.in)._2}")
+    // @todo Day10
+    // @todo Day11
+    println(s"Day12: FindPrograms -> ${Day12.findPrograms(0, Day12.parseInput(Day12.in))}")
+    println(s"Day12: FindGroups -> ${Day12.findGroups(Day12.parseInput(Day12.in))}")
+    println(s"Day13: SecurityScore -> ${Day13.FireWall.runSimulation(Day13.FireWall.build(Day13.parseInput(Day13.in), 0))}")
+    // @todo Day13 - Part2 - println(s"Day13: FindWayThrough -> ${Day13.findWayThrough(Day13.parseInput(Day13.in))}")
   }
 }
