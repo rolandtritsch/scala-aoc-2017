@@ -40,6 +40,22 @@ class Day15Spec extends FlatSpec with Matchers {
     )
   )
 
+  val test2DecPairs = List(
+    (1352636452, 1233683848),
+    (1992081072, 862516352),
+    (530830436, 1159784568),
+    (1980017072, 1616057672),
+    (740335192, 412269392)
+  )
+
+  val test2BinPairs = List(
+    ("01010000100111111001100000100100", "01001001100010001000010110001000"),
+    ("01110110101111001011111010110000", "00110011011010001111010010000000"),
+    ("00011111101000111101010001100100", "01000101001000001110100001111000"),
+    ("01110110000001001010100110110000", "01100000010100110001010101001000"),
+    ("00101100001000001001111001011000", "00011000100100101011101101010000")
+  )
+
   val testAstart = 65
   val testBstart = 8921
 
@@ -83,13 +99,23 @@ class Day15Spec extends FlatSpec with Matchers {
     Day15.countMatchingPair(binPairGen.numbers, Day15.Default.depth) shouldBe 594
   }
 
-  "counting the matches (fast)" should "return the correct result(s)" in {
-    Day15.countMatchingPairs((testAstart, testBstart), 3) shouldBe 0
-    Day15.countMatchingPairs((testAstart, testBstart), 4) shouldBe 1
-    //Day15.countMatchingPairs((testAstart, testBstart), Day15.Default.depth) shouldBe 588
+  "Part1 - counting the matches (fast)" should "return the correct result(s)" in {
+    Day15.Part1.countMatchingPairs((testAstart, testBstart), 3) shouldBe 0
+    Day15.Part1.countMatchingPairs((testAstart, testBstart), 4) shouldBe 1
+    //Day15.Part1.countMatchingPairs((testAstart, testBstart), Day15.Default.depth) shouldBe 588
   }
 
   ignore should "solve the puzzle" in {
-    Day15.countMatchingPairs((Day15.Default.startA, Day15.Default.startB), Day15.Default.depth) shouldBe 594
+    Day15.Part1.countMatchingPairs((Day15.Default.startA, Day15.Default.startB), Day15.Default.depth) shouldBe 594
+  }
+
+  "Part2 - counting the matches (fast)" should "return the correct result(s)" in {
+    Day15.Part2.countMatchingPairs((testAstart, testBstart), 1056) shouldBe 0
+    Day15.Part2.countMatchingPairs((testAstart, testBstart), 1057) shouldBe 1
+    //Day15.Part2.countMatchingPairs((testAstart, testBstart), Day15.Default.depth2) shouldBe 309
+  }
+
+  ignore should "solve the puzzle" in {
+    Day15.Part2.countMatchingPairs((Day15.Default.startA, Day15.Default.startB), Day15.Default.depth2) shouldBe 328
   }
 }

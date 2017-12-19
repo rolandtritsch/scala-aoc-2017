@@ -6,6 +6,7 @@ object Day15 {
     val factorB = BigInt(48271)
     val devider = BigInt(2147483647)
     val depth = BigInt(40000000)
+    val depth2 = BigInt(5000000)
 
     val startA = BigInt(703)
     val startB = BigInt(516)
@@ -42,18 +43,43 @@ object Day15 {
     }
   }
 
-  def countMatchingPairs(start: (BigInt, BigInt), depth: BigInt): Int = {
-    def go(previous: (BigInt, BigInt), depth: BigInt, count: Int): Int = {
-      if(depth <= 0) count
-      else {
-        val (previousA, previousB) = previous
-        val nextA = (previousA * Default.factorA) % Default.devider
-        val nextB = (previousB * Default.factorB) % Default.devider
-        val next = (nextA, nextB)
-        if(matching(previous)) go(next, depth - 1, count + 1)
-        else go(next, depth - 1, count)
+  object Part1 {
+    def countMatchingPairs(start: (BigInt, BigInt), depth: BigInt): Int = {
+      def go(previous: (BigInt, BigInt), depth: BigInt, count: Int): Int = {
+        if(depth <= 0) count
+        else {
+          val (previousA, previousB) = previous
+          val nextA = (previousA * Default.factorA) % Default.devider
+          val nextB = (previousB * Default.factorB) % Default.devider
+          val next = (nextA, nextB)
+          if(matching(previous)) go(next, depth - 1, count + 1)
+          else go(next, depth - 1, count)
+        }
       }
+      go(start, depth, 0)
     }
-    go(start, depth, 0)
+  }
+
+  object Part2 {
+    def countMatchingPairs(start: (BigInt, BigInt), depth: BigInt): Int = {
+      def findNext(previous: BigInt, factor: BigInt, devider: BigInt, modolo: Int): BigInt = {
+        val next = (previous * factor) % devider
+        if(next % modolo == 0) next
+        else findNext(next, factor, devider, modolo)
+      }
+
+      def go(previous: (BigInt, BigInt), depth: BigInt, count: Int): Int = {
+        if(depth <= 0) count
+        else {
+          val (previousA, previousB) = previous
+          val nextA = findNext(previousA, Default.factorA, Default.devider, 4)
+          val nextB = findNext(previousB, Default.factorB, Default.devider, 8)
+          val next = (nextA, nextB)
+          if(matching(previous)) go(next, depth - 1, count + 1)
+          else go(next, depth - 1, count)
+        }
+      }
+      go(start, depth, 0)
+    }
   }
 }
