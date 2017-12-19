@@ -48,18 +48,48 @@ class Day15Spec extends FlatSpec with Matchers {
   }
 
   "a generator" should "produce a/the correct stream of numbers" in {
-    val genA = Day15.Generator(testAstart, Day15.genAseed, Day15.defaultDevider)
+    val genA = Day15.Generator(testAstart, Day15.Default.factorA)
     genA.numbers.take(5).toList shouldBe testGenA
 
-    val genB = Day15.Generator(testBstart, Day15.genBseed, Day15.defaultDevider)
+    val genB = Day15.Generator(testBstart, Day15.Default.factorB)
     genB.numbers.take(5).toList shouldBe testGenB
   }
 
   it should "produce the right pairs of binary numbers" in {
-    val genA = Day15.Generator(testAstart, Day15.genAseed, Day15.defaultDevider)
-    val genB = Day15.Generator(testBstart, Day15.genBseed, Day15.defaultDevider)
+    val genA = Day15.Generator(testAstart, Day15.Default.factorA)
+    val genB = Day15.Generator(testBstart, Day15.Default.factorB)
 
     val binPairGen = Day15.BinaryPairGenerator(genA, genB)
     binPairGen.numbers.take(5).toList should be (testBinPairs)
+  }
+
+  "counting the matches" should "return the correct result(s)" in {
+    val genA = Day15.Generator(testAstart, Day15.Default.factorA)
+    val genB = Day15.Generator(testBstart, Day15.Default.factorB)
+
+    val binPairGen = Day15.BinaryPairGenerator(genA, genB)
+
+    Day15.countMatchingPair(binPairGen.numbers, 2) shouldBe 0
+    Day15.countMatchingPair(binPairGen.numbers, 3) shouldBe 1
+    //Day15.countMatchingPair(binPairGen.numbers, Day15.defaultDepth) shouldBe 588
+  }
+
+  ignore should "solve the puzzle" in {
+    val genA = Day15.Generator(Day15.Default.startA, Day15.Default.factorA)
+    val genB = Day15.Generator(Day15.Default.startB, Day15.Default.factorB)
+
+    val binPairGen = Day15.BinaryPairGenerator(genA, genB)
+
+    Day15.countMatchingPair(binPairGen.numbers, Day15.Default.depth) shouldBe 594
+  }
+
+  "counting the matches (fast)" should "return the correct result(s)" in {
+    Day15.countMatchingPairs((testAstart, testBstart), 3) shouldBe 0
+    Day15.countMatchingPairs((testAstart, testBstart), 4) shouldBe 1
+    //Day15.countMatchingPairs((testAstart, testBstart), Day15.Default.depth) shouldBe 588
+  }
+
+  ignore should "solve the puzzle" in {
+    Day15.countMatchingPairs((Day15.Default.startA, Day15.Default.startB), Day15.Default.depth) shouldBe 594
   }
 }
