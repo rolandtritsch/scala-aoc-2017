@@ -21,28 +21,45 @@ class Day15Spec extends FlatSpec with Matchers {
     285222916
   )
 
+  val testBinPairs = List(
+    (
+      "00000000000100001010101101100111",
+      "00011001101010101101001100110111"
+    ),(
+      "01000110011001001111011100111001",
+      "01001001100010001000010110001000"
+    ),(
+      "00001110101000101110001101001010",
+      "01010101010100101110001101001010"
+    ),(
+      "01100111111110000001011011000111",
+      "00001000001101111100110000000111"
+    ),(
+      "01010000100111111001100000100100",
+      "00010001000000000010100000000100"
+    )
+  )
+
   val testAstart = 65
   val testBstart = 8921
 
-  "the generators" should "return the right values" in {
-    val g0 = Day15.Generator(testAstart, Day15.genAseed, Day15.devider)
-    g0.current shouldBe testGenA(0)
-    g0.next.current shouldBe testGenA(1)
-    g0.next.next.current shouldBe testGenA(2)
-    g0.next.next.next.current shouldBe testGenA(3)
-    g0.next.next.next.next.current shouldBe testGenA(4)
+  "dec2bin" should "convert to bin correctly" in {
+    Day15.dec2bin(1092455) shouldBe "00000000000100001010101101100111"
+  }
 
-    val g0result = (0 to 3).foldLeft(g0, List(g0.current))((acc, _) => {
-      val g = Day15.Generator(acc._2.head, acc._1.factor, acc._1.devider)
-      (g, g.current :: acc._2)
-    })
-    g0result._2.reverse should be (testGenA)
+  "a generator" should "produce a/the correct stream of numbers" in {
+    val genA = Day15.Generator(testAstart, Day15.genAseed, Day15.defaultDevider)
+    genA.numbers.take(5).toList shouldBe testGenA
 
-    val g1 = Day15.Generator(testBstart, Day15.genBseed, Day15.devider)
-    val g1result = (0 to 3).foldLeft(g1, List(g1.current))((acc, _) => {
-      val g = Day15.Generator(acc._2.head, acc._1.factor, acc._1.devider)
-      (g, g.current :: acc._2)
-    })
-    g1result._2.reverse should be (testGenB)
+    val genB = Day15.Generator(testBstart, Day15.genBseed, Day15.defaultDevider)
+    genB.numbers.take(5).toList shouldBe testGenB
+  }
+
+  it should "produce the right pairs of binary numbers" in {
+    val genA = Day15.Generator(testAstart, Day15.genAseed, Day15.defaultDevider)
+    val genB = Day15.Generator(testBstart, Day15.genBseed, Day15.defaultDevider)
+
+    val binPairGen = Day15.BinaryPairGenerator(genA, genB)
+    binPairGen.numbers.take(5).toList should be (testBinPairs)
   }
 }
