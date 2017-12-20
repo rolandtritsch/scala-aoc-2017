@@ -5,6 +5,7 @@ object Day16 {
   val in = Util.readInputURL(fileURL).head.split(',').toList
 
   val programs = ('a' to 'p').mkString
+  val times = 1000000000
 
   abstract class Move
   case class Spin(size: Int) extends Move
@@ -44,6 +45,7 @@ object Day16 {
   def executeMoves(programs: String, moves: List[Move]): String = {
     def executeMove(programs: String, move: Move): String = move match {
       case Spin(s) => {
+        // Note: The Spin rotates counter-clockwise
         val (head, tail) = programs.splitAt(programs.size - s)
         tail + head
       }
@@ -60,5 +62,14 @@ object Day16 {
     }
 
     moves.foldLeft(programs)((current, move) => executeMove(current, move))
+  }
+
+  def executeDance2(programs: String, moves: List[Move], times: BigInt): String = {
+    if(times <= 1) executeMoves(programs, moves)
+    else executeDance(executeMoves(programs, moves), moves, times - 1)
+  }
+
+  def executeDance(programs: String, moves: List[Move], times: BigInt): String = {
+    (BigInt(1) to times).foldLeft(programs)((current, _) => executeMoves(current, moves))
   }
 }
