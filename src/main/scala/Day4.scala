@@ -1,8 +1,7 @@
 package aoc
 
 object Day4 {
-  val fileURL = getClass.getResource(".") + "/Day4input.txt"
-  val in = Util.readInputURL(fileURL)
+  val in = Util.readInput("Day4input.txt")
 
   object Part1 {
     def isValid(passPhrase: String): Boolean = {

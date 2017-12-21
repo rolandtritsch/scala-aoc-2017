@@ -1,8 +1,7 @@
 package aoc
 
 object Day11 {
-  val fileURL = getClass.getResource(".") + "/Day11input.txt"
-  val in = Util.readInputURL(fileURL).head.split(',')
+  val in = Util.readInput("Day11input.txt").head.split(',').toList
 
   def calcSteps(path: List[String]): Int = {
     0

@@ -1,8 +1,7 @@
 package aoc
 
 object Day8 {
-  val fileURL = getClass.getResource(".") + "/Day8input.txt"
-  val in = Util.readInputURL(fileURL)
+  val in = Util.readInput("Day8input.txt")
 
   case class Instruction(register: String, operation: String, operand: Int, conditionRegister: String, condition: String, conditionOperand: Int)
 

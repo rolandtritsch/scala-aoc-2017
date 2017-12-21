@@ -1,8 +1,7 @@
 package aoc
 
 object Day16 {
-  val fileURL = getClass.getResource(".") + "/Day16input.txt"
-  val in = Util.readInputURL(fileURL).head.split(',').toList
+  val in = Util.readInput("Day16input.txt").head.split(',').toList
 
   val programs = ('a' to 'p').mkString
   val times = 1000000000

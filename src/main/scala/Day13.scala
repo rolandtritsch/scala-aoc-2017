@@ -1,8 +1,7 @@
 package aoc
 
 object Day13 {
-  val fileURL = getClass.getResource(".") + "/Day13input.txt"
-  val in = Util.readInputURL(fileURL)
+  val in = Util.readInput("Day13input.txt")
 
   def parseInput(lines: List[String]): Map[Int, Int] = {
     lines.map(l => {

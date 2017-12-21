@@ -1,8 +1,7 @@
 package aoc
 
 object Day7 {
-  val fileURL = getClass.getResource(".") + "/Day7input.txt"
-  val in = Util.readInputURL(fileURL)
+  val in = Util.readInput("Day7input.txt")
 
   abstract class ParseElement {
     def name: String

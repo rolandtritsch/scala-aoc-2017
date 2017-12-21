@@ -1,8 +1,7 @@
 package aoc
 
 object Day9 {
-  val fileURL = getClass.getResource(".") + "/Day9input.txt"
-  val in = Util.readInputURL(fileURL).head.toList
+  val in = Util.readInput("Day9input.txt").head.toList
 
   // Note: This is heavy on the stack. Had to increase -Xss to make it work.
   def score(stream: List[Char]): (List[Int], Int) = {
