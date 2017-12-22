@@ -44,7 +44,7 @@ class Day16Spec extends FlatSpec with Matchers {
     Day16.executeDance("abcde", Day16.parseInput(testInput), 2) shouldBe "ceadb"
   }
 
-  it should "solve the puzzle" in {
+  ignore should "solve the puzzle" in {
     Day16.executeMoves(Day16.programs, Day16.parseInput(Day16.in)) shouldBe "bijankplfgmeodhc"
     Day16.executeDance(Day16.programs, Day16.parseInput(Day16.in), 1) shouldBe "bijankplfgmeodhc"
     Day16.executeDance(Day16.programs, Day16.parseInput(Day16.in), Day16.times) shouldBe ""

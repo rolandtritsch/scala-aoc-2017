@@ -5,7 +5,7 @@ import org.scalatest.{FlatSpec, Matchers}
 class Day4Spec extends FlatSpec with Matchers {
 
   "readInput" should "return the list of passphrases" in {
-    Util.readInput(Day4.fileURL).head shouldBe "sayndz zfxlkl attjtww cti sokkmty brx fhh suelqbp"
+    Day4.in.head shouldBe "sayndz zfxlkl attjtww cti sokkmty brx fhh suelqbp"
   }
 
   "Part 1 - isValid" should "return the correct result(s)" in {
