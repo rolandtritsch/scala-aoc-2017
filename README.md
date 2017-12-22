@@ -11,8 +11,6 @@ To make this work you need to ...
 * run the JVM main (`sbt aocJVM/run`)
 * run the Native main (`sbt aocNative/run`)
 
-Note: Right now you need to manually copy the `*.txt` files from the `src/main/resources` directory into `.jvm/target/scala-2.11/test-classes/aoc`.
-
 Have fun!!!
 
 ## Todos
@@ -22,7 +20,5 @@ Have fun!!!
 * make test run fast (by excluding long-running test until a full test is requested)
 * add property based testing for all days
 * optimize implementations for performance (especially Day5)
-* refactor the readInput into a package/utility object
-* make sure we can find the input files (*input.txt)(or copy them as part of the build process into the right target dir)
 * add/use visibility (right now all vals and defs and classes are public (which is not right)) 
 
