@@ -38,8 +38,17 @@ object Day20 {
     else run(ps.map(_.tick), depth - 1)
   }
 
-  def closest(ps: List[Particle]): Int = {
+  def findClosest(ps: List[Particle]): Int = {
     val min = ps.map(_.p.sumAbs).min
     ps.indexWhere(p => p.p.sumAbs == min)
+  }
+
+  def removeCollisions(ps: List[Particle]): List[Particle] = {
+    ps.groupBy(_.p).map{case (k, v) => (k, v, v.size)}.filter{case (_, v, s) => s == 1}.toList.map{case (_, v, _) => v.head}
+  }
+
+  def runWithCollisionDetection(ps: List[Particle], depth: Int): List[Particle] = {
+    if(depth <= 0) ps
+    else runWithCollisionDetection(removeCollisions(ps.map(_.tick)), depth - 1)
   }
 }
