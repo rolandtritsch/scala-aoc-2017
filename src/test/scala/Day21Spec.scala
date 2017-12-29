@@ -13,8 +13,8 @@ class Day21Spec extends FlatSpec with Matchers {
   }
 
   "parsing the input" should "produce the correct results" in {
-    Day21.parseInput(testInput).size shouldBe 12
-    Day21.parseInput(Day21.in).size shouldBe 648
+    Day21.parseInput(testInput).size shouldBe 24
+    Day21.parseInput(Day21.in).size shouldBe 1296
   }
 
   "flipping the grid horizontally" should "produce the correct result(s)" in {
@@ -168,7 +168,7 @@ class Day21Spec extends FlatSpec with Matchers {
     Day21.Grid.toString(grid2).count(_ == '#') shouldBe 12
   }
 
-  it should "solve the puzzle" in {
+  ignore should "solve the puzzle" in {
     val grid5 = Day21.run(Day21.start, Day21.parseInput(Day21.in), 5)
     //Day21.Grid.toString(grid5) shouldBe ""
     Day21.Grid.toString(grid5).count(_ == '#') shouldBe 0
