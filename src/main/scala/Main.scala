@@ -42,5 +42,6 @@ object Main {
     // @todo Day21
     println(s"Day22: SimpleGrid -> ${Day22.run(Day22.SimpleGrid(1001).mapInput(Day22.parseInput(Day22.in)), Day22.Default.ticks1).numOfInfections}")
     println(s"Day22: AdvancedGrid -> ${Day22.run(Day22.AdvancedGrid(1001).mapInput(Day22.parseInput(Day22.in)), Day22.Default.ticks2).numOfInfections}")
+    // @todo - Day23 - loops forever
   }
 }
