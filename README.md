@@ -22,3 +22,5 @@ Have fun!!!
 * optimize implementations for performance (especially Day5)
 * add/use visibility (right now all vals and defs and classes are public (which is not right)) 
 * add a test flag to only run the solution tests
+* use behaviour to make FlatSpec more readable/maintainable
+* fix/remove the warnings about the conflicts

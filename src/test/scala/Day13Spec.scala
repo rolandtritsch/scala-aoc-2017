@@ -10,7 +10,8 @@ class Day13Spec extends FlatSpec with Matchers {
     "6: 4"
   )
 
-  "the input" should "be correct" in {
+  behavior of "the input"
+  it should "be correct" in {
     Day13.in.head shouldBe "0: 4"
   }
 
@@ -20,7 +21,8 @@ class Day13Spec extends FlatSpec with Matchers {
     parsed(98) shouldBe 18
   }
 
-  "a security scanner" should "behave as expected" in {
+  behavior of "the security scanner"
+  it should "behave as expected" in {
     val ss0 = Day13.SecurityScanner(0)
     ss0.isTop shouldBe false
     ss0.tick.isTop shouldBe false
@@ -44,12 +46,14 @@ class Day13Spec extends FlatSpec with Matchers {
     ss2.tick.tick.tick.tick.tick.direction shouldBe Day13.Direction.DOWN
   }
 
-  "a layer" should "behave as expected" in {
+  behavior of "a layer"
+  it should "behave as expected" in {
     val l0 = Day13.Layer(0, Day13.SecurityScanner(1))
     l0.tick.securityScanner.isTop shouldBe true
   }
 
-  "building a firewall" should "return a/the correct firewall" in {
+  behavior of "building a firewall"
+  it should "return a/the correct firewall" in {
     val fw = Day13.FireWall.build(Day13.parseInput(testInput), 0)
     //println(fw); println("---")
     fw.threatDetected shouldBe false
@@ -57,7 +61,8 @@ class Day13Spec extends FlatSpec with Matchers {
     fw.tick.threatDetected shouldBe true
   }
 
-  "the firewall" should "have the correct states" in {
+  behavior of "the firewall"
+  it should "have the correct states" in {
     val fw = Day13.FireWall.build(Day13.parseInput(testInput), 0)
     fw.securityScore shouldBe 0
     fw.threatDetected shouldBe false
@@ -120,7 +125,8 @@ class Day13Spec extends FlatSpec with Matchers {
     simResultFw.threatDetected shouldBe false
   }
 
-  "findWayThrough" should "find the smallest possible delay" in {
+  behavior of "find a way through"
+  it should "find the smallest possible delay" in {
     Day13.findWayThrough(Day13.parseInput(testInput)) shouldBe 10
   }
 

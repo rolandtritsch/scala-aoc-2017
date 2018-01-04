@@ -11,11 +11,11 @@ object Day13 {
   }
 
   object Direction extends Enumeration {
-    val UP = 0
-    val DOWN = 1
+    type Direction = Value
+    val UP, DOWN = Value
   }
 
-  case class SecurityScanner(range: Int, pos: Int = 1, direction: Int = Direction.DOWN) {
+  case class SecurityScanner(range: Int, pos: Int = 1, direction: Direction.Direction = Direction.DOWN) {
     def tick: SecurityScanner = {
       if (range > 1)
         if (direction == Direction.DOWN)
@@ -31,25 +31,15 @@ object Day13 {
     def isTop: Boolean = (pos == 1 && range > 0)
   }
 
-  /** A layer in the firewall.
-    *
-    * @param depth           the depth of that layer in the firewall (0 .. maxDepth)
-    * @param securityScanner the current securityScanner
-    */
   case class Layer(depth: Int, securityScanner: SecurityScanner) {
     def tick: Layer = Layer(depth, securityScanner.tick)
   }
 
-  /** Firewall companion object.
-    */
   object FireWall {
     /** Build a firewall.
       *
       * @note If the layer has no range (is not defined in the input), a [[Layer]] with range 0 is created.
       * @note For all layers the security scanner starts at position 1 (the top).
-      *
-      * @param inputLayers the layers to use to build the firewall
-      * @return the firewall
       */
     def build(inputLayers: Map[Int, Int], delay: Int): FireWall = {
       val layers = (for {
@@ -70,14 +60,6 @@ object Day13 {
     }
   }
 
-  /** The firewall.
-    *
-    * A firewall is build from layers.
-    *
-    * @param layers
-    * @param threatPosition
-    * @param securityScore
-    */
   case class FireWall(layers: List[Layer], threatPosition: Int, securityScore: Int, threatDetected: Boolean) {
     def tick: FireWall = {
       val newThreats = layers.map(l => {
@@ -104,6 +86,7 @@ object Day13 {
   def findWayThrough(input: Map[Int, Int]): Int = {
     def go(input: Map[Int, Int], delay: Int): Int = {
       val fw = FireWall.runSimulation(FireWall.build(input, delay))
+      //if(delay % 1000 == 0) {println(delay); println(fw); println("---")}
       if (fw.threatDetected) go(input, delay + 1)
       else delay
     }
