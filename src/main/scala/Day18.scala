@@ -1,17 +1,18 @@
 package aoc
 
+// @note The instruction on line 35 is >jgz 1 3<. Not sure, if this is a typo. I changed it to >jgz l 3< and added >set l 1< as the first instruction.
 object Day18 {
   val in = Util.readInput("Day18input.txt")
 
   sealed abstract class Operation
   case class Sound(register: Char) extends Operation
-  case class Set(register: Char, value: Int) extends Operation
+  case class Set(register: Char, value: Long) extends Operation
   case class SetR(register: Char, value: Char) extends Operation
-  case class Add(register: Char, value: Int) extends Operation
+  case class Add(register: Char, value: Long) extends Operation
   case class AddR(register: Char, value: Char) extends Operation
-  case class Multiply(register: Char, value: Int) extends Operation
+  case class Multiply(register: Char, value: Long) extends Operation
   case class MultiplyR(register: Char, value: Char) extends Operation
-  case class Modulo(register: Char, value: Int) extends Operation
+  case class Modulo(register: Char, value: Long) extends Operation
   case class ModuloR(register: Char, value: Char) extends Operation
   case class Recover(register: Char) extends Operation
   case class JumpIfGreaterThanZero(register: Char, value: Int) extends Operation
@@ -25,31 +26,32 @@ object Day18 {
       assert(tokens.size >= 2)
       val operation = tokens(0)
       val register = tokens(1).charAt(0)
+      assert(registerRange.contains(register))
       operation match {
         case "snd" => Sound(register)
         case "set" => {
           assert(tokens.size == 3)
           val operand = tokens(2)
           if(registerRange.contains(operand.charAt(0))) SetR(register, operand.charAt(0))
-          else Set(register, operand.toInt)
+          else Set(register, operand.toLong)
         }
         case "add" => {
           assert(tokens.size == 3)
           val operand = tokens(2)
           if(registerRange.contains(operand.charAt(0))) AddR(register, operand.charAt(0))
-          else Add(register, operand.toInt)
+          else Add(register, operand.toLong)
         }
         case "mul" => {
           assert(tokens.size == 3)
           val operand = tokens(2)
           if(registerRange.contains(operand.charAt(0))) MultiplyR(register, operand.charAt(0))
-          else Multiply(register, operand.toInt)
+          else Multiply(register, operand.toLong)
         }
         case "mod" => {
           assert(tokens.size == 3)
           val operand = tokens(2)
           if(registerRange.contains(operand.charAt(0))) ModuloR(register, operand.charAt(0))
-          else Modulo(register, operand.toInt)
+          else Modulo(register, operand.toLong)
         }
         case "rcv" => Recover(register)
         case "jgz" => {
@@ -63,11 +65,11 @@ object Day18 {
     })
   }
 
-  case class Program(counter: Int, instructions: List[Operation], register: Map[Char, Int])
+  case class Program(counter: Int, instructions: List[Operation], register: Map[Char, Long])
 
   val recoverRegister = '!'
 
-  def run(program: Program, done: Program => Boolean, exit: Program => Int): Int = {
+  def run(program: Program, done: Program => Boolean, exit: Program => Long): Long = {
     if(done(program)) exit(program)
     else {
       val next = program.instructions(program.counter) match {
@@ -107,7 +109,7 @@ object Day18 {
           else Program(program.counter + 1, program.instructions, program.register)
         }
         case JumpIfGreaterThanZeroR(r, v) => {
-          if(program.register(r) > 0) Program(program.counter + program.register(v), program.instructions, program.register)
+          if(program.register(r) > 0) Program(program.counter + program.register(v).toInt, program.instructions, program.register)
           else Program(program.counter + 1, program.instructions, program.register)
         }
       }
@@ -115,14 +117,14 @@ object Day18 {
     }
   }
 
-  def fullRun(program: Program): Int = {
+  def fullRun(program: Program): Long = {
     def done(p: Program) = p.counter < 0 || p.counter >= p.instructions.size
     def exit(p: Program) = -1
 
     run(program, done, exit)
   }
 
-  def solveRun(program: Program): Int = {
+  def solveRun(program: Program): Long = {
     def done(p: Program) = {
       if(p.counter < 0 || p.counter >= p.instructions.size) true
       else p.instructions(p.counter) match {

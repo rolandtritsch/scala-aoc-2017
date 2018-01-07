@@ -30,6 +30,7 @@ class Day18Spec extends FlatSpec with Matchers {
   )
 
   val resultInput = List(
+    "set l 1",
     "set i 31",
     "set a 1",
     "mul p 17",
@@ -37,19 +38,22 @@ class Day18Spec extends FlatSpec with Matchers {
     "mul a 2"
   )
 
-  "the input" should "be correct" in {
+  behavior of "the input"
+  it should "be correct" in {
     Day18.in.take(resultInput.size) should be (resultInput)
   }
 
-  "the parser" should "return the correct result(s)" in {
+  behavior of "the parser"
+  it should "return the correct result(s)" in {
     Day18.parseInput(testInput) should be (testOutput)
   }
 
-  "running the program" should "return the correct result(s)" in {
-    Day18.solveRun(Day18.Program(0, Day18.parseInput(testInput), Map.empty[Char, Int].withDefaultValue(0))) shouldBe 4
+  behavior of "running the program"
+  it should "return the correct result(s)" in {
+    Day18.solveRun(Day18.Program(0, Day18.parseInput(testInput), Map.empty[Char, Long].withDefaultValue(0))) shouldBe 4
   }
 
   it should "solve the puzzle" in {
-    Day18.solveRun(Day18.Program(0, Day18.parseInput(Day18.in), Map.empty[Char, Int].withDefaultValue(0))) shouldBe 3675
+    Day18.solveRun(Day18.Program(0, Day18.parseInput(Day18.in), Map.empty[Char, Long].withDefaultValue(0))) shouldBe 3188
   }
 }
