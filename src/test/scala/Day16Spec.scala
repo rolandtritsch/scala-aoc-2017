@@ -23,12 +23,14 @@ class Day16Spec extends FlatSpec with Matchers {
     Day16.Partner('e', 'b')
   )
 
-  "reading the input" should "produce the correct list of moves" in {
+  behavior of "reading the input"
+  it should "produce the correct list of moves" in {
     Day16.in.take(5) should be (inputFirstFive)
     Day16.parseInput(testInput) should be (testOutput)
   }
 
-  "executing the moves" should "produce the correct result(s)" in {
+  behavior of "executing the moves"
+  it should "produce the correct result(s)" in {
     Day16.executeMoves("abcde", List(Day16.Spin(1))) shouldBe "eabcd"
     Day16.executeMoves("abcde", List(Day16.Spin(3))) shouldBe "cdeab"
     Day16.executeMoves("abcde", List(Day16.Exchange(0, 1))) shouldBe "bacde"
@@ -44,9 +46,20 @@ class Day16Spec extends FlatSpec with Matchers {
     Day16.executeDance("abcde", Day16.parseInput(testInput), 2) shouldBe "ceadb"
   }
 
-  ignore should "solve the puzzle" in {
+  it should "solve the puzzle" in {
     Day16.executeMoves(Day16.programs, Day16.parseInput(Day16.in)) shouldBe "bijankplfgmeodhc"
     Day16.executeDance(Day16.programs, Day16.parseInput(Day16.in), 1) shouldBe "bijankplfgmeodhc"
+  }
+
+  ignore should "solve the big puzzle" in {
     Day16.executeDance(Day16.programs, Day16.parseInput(Day16.in), Day16.times) shouldBe ""
+  }
+
+  ignore should "solve the big puzzle again" in {
+    Day16.executeDance2(Day16.programs, Day16.parseInput(Day16.in), Day16.times) shouldBe ""
+  }
+
+  ignore should "solve the big puzzle again and again" in {
+    Day16.executeDance22(new StringBuilder(Day16.programs), Day16.parseInput(Day16.in), Day16.times) shouldBe ""
   }
 }

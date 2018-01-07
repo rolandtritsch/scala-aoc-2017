@@ -6,7 +6,7 @@ object Day16 {
   val programs = ('a' to 'p').mkString
   val times = 1000000000
 
-  abstract class Move
+  sealed abstract class Move
   case class Spin(size: Int) extends Move
   case class Exchange(thiz: Int, thaz: Int) extends Move
   case class Partner(thiz: Char, thaz: Char) extends Move
@@ -63,12 +63,45 @@ object Day16 {
     moves.foldLeft(programs)((current, move) => executeMove(current, move))
   }
 
-  def executeDance2(programs: String, moves: List[Move], times: BigInt): String = {
-    if(times <= 1) executeMoves(programs, moves)
-    else executeDance(executeMoves(programs, moves), moves, times - 1)
+  def executeMoves2(programs: StringBuilder, moves: List[Move]): StringBuilder = {
+    def executeMove2(programs: StringBuilder, move: Move): StringBuilder = move match {
+      case Spin(s) => {
+        // Note: The Spin rotates counter-clockwise
+        val (head, tail) = programs.splitAt(programs.size - s)
+        new scala.collection.mutable.StringBuilder((tail ++ head).toString)
+      }
+      case Exchange(thiz, thaz) => {
+        val thizProgram = programs.charAt(thiz)
+        val thazProgram = programs.charAt(thaz)
+        programs.update(thiz, thazProgram)
+        programs.update(thaz, thizProgram)
+        programs
+      }
+      case Partner(thiz, thaz) => {
+        val thizPos = programs.indexOf(thiz)
+        val thazPos = programs.indexOf(thaz)
+        programs.update(thizPos, thaz)
+        programs.update(thazPos, thiz)
+        programs
+      }
+    }
+
+    moves.foldLeft(programs)((current, move) => executeMove2(current, move))
   }
 
   def executeDance(programs: String, moves: List[Move], times: BigInt): String = {
     (BigInt(1) to times).foldLeft(programs)((current, _) => executeMoves(current, moves))
+  }
+
+  def executeDance2(programs: String, moves: List[Move], times: BigInt): String = {
+    if(times % 100000 == 0) println(times)
+    if(times <= 1) executeMoves(programs, moves)
+    else executeDance2(executeMoves(programs, moves), moves, times - 1)
+  }
+
+  def executeDance22(programs: StringBuilder, moves: List[Move], times: BigInt): String = {
+    if(times % 100000 == 0) println(times)
+    if(times <= 1) executeMoves2(programs, moves).result
+    else executeDance22(executeMoves2(programs, moves), moves, times - 1)
   }
 }
