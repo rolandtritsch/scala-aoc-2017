@@ -21,9 +21,9 @@ class Day18Spec extends FlatSpec with Matchers {
     Day18.Add('a', 2),
     Day18.MultiplyR('a', 'a'),
     Day18.Modulo('a', 5),
-    Day18.Sound('a'),
+    Day18.Send('a'),
     Day18.Set('a', 0),
-    Day18.Recover('a'),
+    Day18.Receive('a'),
     Day18.JumpIfGreaterThanZero('a', -1),
     Day18.Set('a', 1),
     Day18.JumpIfGreaterThanZero('a', -2)
@@ -50,10 +50,12 @@ class Day18Spec extends FlatSpec with Matchers {
 
   behavior of "running the program"
   it should "return the correct result(s)" in {
-    Day18.solveRun(Day18.Program(0, Day18.parseInput(testInput), Map.empty[Char, Long].withDefaultValue(0))) shouldBe 4
+    val channel = new java.util.concurrent.LinkedBlockingDeque[Long]()
+    Day18.solveRun(Day18.Program(0, Day18.parseInput(testInput), Map.empty[Char, Long].withDefaultValue(0), channel, channel)) shouldBe 4
   }
 
   it should "solve the puzzle" in {
-    Day18.solveRun(Day18.Program(0, Day18.parseInput(Day18.in), Map.empty[Char, Long].withDefaultValue(0))) shouldBe 3188
+    val channel = new java.util.concurrent.LinkedBlockingDeque[Long]()
+    Day18.solveRun(Day18.Program(0, Day18.parseInput(Day18.in), Map.empty[Char, Long].withDefaultValue(0), channel, channel)) shouldBe 3188
   }
 }
