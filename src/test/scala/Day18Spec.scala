@@ -38,6 +38,22 @@ class Day18Spec extends FlatSpec with Matchers {
     "mul a 2"
   )
 
+  val deadlockInput = List(
+    "set a 1",
+    "set b 1",
+    "set c 1",
+    "set d 1",
+    "set x 1",
+    "set y 2",
+    "snd x",
+    "snd y",
+    "snd p",
+    "rcv a",
+    "rcv b",
+    "rcv c",
+    "rcv d"
+  )
+
   behavior of "the input"
   it should "be correct" in {
     Day18.in.take(resultInput.size) should be (resultInput)
@@ -51,11 +67,22 @@ class Day18Spec extends FlatSpec with Matchers {
   behavior of "running the program"
   it should "return the correct result(s)" in {
     val channel = new java.util.concurrent.LinkedBlockingDeque[Long]()
-    Day18.solveRun(Day18.Program(0, Day18.parseInput(testInput), Map.empty[Char, Long].withDefaultValue(0), channel, channel)) shouldBe 4
+    Day18.solveRun(Day18.Program(0, 0, Day18.parseInput(testInput), Map.empty[Char, Long].withDefaultValue(0L), channel, channel, 0, true)) shouldBe 4
   }
 
   it should "solve the puzzle" in {
     val channel = new java.util.concurrent.LinkedBlockingDeque[Long]()
-    Day18.solveRun(Day18.Program(0, Day18.parseInput(Day18.in), Map.empty[Char, Long].withDefaultValue(0), channel, channel)) shouldBe 3188
+    Day18.solveRun(Day18.Program(0, 0, Day18.parseInput(Day18.in), Map.empty[Char, Long].withDefaultValue(0L), channel, channel, 0, true)) shouldBe 3188
+  }
+
+  behavior of "running the program concurrently"
+  ignore should "deadlock" in {
+    // print 3
+    Day18.concurrentRun(Day18.parseInput(deadlockInput))
+  }
+
+  ignore should "solve the puzzle (again)" in {
+    // print 7112
+    Day18.concurrentRun(Day18.parseInput(Day18.in))
   }
 }
