@@ -111,6 +111,7 @@ object Day3 {
 
   object Part2 {
     def findNextBiggestNumber(number: Int): Int = {
+      // @todo D... it. Lost some code. Need to get rid of the hardcoded Array ... again.
       val grid = Array.ofDim[Int](11, 11)
 
       lazy val msi = moves(initalLoop).iterator
