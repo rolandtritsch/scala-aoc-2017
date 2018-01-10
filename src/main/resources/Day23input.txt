@@ -1,3 +1,4 @@
+set l 1
 set b 84
 set c b
 jnz a 2
