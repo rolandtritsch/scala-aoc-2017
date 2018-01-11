@@ -3,43 +3,46 @@ package aoc
 object Day10 {
   val in = List(165, 1, 255, 31, 87, 52, 24, 113, 0, 91, 148, 254, 158, 2, 73, 153)
 
-  type Hash = List[Int]
+  def shiftLeft(hash: List[Int], times: Int): List[Int] = {
+    require(hash.nonEmpty, s"hash.nonEmpty failed; with >${hash}<")
+    require(times >= 0, s"times >= 0 failed; with >${times}<")
 
-  def knot(lengths: List[Int], seed: Hash): Hash = {
-    def go(lengths: List[Int], currentHash: Hash, currentPosition: Int, currentSkip: Int): Hash = lengths match {
-      case Nil => currentHash
-      case l :: restLengths => {
-        // So that I do not need to do the wrap-around,
-        // I am just doubleing the hash so that I can write
-        // over the end.
-        val buffer = currentHash ++ currentHash
-        val head = buffer.slice(0, currentPosition)
-        val toBeReversed = buffer.slice(currentPosition, currentPosition + l)
-        val tail = buffer.slice(currentPosition + l, buffer.size)
-        val newBuffer = head ++ toBeReversed.reverse ++ tail
-        //println(s"${currentPosition}/${l}/${currentSkip}")
-        //println(s"${head} ++ ${toBeReversed.reverse} ++ ${tail}")
-        val newHash = if(currentPosition + l > currentHash.size) {
-          // assemble the new hash from the buffer
-          val (firstHalf, secondHalf) = newBuffer.splitAt(currentHash.size)
-          val (firstHalfOld, firstHalfNew) = firstHalf.splitAt(currentPosition)
-          val (secondHalfNew, secondHalfOld) = secondHalf.splitAt(((currentPosition + l) % currentHash.size) + 1)
-          //println(firstHalf, secondHalf)
-          //println(firstHalfOld, firstHalfNew)
-          //println(secondHalfNew, secondHalfOld)
-          //println(secondHalfNew ++ firstHalfNew)
-          //println("---")
-          secondHalfNew ++ firstHalfNew
-        } else {
-          // use the first half of the buffer
-          //println(newBuffer.splitAt(currentHash.size)._1)
-          //println("---")
-          newBuffer.splitAt(currentHash.size)._1
-        }
-        go(restLengths, newHash, (currentPosition + l + currentSkip) % newHash.size, currentSkip + 1)
-      }
+    def shiftLeftOnce(hash: List[Int]): List[Int] = hash match {
+      case head :: rest => rest ++ List(head)
+      case Nil => hash
     }
 
-    go(lengths, seed, 0, 0)
+    if (times == 0) hash
+    else shiftLeft(shiftLeftOnce(hash), times - 1)
+  }
+
+  def shiftRight(hash: List[Int], times: Int): List[Int] = {
+    shiftLeft(hash, hash.size - times)
+  }
+
+  def reverse(hash: List[Int], length: Int): List[Int] = {
+    require(hash.nonEmpty, s"hash.nonEmpty failed; with >${hash}<")
+    require(length >= 0 && length <= hash.size, s"length >= 0 && length <= hash.size failed; with >${length}<")
+
+    val (front, end) = hash.splitAt(length)
+    front.reverse ++ end
+  }
+
+  case class Hash(hash: List[Int], position: Int, skip: Int) {
+    def next(length: Int): Hash = {
+      val nextHash = shiftRight(reverse(shiftLeft(hash, position), length), position)
+      val nextPosition = (position + length + skip) % hash.size
+      val nextSkip = skip + 1
+      Hash(nextHash, nextPosition, nextSkip)
+    }
+  }
+
+  def knot(lengths: List[Int], seed: Hash): Hash = {
+    lengths.foldLeft(seed)((currentHash, length) => currentHash.next(length))
+  }
+
+  def solve(lengths: List[Int], seed: List[Int]): Int = {
+    val hash = knot(lengths, Hash(seed, 0, 0)).hash
+    hash(0) * hash(1)
   }
 }
