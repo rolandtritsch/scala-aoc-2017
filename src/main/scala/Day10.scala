@@ -4,6 +4,7 @@ object Day10 {
   val in = List(165, 1, 255, 31, 87, 52, 24, 113, 0, 91, 148, 254, 158, 2, 73, 153)
 
   def shiftLeft(hash: List[Int], times: Int): List[Int] = {
+    require(hash.nonEmpty, s"hash.nonEmpty failed; with >${hash}<")
     require(times >= 0, s"times >= 0 failed; with >${times}<")
 
     def shiftLeftOnce(hash: List[Int]): List[Int] = hash match {
@@ -20,13 +21,11 @@ object Day10 {
   }
 
   def reverse(hash: List[Int], length: Int): List[Int] = {
-    require(hash.isEmpty || length >= 0 && length <= hash.size, s"length >= 0 && length <= hash.size failed; with >${length}<")
+    require(hash.nonEmpty, s"hash.nonEmpty failed; with >${hash}<")
+    require(length >= 0 && length <= hash.size, s"length >= 0 && length <= hash.size failed; with >${length}<")
 
-    if(hash.isEmpty) hash
-    else {
-      val (front, end) = hash.splitAt(length)
-      front.reverse ++ end
-    }
+    val (front, end) = hash.splitAt(length)
+    front.reverse ++ end
   }
 
   case class Hash(hash: List[Int], position: Int, skip: Int) {

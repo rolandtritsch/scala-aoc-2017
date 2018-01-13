@@ -6,6 +6,7 @@ class Day10Spec extends FlatSpec with Matchers {
 
   behavior of "shiftLeft"
 
+  an [IllegalArgumentException] should be thrownBy Day10.shiftLeft(List(), 0)
   an [IllegalArgumentException] should be thrownBy Day10.shiftLeft(List(0), -1)
 
   it should "shift a list/hash to the left" in {
@@ -24,6 +25,7 @@ class Day10Spec extends FlatSpec with Matchers {
 
   behavior of "reverse"
 
+  an [IllegalArgumentException] should be thrownBy Day10.reverse(List(), 0)
   an [IllegalArgumentException] should be thrownBy Day10.reverse(List(0), -1)
   an [IllegalArgumentException] should be thrownBy Day10.reverse(List(0), 2)
 
