@@ -20,8 +20,10 @@ object Main {
     println(s"Day8: FindMaxStack -> ${Day8.findMaxStack(Day8.in)}")
     println(s"Day9: StreamScore -> ${Day9.score(Day9.in)._1.sum}")
     println(s"Day9: StreamGarbageCounter -> ${Day9.score(Day9.in)._2}")
-    // @todo Day10
-    // @todo Day11
+    println(s"Day10: KnotTheHash -> ${Day10.solve(Day10.in, List.range(0, 256))}")
+    // @todo Day10 - Part 2
+    println(s"Day11: CalcSteps -> ${Day11.calcSteps(Day11.in)._1}")
+    println(s"Day11: CalcMaxSteps -> ${Day11.calcSteps(Day11.in)._2}")
     println(s"Day12: FindPrograms -> ${Day12.findPrograms(0, Day12.parseInput(Day12.in)).size}")
     println(s"Day12: FindGroups -> ${Day12.findGroups(Day12.parseInput(Day12.in)).size}")
     println(s"Day13: SecurityScore -> ${Day13.FireWall.runSimulation(Day13.FireWall.build(Day13.parseInput(Day13.in), 0)).securityScore}")
@@ -42,8 +44,10 @@ object Main {
     // @todo Day21
     println(s"Day22: SimpleGrid -> ${Day22.run(Day22.SimpleGrid(1001).mapInput(Day22.parseInput(Day22.in)), Day22.Default.ticks1).numOfInfections}")
     println(s"Day22: AdvancedGrid -> ${Day22.run(Day22.AdvancedGrid(1001).mapInput(Day22.parseInput(Day22.in)), Day22.Default.ticks2).numOfInfections}")
-    // @todo - Day23 - loops forever
+    println(s"Day23: RunProgram -> ${Day23.solveRun(Day23.Program(0, Day23.parseInput(Day23.in), Map.empty[Char, Long].withDefaultValue(0), Map.empty[String, Long].withDefaultValue(0)))}")
+    // @todo - Day23 - Part2
     // @todo - Day24 - too slow - println(s"Day24: FindStrongestPath -> ${Day24.findStrongestPath(Day24.findPaths(Day24.parseInput(Day24.in)))._1}")
-    // @todo - Day24 - too slow - println(s"Day24: FindStrongestPath -> ${Day24.findLongestPath(Day24.findPaths(Day24.parseInput(Day24.in)))._2}")
+    // @todo - Day24 - too slow - println(s"Day24: FindLongestPath -> ${Day24.findLongestPath(Day24.findPaths(Day24.parseInput(Day24.in)))._2}")
+    // @todo - This does not compile with scala-native - println(s"Day25: RunProgram -> ${val tape = Day25.Tape(scala.collection.mutable.ArrayBuffer.fill(100001)(0)); Day25.run(Day25.StateA(tape.size / 2, tape), Day25.in).checkSum}")
   }
 }
