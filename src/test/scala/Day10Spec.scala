@@ -5,10 +5,8 @@ import org.scalatest.{FlatSpec, Matchers}
 class Day10Spec extends FlatSpec with Matchers {
 
   behavior of "shiftLeft"
-
   an [IllegalArgumentException] should be thrownBy Day10.shiftLeft(List(), 0)
   an [IllegalArgumentException] should be thrownBy Day10.shiftLeft(List(0), -1)
-
   it should "shift a list/hash to the left" in {
     Day10.shiftLeft(List(1, 2, 3), 0) should be (List(1, 2, 3))
     Day10.shiftLeft(List(1, 2, 3), 1) should be (List(2, 3, 1))
@@ -16,7 +14,6 @@ class Day10Spec extends FlatSpec with Matchers {
   }
 
   behavior of "shiftRight"
-
   it should "shift a list/hash to the right" in {
     Day10.shiftRight(List(1, 2, 3), 0) should be (List(1, 2, 3))
     Day10.shiftRight(List(1, 2, 3), 1) should be (List(3, 1, 2))
@@ -24,11 +21,9 @@ class Day10Spec extends FlatSpec with Matchers {
   }
 
   behavior of "reverse"
-
   an [IllegalArgumentException] should be thrownBy Day10.reverse(List(), 0)
   an [IllegalArgumentException] should be thrownBy Day10.reverse(List(0), -1)
   an [IllegalArgumentException] should be thrownBy Day10.reverse(List(0), 2)
-
   it should "reverse a given hash" in {
     Day10.reverse(List(1, 2, 3, 4, 5), 2) should be (List(2, 1, 3, 4, 5))
     Day10.reverse(List(1, 2, 3, 4, 5), 3) should be (List(3, 2, 1, 4, 5))
@@ -36,7 +31,6 @@ class Day10Spec extends FlatSpec with Matchers {
   }
 
   behavior of "knot"
-
   it should "return the right test hashes" in {
     Day10.knot(List(3), Day10.Hash(List.range(0, 5), 0, 0)).hash should be (List(2, 1, 0, 3, 4))
     Day10.knot(List(3, 4), Day10.Hash(List.range(0, 5), 0, 0)).hash should be (List(4, 3, 0, 1, 2))
@@ -49,7 +43,6 @@ class Day10Spec extends FlatSpec with Matchers {
   }
 
   behavior of "solve"
-
   it should "solve the puzzle" in {
     Day10.solve(Day10.in, List.range(0, 256)) shouldBe 4114
   }
