@@ -1,6 +1,6 @@
 package aoc
 
-object Day9 {
+object Day09 {
   val in = Util.readInput("Day9input.txt").head.toList
 
   // Note: This is heavy on the stack. Had to increase -Xss to make it work.

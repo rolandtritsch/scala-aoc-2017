@@ -84,10 +84,10 @@ object Day21 {
       }
       rule.to
     }}
-    println(thiz.map(Grid.toString(_)).mkString("\n"))
-    println("---")
-    println(result.map(Grid.toString(_)).mkString("\n"))
-    println("***")
+    //println(thiz.map(Grid.toString(_)).mkString("\n"))
+    //println("---")
+    //println(result.map(Grid.toString(_)).mkString("\n"))
+    //println("***")
     result
   }
 

@@ -20,7 +20,7 @@ package aoc
   *
   * I am then using the resulting/initialized grids to solve the problems.
   */
-object Day3 {
+object Day03 {
 
   val in = 368078
 

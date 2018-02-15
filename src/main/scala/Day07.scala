@@ -1,6 +1,6 @@
 package aoc
 
-object Day7 {
+object Day07 {
   val in = Util.readInput("Day7input.txt")
 
   abstract class ParseElement {
@@ -90,7 +90,7 @@ object Day7 {
 
     def solve(input: List[String]): (String, Int, Int) = {
       val pnodes = parseInput(input)
-      val root = build(Day7.Tree.findRoot(pnodes), pnodes)
+      val root = build(Day07.Tree.findRoot(pnodes), pnodes)
       val badNode = findBadNode(root)
 
       val nodesByWeight = badNode.children.groupBy(calcWeight(_))

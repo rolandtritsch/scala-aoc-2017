@@ -146,7 +146,7 @@ class Day21Spec extends FlatSpec with Matchers {
 
   it should "solve the puzzle" in {
     val grid5 = Day21.run(List(Day21.start), Day21.parseInput(Day21.in), 5)
-    grid5.flatten.flatten.count(_ == '#') shouldBe 205
+    grid5.flatten.flatten.count(_ == '#') shouldBe 134
   }
 
   ignore should "show all the right numbers on the way to the solution" in {

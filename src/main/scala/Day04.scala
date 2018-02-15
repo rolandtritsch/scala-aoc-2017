@@ -1,6 +1,6 @@
 package aoc
 
-object Day4 {
+object Day04 {
   val in = Util.readInput("Day4input.txt")
 
   object Part1 {

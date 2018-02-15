@@ -1,6 +1,6 @@
 package aoc
 
-object Day5 {
+object Day05 {
   val in = Util.readInput("Day5input.txt").map(_.toInt)
 
   object Part1 {

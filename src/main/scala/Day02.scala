@@ -2,7 +2,7 @@ package aoc
 
 import scala.io.Source
 
-object Day2 {
+object Day02 {
 
   val in = List(
     List(737, 1866, 1565, 1452, 1908, 1874, 232, 1928, 201, 241, 922, 281, 1651, 1740, 1012, 1001),
