@@ -11,6 +11,8 @@ To make this work you need to ...
 * run the JVM main (`sbt aocJVM/run`)
 * run the Native main (`sbt aocNative/run`)
 
+Note: To [make Scala Native work](http://www.scala-native.org/en/latest/user/setup.html) you probably need to install a couple more packages.
+
 Have fun!!!
 
 ## Todos
