@@ -2,7 +2,7 @@ package aoc
 
 object Day06 {
 
-  val in = List(10, 3, 15, 10, 5, 15, 5, 15, 9, 2, 5, 8, 5, 2, 3, 6)
+  val in = Util.readInput("Day06input.txt").head.split('\t').map(_.toInt).toList
 
   object Part1 {
     def redistribute(banks: List[Int]): List[Int] = {

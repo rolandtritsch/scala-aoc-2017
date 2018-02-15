@@ -13,11 +13,13 @@ class Day19Spec extends FlatSpec with Matchers {
     "      +B-+  +--+"
   ).map(_.toCharArray)
 
-  "the input" should "have the first line in it" in {
+  behavior of "the input"
+  it should "have the first line in it" in {
     Day19.in.head.indexOf('|') shouldBe 163
   }
 
-  "walking the maze" should "give the right result(s)" in {
+  behavior of "walking the maze"
+  it should "give the right result(s)" in {
     Day19.walkTheMaze(testInput) shouldBe ("ABCDEF", 38)
   }
 

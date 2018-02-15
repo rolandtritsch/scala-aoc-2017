@@ -1,6 +1,7 @@
 package aoc
 
 object Day23 {
+
   val in = Util.readInput("Day23input.txt")
 
   sealed abstract class Operation

@@ -1,6 +1,7 @@
 package aoc
 
 object Day19 {
+
   val in = Util.readInput("Day19input.txt").map(_.toCharArray).toArray
 
   object Direction {

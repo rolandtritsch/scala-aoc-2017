@@ -22,7 +22,7 @@ package aoc
   */
 object Day03 {
 
-  val in = 368078
+  val in = Util.readInput("Day03input.txt").head.toInt
 
   type Grid = Array[Array[Int]]
   type Moves = List[List[Move]]

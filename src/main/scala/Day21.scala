@@ -1,6 +1,7 @@
 package aoc
 
 object Day21 {
+
   val in = Util.readInput("Day21input.txt")
 
   val start = Array(

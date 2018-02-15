@@ -13,11 +13,18 @@ class Day03Spec extends FlatSpec with Matchers {
     Array(21, 22, 23, 24, 25)
   )
 
-  "moves" should "return the initial moves" in {
+  behavior of "Reading the input"
+  it should "read the input correctly" in {
+    Day03.in shouldBe 368078
+  }
+
+  behavior of "moves"
+  it should "return the initial moves" in {
     Day03.moves(Day03.initalLoop).take(8) should be (Day03.initalLoop.flatten)
   }
 
-  "calcDimension" should "return the required dimension to accomodate n" in {
+  behavior of "calcDimension"
+  it should "return the required dimension to accomodate n" in {
     val results = List(
       (1, 1),
       (2, 3), (3, 3), (4, 3), (5, 3), (6, 3), (7, 3), (8, 3), (9, 3),
@@ -28,11 +35,13 @@ class Day03Spec extends FlatSpec with Matchers {
     results.forall(r => Day03.Part1.calcDimensions(r._1) == r._2)
   }
 
-  "init" should "return the test grid" in {
+  behavior of "init"
+  it should "return the test grid" in {
     Day03.Part1.initGrid(25) should be (testGrid)
   }
 
-  "Part 1 - calcDistance" should "return the correct result(s)" in {
+  behavior of "Part 1 - calcDistance"
+  it should "return the correct result(s)" in {
     Day03.Part1.calcDistanceFromLocToCenter(1, Day03.Part1.initGrid(1)) shouldBe 0
     Day03.Part1.calcDistanceFromLocToCenter(12, Day03.Part1.initGrid(12)) shouldBe 3
     Day03.Part1.calcDistanceFromLocToCenter(23, Day03.Part1.initGrid(23)) shouldBe 2
@@ -44,7 +53,8 @@ class Day03Spec extends FlatSpec with Matchers {
     Day03.Part1.calcDistanceFromLocToCenter(Day03.in, Day03.Part1.initGrid(Day03.in)) shouldBe 371
   }
 
-  "Part 2 - findTheBiggestNumber" should "return the correct result(s)" in {
+  behavior of "Part 2 - findTheBiggestNumber"
+  it should "return the correct result(s)" in {
     Day03.Part2.findNextBiggestNumber(747) shouldBe 806
     Day03.Part2.findNextBiggestNumber(1000000) shouldBe 1009457
   }

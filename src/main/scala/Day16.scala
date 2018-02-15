@@ -1,6 +1,7 @@
 package aoc
 
 object Day16 {
+
   val in = Util.readInput("Day16input.txt").head.split(',').toList
 
   val programs = ('a' to 'p').mkString

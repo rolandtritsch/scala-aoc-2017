@@ -1,6 +1,7 @@
 package aoc
 
 object Day12 {
+
   val in = Util.readInput("Day12input.txt")
 
   def parseInput(in: List[String]): Map[Int, List[Int]] = {

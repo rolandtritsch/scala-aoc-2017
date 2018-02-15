@@ -23,7 +23,7 @@ For every day ...
 
 * review [other solutions](https://github.com/topics/advent-of-code-2017?l=scala) and adjust accordingly
 * add require/ensuring
-* run/review/adjust (all) tests - sbt aocJVM/testOnly aoc.Day??[Spec|Check]
+* run/review/adjust (all) tests - sbt aocJVM/testOnly aoc.Day??[Spec|Check|Meter]
 * run the fast tests - ???
 * run the solution tests - ???
 * add a/the documentation on the chosen approach/solution/algorithm

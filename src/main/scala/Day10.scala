@@ -1,7 +1,8 @@
 package aoc
 
 object Day10 {
-  val in = List(165, 1, 255, 31, 87, 52, 24, 113, 0, 91, 148, 254, 158, 2, 73, 153)
+
+  val in = Util.readInput("Day10input.txt").head.split(',').map(_.toInt).toList
 
   def shiftLeft(hash: List[Int], times: Int): List[Int] = {
     require(hash.nonEmpty, s"hash.nonEmpty failed; with >${hash}<")

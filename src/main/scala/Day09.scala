@@ -1,7 +1,8 @@
 package aoc
 
 object Day09 {
-  val in = Util.readInput("Day9input.txt").head.toList
+
+  val in = Util.readInput("Day09input.txt").head.toList
 
   // Note: This is heavy on the stack. Had to increase -Xss to make it work.
   def score(stream: List[Char]): (List[Int], Int) = {

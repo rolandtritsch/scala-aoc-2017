@@ -2,6 +2,7 @@ package aoc
 
 // @note https://stackoverflow.com/a/47749887/2374327
 object Day11 {
+
   val in = Util.readInput("Day11input.txt").head.split(',').toList
 
   case class Tile(x: Int, y: Int, z: Int) {

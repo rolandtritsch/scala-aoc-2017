@@ -1,7 +1,8 @@
 package aoc
 
 object Day04 {
-  val in = Util.readInput("Day4input.txt")
+
+  val in = Util.readInput("Day04input.txt")
 
   object Part1 {
     def isValid(passPhrase: String): Boolean = {

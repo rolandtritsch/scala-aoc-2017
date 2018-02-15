@@ -1,7 +1,8 @@
 package aoc
 
 object Day08 {
-  val in = Util.readInput("Day8input.txt")
+
+  val in = Util.readInput("Day08input.txt")
 
   case class Instruction(register: String, operation: String, operand: Int, conditionRegister: String, condition: String, conditionOperand: Int)
 

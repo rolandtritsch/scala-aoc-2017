@@ -1,7 +1,8 @@
 package aoc
 
 object Day05 {
-  val in = Util.readInput("Day5input.txt").map(_.toInt)
+
+  val in = Util.readInput("Day05input.txt").map(_.toInt)
 
   object Part1 {
     def countSteps(stack: List[Int], stackCounter: Int, steps: Int = 1): Int = {

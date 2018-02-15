@@ -3,13 +3,20 @@ package aoc
 import org.scalatest.{FlatSpec, Matchers}
 
 class Day02Spec extends FlatSpec with Matchers {
+
   val testSheet = List(
     List(5, 1, 9, 5),
     List(7, 5, 3),
     List(2, 4, 6, 8)
   )
 
-  "checksum" should "return the correct checksum" in {
+  behavior of "Reading the input"
+  it should "read the (begining) of the input" in {
+    Day02.in.head should be (List(737, 1866, 1565, 1452, 1908, 1874, 232, 1928, 201, 241, 922, 281, 1651, 1740, 1012, 1001))
+  }
+
+  behavior of "Part 1 - checksum"
+  it should "return the correct checksum" in {
     Day02.checksum(testSheet) shouldBe 18
   }
 
@@ -30,7 +37,8 @@ class Day02Spec extends FlatSpec with Matchers {
     List(3, 8, 6, 5)
   )
 
-  "checksum2" should "return the correct checksum" in {
+  behavior of "Part 2 - checksum"
+  it should "return the correct checksum" in {
     Day02.checksum2(testSheet2) shouldBe 9
   }
 

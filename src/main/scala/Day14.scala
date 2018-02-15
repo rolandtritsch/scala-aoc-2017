@@ -2,7 +2,7 @@ package aoc
 
 object Day14 {
 
-  val in = "ugkiagan"
+  val in = Util.readInput("Day14input.txt").head
 
   def hex2bin(hex: String): String = {
     (hex.foldLeft(List.empty[String])((acc, c) => BigInt(c.toString, 16).toString(2).reverse.padTo(4, '0').reverse :: acc)).reverse.mkString

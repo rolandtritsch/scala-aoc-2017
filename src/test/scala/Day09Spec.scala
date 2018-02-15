@@ -4,7 +4,13 @@ import org.scalatest.{FlatSpec, Matchers}
 
 class Day09Spec extends FlatSpec with Matchers {
 
-  "score" should "return the right results" in {
+  behavior of "readInput"
+  it should "read the input" in {
+    Day09.in.take(10) should be ("{{{{{},{<>".toList)
+  }
+
+  behavior of "score"
+  it should "return the right results" in {
     Day09.score("{}".toList)._1.sum shouldBe 1
     Day09.score("{{{}}}".toList)._1.sum shouldBe 6
     Day09.score("{{},{}}".toList)._1.sum shouldBe 5

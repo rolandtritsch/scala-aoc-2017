@@ -1,9 +1,10 @@
 package aoc
 
 object Day25 {
-  val in = 12667664
-
   import scala.collection.mutable
+
+  //val in = Util.readInput("Day25input.txt").head.toInt
+  val in = 12667664
 
   // @todo do not use a fixed size array as a tape (make it grow indefinetly (in both directions))
   case class Tape(private val init: mutable.ArrayBuffer[Int]) {

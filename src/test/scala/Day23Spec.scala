@@ -3,6 +3,7 @@ package aoc
 import org.scalatest.{FlatSpec, Matchers}
 
 class Day23Spec extends FlatSpec with Matchers {
+
   behavior of "the input"
   it should "be correct" in {
     Day23.in.head shouldBe "set l 1"

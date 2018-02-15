@@ -3,7 +3,9 @@ package aoc
 object Day17 {
   import scala.collection.mutable
 
-  val steps = 371
+  val in = Util.readInput("Day17input.txt").head.toInt
+
+  val steps = in
   val times = 2017
   val times2 = 50000000
 

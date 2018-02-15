@@ -3,6 +3,7 @@ package aoc
 import scala.collection.mutable
 
 object Day22 {
+
   val in = Util.readInput("Day22input.txt")
 
   def parseInput(in: List[String]): Array[Array[Char]] = {

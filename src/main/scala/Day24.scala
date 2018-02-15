@@ -1,6 +1,7 @@
 package aoc
 
 object Day24 {
+
   val in = Util.readInput("Day24input.txt")
 
   case class Component(left: Int, right: Int) {

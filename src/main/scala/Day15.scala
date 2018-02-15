@@ -1,6 +1,9 @@
 package aoc
 
 object Day15 {
+  // val in = ... - the only one with no *in*, means I am not reading Day15input.txt.
+  // I just copied the values from it :).
+
   object Default {
     val factorA = BigInt(16807)
     val factorB = BigInt(48271)

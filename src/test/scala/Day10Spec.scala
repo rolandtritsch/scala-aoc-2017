@@ -4,6 +4,11 @@ import org.scalatest.{FlatSpec, Matchers}
 
 class Day10Spec extends FlatSpec with Matchers {
 
+  behavior of "readInput"
+  it should "read the input" in {
+    Day10.in should be (List(165, 1, 255, 31, 87, 52, 24, 113, 0, 91, 148, 254, 158, 2, 73, 153))
+  }
+
   behavior of "shiftLeft"
   an [IllegalArgumentException] should be thrownBy Day10.shiftLeft(List(), 0)
   an [IllegalArgumentException] should be thrownBy Day10.shiftLeft(List(0), -1)

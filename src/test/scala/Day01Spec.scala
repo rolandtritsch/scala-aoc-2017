@@ -4,7 +4,13 @@ import org.scalatest.{FlatSpec, Matchers}
 
 class Day01Spec extends FlatSpec with Matchers {
 
-  "Part1 - captcha" should "return the right result" in {
+  behavior of "Reading the input"
+  it should "return the (the beginnig) of the correct input" in {
+    Day01.in.take(10) shouldBe "7773699185"
+  }
+
+  behavior of "Part1 - captcha"
+  it should "return the right result" in {
     Day01.Part1.captcha("1122") shouldBe 3
     Day01.Part1.captcha("1111") shouldBe 4
     Day01.Part1.captcha("1234") shouldBe 0
@@ -24,7 +30,8 @@ class Day01Spec extends FlatSpec with Matchers {
     assertThrows[IllegalArgumentException](Day01.Part1.captcha("123 "))
   }
 
-  "Part2 - captcha" should "return the right result" in {
+  behavior of "Part2 - captcha"
+  it should "return the right result" in {
     Day01.Part2.captcha("1212") shouldBe 6
     Day01.Part2.captcha("1221") shouldBe 0
     Day01.Part2.captcha("123425") shouldBe 4

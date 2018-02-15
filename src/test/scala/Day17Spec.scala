@@ -18,6 +18,11 @@ class Day17Spec extends FlatSpec with Matchers {
     (1, List(0, 9, 5, 7, 2, 4, 3, 8, 6, 1))
   )
 
+  behavior of "readInput"
+  it should "read the input" in {
+    Day17.in shouldBe 371
+  }
+
   behavior of "moveForward"
   it should "return the right result(s)" in {
     Day17.moveForward(0, 1, 3) shouldBe 0

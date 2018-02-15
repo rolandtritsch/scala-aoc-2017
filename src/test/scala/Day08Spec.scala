@@ -3,6 +3,7 @@ package aoc
 import org.scalatest.{FlatSpec, Matchers}
 
 class Day08Spec extends FlatSpec with Matchers {
+
   val testInput = List(
     "b inc 5 if a > 1",
     "a inc 1 if b < 5",
@@ -17,18 +18,26 @@ class Day08Spec extends FlatSpec with Matchers {
     Day08.Instruction("c", "inc", -20, "c", "==", 10)
   )
 
-  "parseInput" should "return the list of instructions" in {
+  behavior of "readInput"
+  it should "read the input" in {
+    Day08.in.head shouldBe "g dec 231 if bfx > -10"
+  }
+
+  behavior of "parseInput"
+  it should "return the list of instructions" in {
     Day08.parseInput(testInput) should be (testInstructions)
   }
 
-  "runProgram" should "return the stack of registers" in {
+  behavior of "runProgram"
+  it should "return the stack of registers" in {
     val instructions = Day08.parseInput(testInput)
     val registers = Day08.buildRegisters(instructions)
     val stack = Day08.runProgram(instructions, registers)
     stack.head.toList.sorted should be (List(("a", 1), ("b", 0), ("c", -10)))
   }
 
-  "maxRegister" should "return the max of all registers" in {
+  behavior of "maxRegister"
+  it should "return the max of all registers" in {
     val instructions = Day08.parseInput(testInput)
     val registers = Day08.buildRegisters(instructions)
     val stack = Day08.runProgram(instructions, registers)
@@ -42,7 +51,8 @@ class Day08Spec extends FlatSpec with Matchers {
     Day08.maxRegister(stack.head) shouldBe 4163
   }
 
-  "maxStack" should "return the max of all register values in the stack" in {
+  behavior of "maxStack"
+  it should "return the max of all register values in the stack" in {
     val instructions = Day08.parseInput(testInput)
     val registers = Day08.buildRegisters(instructions)
     val stack = Day08.runProgram(instructions, registers)

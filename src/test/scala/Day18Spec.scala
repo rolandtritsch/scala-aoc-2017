@@ -3,6 +3,7 @@ package aoc
 import org.scalatest.{FlatSpec, Matchers}
 
 class Day18Spec extends FlatSpec with Matchers {
+
   val testInput = List(
     "set a 1",
     "add a 2",

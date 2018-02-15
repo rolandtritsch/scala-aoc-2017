@@ -5,7 +5,12 @@ import org.scalatest.{FlatSpec, Matchers}
 class Day06Spec extends FlatSpec with Matchers {
   val testBanks = List(0, 2, 7, 0)
 
-  "redistribute" should "return the correct results" in {
+  behavior of "readInput"
+  it should "read the input" in {
+    Day06.in should be (List(10, 3, 15, 10, 5, 15, 5, 15, 9, 2, 5, 8, 5, 2, 3, 6))
+  }
+  behavior of "redistribute"
+  it should "return the correct results" in {
     val step1 = Day06.Part1.redistribute(testBanks)
     step1 should be (List(2, 4, 1, 2))
 
@@ -22,7 +27,8 @@ class Day06Spec extends FlatSpec with Matchers {
     step5 should be (step1)
   }
 
-  "detectLoop" should "return the correct result(s)" in {
+  behavior of "detectLoop"
+  it should "return the correct result(s)" in {
     Day06.Part1.detectLoop(testBanks) shouldBe (5, 4)
   }
 

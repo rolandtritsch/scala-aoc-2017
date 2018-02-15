@@ -48,22 +48,26 @@ class Day24Spec extends FlatSpec with Matchers {
     )
   )
 
-  "the input" should "be correct" in {
+  behavior of "the input"
+  it should "be correct" in {
     Day24.in.head shouldBe "14/42"
   }
 
-  "parse the input" should "produce the correct result(s)" in {
+  behavior of "parse the input"
+  it should "produce the correct result(s)" in {
     Day24.parseInput(testInput)(2) shouldBe Day24.Component(1, 10)
     Day24.parseInput(Day24.in).head shouldBe Day24.Component(0, 30)
     Day24.parseInput(Day24.in).distinct.size shouldBe Day24.in.size
   }
 
-  "find zero-pin components" should "return the correct result(s)" in {
+  behavior of "find zero-pin components"
+  it should "return the correct result(s)" in {
     Day24.findZero(Day24.parseInput(testInput)) should be (List(Day24.Component(0, 2), Day24.Component(0, 1)))
     Day24.findZero(Day24.parseInput(Day24.in)) should be (List(Day24.Component(0, 30)))
   }
 
-  "find path for a given zero" should "return the correct result(s)" in {
+  behavior of "find path for a given zero"
+  it should "return the correct result(s)" in {
     val components = Day24.parseInput(testInput)
 
     val zero1 = List(Day24.Component(0, 1))
@@ -73,11 +77,13 @@ class Day24Spec extends FlatSpec with Matchers {
     Day24.findPath(zero2, components.diff(zero2), List()) should be (testOutput2)
   }
 
-  "find all path for a given list of components" should "return the correct result(s)" in {
+  behavior of "find all path for a given list of components"
+  it should "return the correct result(s)" in {
     Day24.findPaths(Day24.parseInput(testInput)) should be (testOutput2 ++ testOutput1)
   }
 
-  "find strongest path" should "return the correct result(s)" in {
+  behavior of "find strongest path"
+  it should "return the correct result(s)" in {
     Day24.findStrongestPath(Day24.findPaths(Day24.parseInput(testInput)))._1 shouldBe 31
   }
 
@@ -85,7 +91,8 @@ class Day24Spec extends FlatSpec with Matchers {
     Day24.findStrongestPath(Day24.findPaths(Day24.parseInput(Day24.in)))._1 shouldBe 1695
   }
 
-  "find longest/strongest path" should "return the correct result(s)" in {
+  behavior of "find longest/strongest path"
+  it should "return the correct result(s)" in {
     Day24.findLongestPath(Day24.findPaths(Day24.parseInput(testInput)))._2 shouldBe 19
   }
 

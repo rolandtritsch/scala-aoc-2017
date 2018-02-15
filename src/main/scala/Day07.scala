@@ -1,7 +1,8 @@
 package aoc
 
 object Day07 {
-  val in = Util.readInput("Day7input.txt")
+
+  val in = Util.readInput("Day07input.txt")
 
   abstract class ParseElement {
     def name: String
