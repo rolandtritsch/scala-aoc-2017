@@ -16,3 +16,15 @@ To make this work you need to ...
 Note: To [make Scala Native work](http://www.scala-native.org/en/latest/user/setup.html) you probably need to install a couple more packages.
 
 Have fun!!!
+
+# Refactoring checklist
+
+For every day ...
+
+* review [other solutions](https://github.com/topics/advent-of-code-2017?l=scala) and adjust accordingly
+* add require/ensuring
+* run/review/adjust (all) tests - sbt aocJVM/testOnly aoc.Day??[Spec|Check]
+* run the fast tests - ???
+* run the solution tests - ???
+* add a/the documentation on the chosen approach/solution/algorithm
+* merge
