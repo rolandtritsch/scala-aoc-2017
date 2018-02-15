@@ -1,4 +1,10 @@
+sudo: required
+
 language: scala
+
+before_install:
+  - bash bin/travis_setup.sh
+
 script:
   - sbt aocJVM/test
   - sbt aocJVM/run
