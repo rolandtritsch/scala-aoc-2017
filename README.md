@@ -11,9 +11,9 @@ To make this work you need to ...
 * clone the repo (`git clone ...`)
 * run the tests (`sbt aocJVM/test`)
   * this will run all tests (ScalaTest, ScalaCheck, ScalaMeter) and this might take a while
-  * you can run specific tests with `sbt aocJVM/testOnly aoc.Day01Spec`
-  * you can run `sbt ???` to only run the *fast* tests
-  * you can run `sbt ???` to only run the tests that will test for the correct solutions
+  * you can run specific tests with `sbt "aocJVM/testOnly aoc.Day01Spec"`
+  * you can run `sbt "aocJVM/testOnly aoc.Day*Spec -- -l aoc.SlowTest"` to only run the *fast* tests (exclude the slow tests)
+  * you can run `sbt "aocJVM/testOnly aoc.Day*Spec -- -n aoc.SolutionTest"` to only run the tests that will test for the correct solutions
 * run the JVM main (`sbt aocJVM/run`)
 * run the Native main (`sbt aocNative/run`)
 * generate the doc (`sbt doc`) and look at it (`open target/scala-2.10/api/index.html`)

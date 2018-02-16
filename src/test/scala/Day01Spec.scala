@@ -2,6 +2,8 @@ package aoc
 
 import org.scalatest.{FlatSpec, Matchers}
 
+object SolutionTest extends org.scalatest.Tag("aoc.SolutionTest")
+
 class Day01Spec extends FlatSpec with Matchers {
 
   behavior of "readInput()"
@@ -17,7 +19,7 @@ class Day01Spec extends FlatSpec with Matchers {
     Day01.Part1.solve("91212129") shouldBe 9
   }
 
-  it should "solve the puzzle" in {
+  it should "solve the puzzle" taggedAs(SolutionTest) in {
     Day01.Part1.solve(Day01.input) shouldBe 1223
   }
 
@@ -40,7 +42,7 @@ class Day01Spec extends FlatSpec with Matchers {
     Day01.Part2.solve("111111") shouldBe 6
   }
 
-  it should "solve the puzzle" in {
+  it should "solve the puzzle" taggedAs(SolutionTest) in {
     Day01.Part2.solve(Day01.input) shouldBe 1284
   }
 
