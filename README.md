@@ -28,6 +28,8 @@ For every day ...
 
 * review [other solutions](https://github.com/topics/advent-of-code-2017?l=scala) and adjust accordingly
 * add require/ensuring
+* structure it into Part1/Part2 with a solve() function
+* make sure the visibility is right (public, private, protected)
 * run/review/adjust (all) tests - sbt aocJVM/testOnly aoc.Day??[Spec|Check|Meter]
 * run the fast tests - ???
 * run the solution tests - ???
