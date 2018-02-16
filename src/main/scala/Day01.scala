@@ -1,5 +1,19 @@
 package aoc
 
+/** Problem: [[https://adventofcode.com/2017/day/1]]
+  *
+  * Solution:
+  *
+  * General - To avoid to have to deal with the "wrap-around" we
+  * we are *just* doubling the size of the input. With that we can
+  * build pairs/tuples of values (i, i + offset), find the pairs where
+  * both numbers are the same and sum up the values of the pairs.
+  *
+  * Part 1 - Run the algorithm with an offset of 1.
+  *
+  * Part 2 - Run the algorithm with an offset of half the length
+  * of the input string.
+  */
 object Day01 {
 
   val input = Util.readInput("Day01input.txt").head
@@ -8,8 +22,8 @@ object Day01 {
     require(offset <= digits.size, s"offset <= digits.size failed; with >${offset}< >${digits.size}<")
 
     val doubleDigits = (digits ++ digits).map(_.asDigit).toList
-    val pairs = for (i <- 0 until digits.size) yield List(doubleDigits(i), doubleDigits(i + offset))
-    pairs.filter(p => p.head == p.last).map(_.head).sum
+    val pairs = for (i <- 0 until digits.size) yield (doubleDigits(i), doubleDigits(i + offset))
+    pairs.filter{case (first, second) => first == second}.map{case (value, _) => value}.sum
   } ensuring(_ >= 0, s"_ >= 0 failed")
 
   object Part1 {
