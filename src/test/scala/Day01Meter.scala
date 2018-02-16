@@ -20,7 +20,7 @@ object Day01Meter extends Bench.OfflineReport {
   performance of "Part1" in {
     measure method "captcha" in {
       using(ss) in {
-        s => Day01.Part1.captcha(s)
+        s => Day01.Part1.solve(s)
       }
     }
   }
@@ -28,7 +28,7 @@ object Day01Meter extends Bench.OfflineReport {
   performance of "Part2" in {
     measure method "captcha" in {
       using(ss) in {
-        s => Day01.Part2.captcha(s)
+        s => Day01.Part2.solve(s)
       }
     }
   }
