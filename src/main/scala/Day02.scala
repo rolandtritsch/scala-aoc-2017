@@ -22,7 +22,7 @@ private object Day02 {
     require(spreadSheet.forall(_.nonEmpty), "spreadSheet.forall(_.nonEmpty) failed")
 
     processRow(spreadSheet).sum
-  }
+  } ensuring(_ >= 0, s"_ >= 0 failed")
 
   object Part1 {
     def processRow(s: List[List[Int]]): List[Int] = {
