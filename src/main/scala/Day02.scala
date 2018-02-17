@@ -13,29 +13,29 @@ package aoc
   * one pair where x is divisible by y with no remainder and sum up
   * the result of the division.
   */
-private object Day02 {
+object Day02 {
 
-  protected val input = Util.readInput("Day02input.txt").map(_.split('\t').toList).map(line => line.map(_.toInt))
+  val input = Util.readInput("Day02input.txt").map(_.split('\t').toList).map(line => line.map(_.toInt))
 
-  private def checksum(spreadSheet: List[List[Int]], processRow: List[List[Int]] => List[Int]): Int = {
+  def checksum(spreadSheet: List[List[Int]], processRow: List[List[Int]] => List[Int]): Int = {
     require(spreadSheet.nonEmpty, "spreadSheet.nonEmpty failed")
     require(spreadSheet.forall(_.nonEmpty), "spreadSheet.forall(_.nonEmpty) failed")
 
     processRow(spreadSheet).sum
   } ensuring(_ >= 0, s"_ >= 0 failed")
 
-  private object Part1 {
-    private def processRow(s: List[List[Int]]): List[Int] = {
+  object Part1 {
+    def processRow(s: List[List[Int]]): List[Int] = {
       s.map(row => row.max - row.min)
     }
 
-    protected def solve(spreadSheet: List[List[Int]]): Int = {
+    def solve(spreadSheet: List[List[Int]]): Int = {
       Day02.checksum(spreadSheet, processRow)
     }
   }
 
-  private object Part2 {
-    private def processRow(s: List[List[Int]]): List[Int] = {
+  object Part2 {
+    def processRow(s: List[List[Int]]): List[Int] = {
       s.map {row => {
         val pairs = for(x <- row; y <- row; if x > y) yield (x, y)
         val dividablePairs = pairs.filter{case (x, y) => (x % y == 0)}
@@ -45,7 +45,7 @@ private object Day02 {
       }}
     }
 
-    protected def solve(spreadSheet: List[List[Int]]): Int = {
+    def solve(spreadSheet: List[List[Int]]): Int = {
       Day02.checksum(spreadSheet, processRow)
     }
   }

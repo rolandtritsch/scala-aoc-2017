@@ -14,11 +14,11 @@ package aoc
   * Part 2 - Run the algorithm with an offset of half the length
   * of the input string.
   */
-private object Day01 {
+object Day01 {
 
-  protected val input = Util.readInput("Day01input.txt").head
+  val input = Util.readInput("Day01input.txt").head
 
-  private def captcha(digits: String, offset: Int): Int = {
+  def captcha(digits: String, offset: Int): Int = {
     require(offset <= digits.size, s"offset <= digits.size failed; with >${offset}< >${digits.size}<")
 
     val doubleDigits = (digits ++ digits).map(_.asDigit).toList
@@ -26,8 +26,8 @@ private object Day01 {
     pairs.filter{case (first, second) => first == second}.map{case (value, _) => value}.sum
   } ensuring(_ >= 0, s"_ >= 0 failed")
 
-  private object Part1 {
-    protected def solve(input: String): Int = {
+  object Part1 {
+    def solve(input: String): Int = {
       require(input.nonEmpty, "input.nonEmpty failed")
       require(input.forall(_.isDigit), "input.forall(_.isDigit) failed")
 
@@ -35,8 +35,8 @@ private object Day01 {
     }
   }
 
-  private object Part2 {
-    protected def solve(input: String): Int = {
+  object Part2 {
+    def solve(input: String): Int = {
       require(input.nonEmpty, "input.nonEmpty failed")
       require(input.forall(_.isDigit), "input.forall(_.isDigit) failed")
       require(input.size % 2 == 0, "input.size % 2 == 0 failed")
