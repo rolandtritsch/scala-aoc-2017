@@ -2,10 +2,10 @@ package aoc
 
 object Main {
   def main(args: Array[String]): Unit = {
-    println(s"Day1: Captcha -> ${Day01.Part1.solve(Day01.input)}")
-    println(s"Day1: Captcha2 -> ${Day01.Part2.solve(Day01.input)}")
-    println(s"Day2: CheckSum -> ${Day02.checksum(Day02.in)}")
-    println(s"Day2: CheckSum2 -> ${Day02.checksum2(Day02.in)}")
+    println(s"Day1: Part1: captcha -> ${Day01.Part1.solve(Day01.input)}")
+    println(s"Day1: Part2: captcha -> ${Day01.Part2.solve(Day01.input)}")
+    println(s"Day2: Part1: checksum -> ${Day02.Part1.solve(Day02.input)}")
+    println(s"Day2: Part2: checksum -> ${Day02.Part2.solve(Day02.input)}")
     println(s"Day3: CalcDistance -> ${Day03.Part1.calcDistanceFromLocToCenter(Day03.in, Day03.Part1.initGrid(Day03.in))}")
     println(s"Day3: FindNumber -> ${Day03.Part2.findNextBiggestNumber(Day03.in)}")
     println(s"Day4: CountValid -> ${Day04.Part1.countValid(Day04.in)}")

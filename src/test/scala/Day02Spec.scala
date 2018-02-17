@@ -10,25 +10,25 @@ class Day02Spec extends FlatSpec with Matchers {
     List(2, 4, 6, 8)
   )
 
-  behavior of "Reading the input"
+  behavior of "readInput()"
   it should "read the (begining) of the input" in {
-    Day02.in.head should be (List(737, 1866, 1565, 1452, 1908, 1874, 232, 1928, 201, 241, 922, 281, 1651, 1740, 1012, 1001))
+    Day02.input.head should be (List(737, 1866, 1565, 1452, 1908, 1874, 232, 1928, 201, 241, 922, 281, 1651, 1740, 1012, 1001))
   }
 
-  behavior of "Part 1 - checksum"
-  it should "return the correct checksum" in {
-    Day02.checksum(testSheet) shouldBe 18
+  behavior of "solve() - Part1"
+  it should "solve the testcases" in {
+    Day02.Part1.solve(testSheet) shouldBe 18
   }
 
-  it should "solve the puzzle" in {
-    Day02.checksum(Day02.in) shouldBe 34925
+  it should "solve the puzzle" taggedAs(SolutionTest) in {
+    Day02.Part1.solve(Day02.input) shouldBe 34925
   }
 
   it should "throw an exception, if the sheet is malformed" in {
-    an [IllegalArgumentException] should be thrownBy Day02.checksum(List())
-    an [IllegalArgumentException] should be thrownBy Day02.checksum(List(List()))
-    an [IllegalArgumentException] should be thrownBy Day02.checksum(List(List()))
-    an [IllegalArgumentException] should be thrownBy Day02.checksum(List(List(0), List(), List(0)))
+    an [IllegalArgumentException] should be thrownBy Day02.Part1.solve(List())
+    an [IllegalArgumentException] should be thrownBy Day02.Part1.solve(List(List()))
+    an [IllegalArgumentException] should be thrownBy Day02.Part1.solve(List(List()))
+    an [IllegalArgumentException] should be thrownBy Day02.Part1.solve(List(List(0), List(), List(0)))
   }
 
   val testSheet2 = List(
@@ -37,19 +37,12 @@ class Day02Spec extends FlatSpec with Matchers {
     List(3, 8, 6, 5)
   )
 
-  behavior of "Part 2 - checksum"
-  it should "return the correct checksum" in {
-    Day02.checksum2(testSheet2) shouldBe 9
+  behavior of "solve() - Part2"
+  it should "solve the testcases" in {
+    Day02.Part2.solve(testSheet2) shouldBe 9
   }
 
-  it should "solve the puzzle" in {
-    Day02.checksum2(Day02.in) shouldBe 221
-  }
-
-  it should "throw an exception, if the sheet is malformed" in {
-    an [IllegalArgumentException] should be thrownBy Day02.checksum2(List())
-    an [IllegalArgumentException] should be thrownBy Day02.checksum2(List(List()))
-    an [IllegalArgumentException] should be thrownBy Day02.checksum2(List(List()))
-    an [IllegalArgumentException] should be thrownBy Day02.checksum2(List(List(0), List(), List(0)))
+  it should "solve the puzzle" taggedAs(SolutionTest) in {
+    Day02.Part2.solve(Day02.input) shouldBe 221
   }
 }

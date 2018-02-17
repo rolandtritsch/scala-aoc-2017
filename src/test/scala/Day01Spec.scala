@@ -2,8 +2,6 @@ package aoc
 
 import org.scalatest.{FlatSpec, Matchers}
 
-object SolutionTest extends org.scalatest.Tag("aoc.SolutionTest")
-
 class Day01Spec extends FlatSpec with Matchers {
 
   behavior of "readInput()"

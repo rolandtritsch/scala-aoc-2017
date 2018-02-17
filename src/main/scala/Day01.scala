@@ -14,7 +14,7 @@ package aoc
   * Part 2 - Run the algorithm with an offset of half the length
   * of the input string.
   */
-object Day01 {
+private object Day01 {
 
   val input = Util.readInput("Day01input.txt").head
 
