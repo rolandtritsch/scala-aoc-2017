@@ -16,9 +16,9 @@ package aoc
   */
 private object Day01 {
 
-  val input = Util.readInput("Day01input.txt").head
+  protected val input = Util.readInput("Day01input.txt").head
 
-  def captcha(digits: String, offset: Int): Int = {
+  private def captcha(digits: String, offset: Int): Int = {
     require(offset <= digits.size, s"offset <= digits.size failed; with >${offset}< >${digits.size}<")
 
     val doubleDigits = (digits ++ digits).map(_.asDigit).toList
@@ -26,8 +26,8 @@ private object Day01 {
     pairs.filter{case (first, second) => first == second}.map{case (value, _) => value}.sum
   } ensuring(_ >= 0, s"_ >= 0 failed")
 
-  object Part1 {
-    def solve(input: String): Int = {
+  private object Part1 {
+    protected def solve(input: String): Int = {
       require(input.nonEmpty, "input.nonEmpty failed")
       require(input.forall(_.isDigit), "input.forall(_.isDigit) failed")
 
@@ -35,8 +35,8 @@ private object Day01 {
     }
   }
 
-  object Part2 {
-    def solve(input: String): Int = {
+  private object Part2 {
+    protected def solve(input: String): Int = {
       require(input.nonEmpty, "input.nonEmpty failed")
       require(input.forall(_.isDigit), "input.forall(_.isDigit) failed")
       require(input.size % 2 == 0, "input.size % 2 == 0 failed")
