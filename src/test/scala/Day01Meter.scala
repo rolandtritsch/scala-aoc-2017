@@ -10,13 +10,11 @@ object Day01Meter extends Bench.OfflineReport {
     (for(_ <- 1 to size) yield r.nextInt(10)).mkString
   }
 
-  // generators
   val ss = for {
     size <- Gen.range("size")(2, 100, 2)
     string <- Gen.single("string")(randomDigitString(size))
   } yield string
 
-  // tests
   performance of "Part1" in {
     measure method "captcha" in {
       using(ss) in {

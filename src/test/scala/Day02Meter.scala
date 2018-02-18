@@ -5,7 +5,6 @@ import org.scalameter.picklers.Implicits._
 
 object Day02Meter extends Bench.OfflineReport {
 
-  // generators
   val sheetGen = for {
     rows <- Gen.range("rows")(2, 10, 1)
     cols <- Gen.range("cols")(2, 10, 1)
@@ -14,7 +13,6 @@ object Day02Meter extends Bench.OfflineReport {
     (for(_ <- 1 to rows) yield List.fill(cols)(number)).toList
   }
 
-  // tests
   performance of "Part1" in {
     measure method "solve" in {
       using(sheetGen) in {

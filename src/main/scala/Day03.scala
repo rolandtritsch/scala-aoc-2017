@@ -54,13 +54,18 @@ object Day03 {
     List(Move.right, Move.right)
   )
 
-  def nextLevelMoves(currentLevelMoves: Moves): Moves = List(
-    currentLevelMoves(0),
-    currentLevelMoves(1) ++ List(Move.up, Move.up),
-    currentLevelMoves(2) ++ List(Move.left, Move.left),
-    currentLevelMoves(3) ++ List(Move.down, Move.down),
-    currentLevelMoves(4) ++ List(Move.right, Move.right)
-  )
+  def nextLevelMoves(currentLevelMoves: Moves): Moves = {
+    require(currentLevelMoves.nonEmpty, s"currentLevelMoves.nonEmpty failed")
+    require(currentLevelMoves.forall(_.nonEmpty), s"currentLevelMoves.forall(_.nonEmpty) failed")
+
+    List(
+      currentLevelMoves(0),
+      currentLevelMoves(1) ++ List(Move.up, Move.up),
+      currentLevelMoves(2) ++ List(Move.left, Move.left),
+      currentLevelMoves(3) ++ List(Move.down, Move.down),
+      currentLevelMoves(4) ++ List(Move.right, Move.right)
+    )
+  } ensuring(_.flatten.size == currentLevelMoves.flatten.size + 8)
 
   def moves(seed: Moves): Stream[Move] = {
     def go(ms: Moves): Stream[Move] = ms.flatten.toStream #::: go(nextLevelMoves(ms))
@@ -137,10 +142,12 @@ object Day03 {
     }
 
     def calcValue(currentCoordinates: (Int, Int), valuesSoFar: Map[(Int, Int), Int]): Int = {
+      require(valuesSoFar.nonEmpty, s"valuesSoFar.nonEmpty failed")
+
       val (x, y) = currentCoordinates
       valuesSoFar(x - 1, y) + valuesSoFar(x - 1, y - 1) + valuesSoFar(x - 1, y + 1) +
         valuesSoFar(x + 1, y) + valuesSoFar(x + 1, y - 1) + valuesSoFar(x + 1, y + 1) +
         valuesSoFar(x, y - 1) + valuesSoFar(x, y + 1)
-    }
+    } ensuring(result => result == 1 || result > valuesSoFar.values.max)
   }
 }
