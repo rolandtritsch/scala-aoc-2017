@@ -70,53 +70,77 @@ object Day03 {
   case class Cell(index: Int, value: Int, coordinates: (Int, Int))
 
   object Part1 {
-    def cells(msi: Iterator[Move]): Stream[Cell] = {
-      def go(c: Cell): Stream[Cell] = {
-        val m = msi.next
-        val (x, y) = c.coordinates
-        c #:: go(Cell(c.index + 1, c.value + 1, (x + m.x, y + m.y)))
+    def cells(moves: Iterator[Move]): Stream[Cell] = {
+      def go(previousCell: Cell): Stream[Cell] = {
+        val move = moves.next
+
+        val thisCellIndex = previousCell.index + 1
+        val thisCellCoordinates = (previousCell.coordinates._1 + move.x, previousCell.coordinates._2 + move.y)
+        val thisCellValue = previousCell.value + 1
+        val thisCell = Cell(thisCellIndex, thisCellValue, thisCellCoordinates)
+
+        previousCell #:: go(thisCell)
       }
-      go(Cell(0, 1, (0, 0)))
+
+      val centerCell = Cell(0, 1, (0, 0))
+      go(centerCell)
     }
 
     def solve(cellValueToFind: Int): Int = {
       val spiral = cells(moves(firstLevelMoves).toIterator)
-      val (x, y) = spiral.find(c => c.value == cellValueToFind).get.coordinates
+      val coordinates = spiral.find(c => c.value == cellValueToFind).get.coordinates
+      calcManhattenDistance(coordinates)
+    }
+
+    def calcManhattenDistance(coordinates: (Int, Int)): Int = {
+      val (x, y) = coordinates
       Math.abs(x) + Math.abs(y)
     }
   }
 
   object Part2 {
-    def calcValue(currentCoordinates: (Int, Int), cellsSoFar: Map[(Int, Int), Cell]): Int = {
-      val (x, y) = currentCoordinates
-      cellsSoFar(x - 1, y).value +
-        cellsSoFar(x - 1, y - 1).value +
-        cellsSoFar(x - 1, y + 1).value +
-        cellsSoFar(x + 1, y).value +
-        cellsSoFar(x + 1, y - 1).value +
-        cellsSoFar(x + 1, y + 1).value +
-        cellsSoFar(x, y - 1).value +
-        cellsSoFar(x, y + 1).value
-    }
-
+    /** Using stream of moves to produce stream of cells.
+      *
+      * But ... this time around creating the cell value (the sum of all cell values
+      * around the cell we are creating) is not straight forward.
+      *
+      * To make this work we need to maintain a map of the cell values that we have
+      * already created (and need to be able to look them up by coordinates).
+      *
+      * We also need to cater for the case that (while we calc the cell value from
+      * the 8 cells around a given cell) some of the 8 cells (on the "outerside")
+      * have not been created yet. We do this, by giving the map a default value
+      * of 0 (that means I can just *blindly* look up all 8 cell cooordinates
+      * around the given cell and for the once that do not exist yet, I am just
+      * getting a value of 0).
+      */
     def cells(moves: Iterator[Move]): Stream[Cell] = {
-      def go(c: Cell, cellsSoFar: Map[(Int, Int), Cell]): Stream[Cell] = {
+      def go(previousCell: Cell, valuesSoFar: Map[(Int, Int), Int]): Stream[Cell] = {
         val move = moves.next
-        val thisIndex = c.index + 1
-        val thisCoordinates = (c.coordinates._1 + move.x, c.coordinates._2 + move.y)
-        val thisValue = calcValue(thisCoordinates, cellsSoFar)
-        val thisCell = Cell(thisIndex, thisValue, thisCoordinates)
-        c #:: go(thisCell, cellsSoFar + (thisCoordinates -> thisCell))
+
+        val thisCellIndex = previousCell.index + 1
+        val thisCellCoordinates = (previousCell.coordinates._1 + move.x, previousCell.coordinates._2 + move.y)
+        val thisCellValue = calcValue(thisCellCoordinates, valuesSoFar)
+        val thisCell = Cell(thisCellIndex, thisCellValue, thisCellCoordinates)
+
+        previousCell #:: go(thisCell, valuesSoFar + (thisCellCoordinates -> thisCellValue))
       }
 
       val centerCell = Cell(0, 1, (0, 0))
-      val initMap = Map.empty[(Int, Int), Cell].withDefaultValue(Cell(0, 0, (0, 0))) + (centerCell.coordinates -> centerCell)
-      go(centerCell, initMap)
+      val valuesSoFar = Map.empty[(Int, Int), Int].withDefaultValue(0) + (centerCell.coordinates -> centerCell.value)
+      go(centerCell, valuesSoFar)
     }
 
     def solve(cellValueToFind: Int): Int = {
       val spiral = cells(moves(firstLevelMoves).toIterator)
       spiral.find(c => c.value > cellValueToFind).get.value
+    }
+
+    def calcValue(currentCoordinates: (Int, Int), valuesSoFar: Map[(Int, Int), Int]): Int = {
+      val (x, y) = currentCoordinates
+      valuesSoFar(x - 1, y) + valuesSoFar(x - 1, y - 1) + valuesSoFar(x - 1, y + 1) +
+        valuesSoFar(x + 1, y) + valuesSoFar(x + 1, y - 1) + valuesSoFar(x + 1, y + 1) +
+        valuesSoFar(x, y - 1) + valuesSoFar(x, y + 1)
     }
   }
 }
