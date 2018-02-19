@@ -9,28 +9,17 @@ class Day05Check extends PropSpec with GeneratorDrivenPropertyChecks with Matche
   // disable shrinking (to make debugging easier)
   import org.scalacheck.Shrink
   implicit def noShrink[T]: Shrink[T] = Shrink.shrinkAny
-/*
-  val maxDimension = 100 * 2 // needs to be divisble by 2
-  val minDimension = 2
-  def maxValueForMin(d: Int) = (d / 2) - 1
-  def minValueForMax(d: Int) = (d / 2) + 1
 
-  val sheetGen = for {
-    dimension <- Gen.choose(minDimension, maxDimension)
-    min <- Gen.choose(0, maxValueForMin(dimension))
-    max <- Gen.choose(minValueForMax(dimension), dimension)
-    minPos <- Gen.choose(0, dimension - 1)
-    maxPos <- Gen.choose(0, dimension - 1)
-    if minPos != maxPos
+  val stackGen = for {
+    stackSize <- Gen.choose(10, 100)
   } yield {
-    val sheet = (for(_ <- 1 to dimension) yield List.fill(dimension)(dimension / 2).updated(minPos, min).updated(maxPos, max)).toList
-    (sheet, dimension * (max - min))
+    List.fill(stackSize)(1)
   }
 
-  property("Any testsheet should return the expected result") {
-    forAll(sheetGen) {case(sheet, result) => {
-      Day02.Part1.solve(sheet) shouldBe result
+  property("Any teststack should return its size") {
+    forAll(stackGen) {s => {
+      Day05.Part1.solve(s) shouldBe s.size
+      Day05.Part2.solve(s) shouldBe s.size
     }}
   }
-  */
 }
