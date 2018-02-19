@@ -2,6 +2,8 @@ package aoc
 
 object Main {
   def main(args: Array[String]): Unit = {
+    require(args.isEmpty, s"args.isEmpty failed; with >${args.toList}<")
+
     println(s"Day01: Part1: captcha -> ${Day01.Part1.solve(Day01.input)}")
     println(s"Day01: Part2: captcha -> ${Day01.Part2.solve(Day01.input)}")
     println(s"Day02: Part1: checksum -> ${Day02.Part1.solve(Day02.input)}")
