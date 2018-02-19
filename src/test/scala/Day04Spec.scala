@@ -4,34 +4,31 @@ import org.scalatest.{FlatSpec, Matchers}
 
 class Day04Spec extends FlatSpec with Matchers {
 
-  behavior of "readInput"
-  it should "return the list of passphrases" in {
-    Day04.in.head shouldBe "sayndz zfxlkl attjtww cti sokkmty brx fhh suelqbp"
+  behavior of "readInput()"
+  it should "return the first passphrase from the list of passphrases" in {
+    Day04.input.head shouldBe ("sayndz zfxlkl attjtww cti sokkmty brx fhh suelqbp".split(' ').toList)
   }
 
-  behavior of "Part 1 - isValid"
+  behavior of "isValid()"
   it should "return the correct result(s)" in {
-    Day04.Part1.isValid("aa bb cc dd ee") shouldBe true
-    Day04.Part1.isValid("aa bb cc dd aa") shouldBe false
-    Day04.Part1.isValid("aa bb cc dd aaa") shouldBe true
+    Day04.isValid("aa bb cc dd ee".split(' ').toList) shouldBe true
+    Day04.isValid("aa bb cc dd aa".split(' ').toList) shouldBe false
+    Day04.isValid("aa bb cc dd aaa".split(' ').toList) shouldBe true
+
+    Day04.isValid("abcde fghij".split(' ').toList.map(_.sorted)) shouldBe true
+    Day04.isValid("abcde xyz ecdab".split(' ').toList.map(_.sorted)) shouldBe false
+    Day04.isValid("a ab abc abd abf abj".split(' ').toList.map(_.sorted)) shouldBe true
+    Day04.isValid("iiii oiii ooii oooi oooo".split(' ').toList.map(_.sorted)) shouldBe true
+    Day04.isValid("oiii ioii iioi iiio".split(' ').toList.map(_.sorted)) shouldBe false
   }
 
-  behavior of "Part 1 - countValid"
-  it should "solve the puzzle" in {
-    Day04.Part1.countValid(Day04.in) shouldBe 383
+  behavior of "solve() - Part1"
+  it should "solve the puzzle" taggedAs(SolutionTest) in {
+    Day04.Part1.solve(Day04.input) shouldBe 383
   }
 
-  behavior of "Part 2 - isValid"
-  it should "return the correct result(s)" in {
-    Day04.Part2.isValid("abcde fghij") shouldBe true
-    Day04.Part2.isValid("abcde xyz ecdab") shouldBe false
-    Day04.Part2.isValid("a ab abc abd abf abj") shouldBe true
-    Day04.Part2.isValid("iiii oiii ooii oooi oooo") shouldBe true
-    Day04.Part2.isValid("oiii ioii iioi iiio") shouldBe false
-  }
-
-  behavior of "Part 2 - countValid"
-  it should "solve the puzzle" in {
-    Day04.Part2.countValid(Day04.in) shouldBe 265
+  behavior of "solve() - Part2"
+  it should "solve the puzzle" taggedAs(SolutionTest) in {
+    Day04.Part2.solve(Day04.input) shouldBe 265
   }
 }
