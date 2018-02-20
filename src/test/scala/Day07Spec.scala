@@ -52,45 +52,43 @@ class Day07Spec extends FlatSpec with Matchers {
     Day07.ParseLeaf("cntj", 57)
   )
 
-  behavior of "readInput"
+  behavior of "readInput()"
   it should "read the input" in {
-    Day07.in.take(1) should be(List("occxa (60)"))
+    Day07.input.take(1) should be(List("occxa (60)"))
   }
 
-  behavior of "parseInput"
+  behavior of "parseInput()"
   it should "return a/the list of nodes" in {
     Day07.parseInput(testInput).size shouldBe testInput.size
     Day07.parseInput(testInput) should be(testNodes)
 
-    Day07.parseInput(Day07.in).size shouldBe Day07.in.size
+    Day07.parseInput(Day07.input).size shouldBe Day07.input.size
   }
 
-  behavior of "findRoot"
-  it should "return the right result(s)" in {
-    Day07.Tree.findRoot(Day07.parseInput(testInput)) shouldBe "tknk"
+  behavior of "solve() - Part1"
+  it should "solve the testcase(s)" in {
+    Day07.Part1.solve(testInput) shouldBe "tknk"
   }
 
-  it should "solve the puzzle" in {
-    Day07.Tree.findRoot(Day07.parseInput(Day07.in)) shouldBe "uownj"
+  it should "solve the puzzle" taggedAs(SolutionTest) in {
+    Day07.Part1.solve(Day07.input) shouldBe "uownj"
   }
 
-  behavior of "build"
+  behavior of "build()"
   it should "build the tree" in {
     val pnodes = Day07.parseInput(testInput)
     val root = Day07.Tree.build(Day07.Tree.findRoot(pnodes), pnodes)
     root.name shouldBe "tknk"
-    //println(root.toString(0))
   }
 
   it should "build the tree from the input" in {
-    val pnodes = Day07.parseInput(Day07.in)
+    val pnodes = Day07.parseInput(Day07.input)
     val root = Day07.Tree.build(Day07.Tree.findRoot(pnodes), pnodes)
     root.name shouldBe "uownj"
-    //println(root.toString(0))
   }
 
-  behavior of "isBalanced"
-  it should "fail on the testInput" in {
+  behavior of "isBalanced()"
+  it should "fail on the unbalanced testInput" in {
     val pnodes = Day07.parseInput(testInput)
     val root = Day07.Tree.build(Day07.Tree.findRoot(pnodes), pnodes)
     Day07.Tree.isBalanced(root) shouldBe false
@@ -103,17 +101,17 @@ class Day07Spec extends FlatSpec with Matchers {
   }
 
   it should "fail on the input" in {
-    val pnodes = Day07.parseInput(Day07.in)
+    val pnodes = Day07.parseInput(Day07.input)
     val root = Day07.Tree.build(Day07.Tree.findRoot(pnodes), pnodes)
     Day07.Tree.isBalanced(root) shouldBe false
   }
 
-  behavior of "solve"
-  it should "find the bad node" in {
-    Day07.Tree.solve(testInput) shouldBe ("ugml", 68, 60)
+  behavior of "solve() - Part2"
+  it should "solve the testcase(s)" in {
+    Day07.Part2.solve(testInput) shouldBe 60
   }
 
-  it should "find the bad node in the input" in {
-    Day07.Tree.solve(Day07.in) shouldBe ("mfzpvpj", 604, 596)
+  it should "solve the puzzle" taggedAs(SolutionTest) in {
+    Day07.Part2.solve(Day07.input) shouldBe 596
   }
 }
