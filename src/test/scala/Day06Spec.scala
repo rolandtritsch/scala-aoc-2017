@@ -9,7 +9,8 @@ class Day06Spec extends FlatSpec with Matchers {
   it should "read the input" in {
     Day06.input should be (List(10, 3, 15, 10, 5, 15, 5, 15, 9, 2, 5, 8, 5, 2, 3, 6))
   }
-  behavior of "redistribute"
+
+  behavior of "cycle()"
   it should "return the correct results" in {
     val step1 = Day06.cycle(testBanks)
     step1 should be (List(2, 4, 1, 2))
@@ -32,7 +33,7 @@ class Day06Spec extends FlatSpec with Matchers {
     Day06.Part1.solve(testBanks) shouldBe 5
   }
 
-  it should "solve the puzzle" in {
+  it should "solve the puzzle" taggedAs(SolutionTest) in {
     Day06.Part1.solve(Day06.input) shouldBe 14029
   }
 
@@ -41,7 +42,7 @@ class Day06Spec extends FlatSpec with Matchers {
     Day06.Part2.solve(testBanks) shouldBe 4
   }
 
-  it should "solve the puzzle" in {
+  it should "solve the puzzle" taggedAs(SolutionTest) in {
     Day06.Part2.solve(Day06.input) shouldBe 2765
   }
 }

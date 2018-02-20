@@ -17,38 +17,34 @@ object Day06 {
   def cycle(banks: MemoryBanks): MemoryBanks = {
     val maxBlocks = banks.max
     val mostBlocksIndex = banks.indexWhere(b => b == maxBlocks)
-    var newBanks = banks.updated(mostBlocksIndex, 0)
-    for {
-      i <- 1 to maxBlocks
-      n = ((mostBlocksIndex + i) % banks.size)
-    } {
-      newBanks = newBanks.updated(n, newBanks(n) + 1)
-    }
-    newBanks
+
+    (1 to maxBlocks).foldLeft(banks.updated(mostBlocksIndex, 0)) {(currentBanks, i) => {
+      val n = (mostBlocksIndex + i) % banks.size
+      currentBanks.updated(n, currentBanks(n) + 1)
+    }}
   }
 
   def floyd(banks: MemoryBanks, cycle: MemoryBanks => MemoryBanks): (Int, Int) = {
-    var tortoise = cycle(banks)
-    var hare = cycle(cycle(banks))
-    while(tortoise != hare) {
-      tortoise = cycle(tortoise)
-      hare = cycle(cycle(hare))
+    def phase1(tortoise: MemoryBanks, hare: MemoryBanks): MemoryBanks = {
+      if(tortoise == hare) hare
+      else phase1(cycle(tortoise), cycle(cycle(hare)))
     }
 
-    var mu = 0
-    tortoise = banks
-    while(tortoise != hare) {
-      tortoise = cycle(tortoise)
-      hare = cycle(hare)
-      mu = mu + 1
+    val hare = phase1(cycle(banks), cycle(cycle(banks)))
+
+    def phase2(tortoise: MemoryBanks, hare: MemoryBanks, mu: Int): (MemoryBanks, Int) = {
+      if(tortoise == hare) (tortoise, mu)
+      else phase2(cycle(tortoise), cycle(hare), mu + 1)
     }
 
-    var lambda = 1
-    hare = cycle(tortoise)
-    while(tortoise != hare) {
-      hare = cycle(hare)
-      lambda = lambda + 1
+    val (tortoise, mu) = phase2(banks, hare, 0)
+
+    def phase3(tortoise: MemoryBanks, hare: MemoryBanks, lambda: Int): Int = {
+      if(tortoise == hare) lambda
+      else phase3(tortoise, cycle(hare), lambda + 1)
     }
+
+    val lambda = phase3(tortoise, cycle(tortoise), 1)
 
     return(lambda, mu)
   }
