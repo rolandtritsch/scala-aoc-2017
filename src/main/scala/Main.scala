@@ -17,7 +17,7 @@ object Main {
     println(s"Day06: Part1: cycles -> ${Day06.Part1.solve(Day06.input)}")
     println(s"Day06: Part2: cycles -> ${Day06.Part2.solve(Day06.input)}")
     println(s"Day07: Part1: findroot -> ${Day07.Part1.solve(Day07.input)}")
-    println(s"Day07: Part2: findnode -> ${Day07.Part2.solve(Day07.input)}")
+    println(s"Day07: Part2: correctweight -> ${Day07.Part2.solve(Day07.input)}")
     println(s"Day08: FindMaxRegister -> ${Day08.findMaxRegister(Day08.in)}")
     println(s"Day08: FindMaxStack -> ${Day08.findMaxStack(Day08.in)}")
     println(s"Day09: StreamScore -> ${Day09.score(Day09.in)._1.sum}")
