@@ -2,7 +2,7 @@ package aoc
 
 /** Problem: [[https://adventofcode.com/2017/day/6]]
   *
-  * General - This is a [[https://en.wikipedia.org/wiki/Cycle_detection#Floyd's_Tortoise_and_Hare cycle detection problem]].
+  * General - This is a [[https://en.wikipedia.org/wiki/Cycle_detection cycle detection problem]].
   *
   * Part1 - Is lambda + mu.
   *
@@ -24,6 +24,8 @@ object Day06 {
     }}
   }
 
+  /** @see [[https://en.wikipedia.org/wiki/Cycle_detection#Floyd's_Tortoise_and_Hare]]
+    */
   def floyd(banks: MemoryBanks, cycle: MemoryBanks => MemoryBanks): (Int, Int) = {
     def phase1(tortoise: MemoryBanks, hare: MemoryBanks): MemoryBanks = {
       if(tortoise == hare) hare
