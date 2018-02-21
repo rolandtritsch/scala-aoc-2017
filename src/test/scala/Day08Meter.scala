@@ -5,24 +5,24 @@ import org.scalameter.picklers.Implicits._
 
 object Day08Meter extends Bench.OfflineReport {
 
-  val nullGen = for {
-    n <- Gen.range("n")(0, 0, 1)
+  val nGen = for {
+    n <- Gen.range("n")(1, 5, 1)
   } yield {
     n
   }
 
   performance of "Part1" in {
     measure method "solve" in {
-      using(nullGen) in {
-        n => Day08.Part1.solve(Day08.input)
+      using(nGen) in {
+        _ => Day08.Part1.solve(Day08.input)
       }
     }
   }
 
   performance of "Part2" in {
     measure method "solve" in {
-      using(nullGen) in {
-        n => Day08.Part2.solve(Day08.input)
+      using(nGen) in {
+        _ => Day08.Part2.solve(Day08.input)
       }
     }
   }

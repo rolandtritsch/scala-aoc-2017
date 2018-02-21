@@ -3,7 +3,7 @@ package aoc
 import org.scalameter.api._
 import org.scalameter.picklers.Implicits._
 
-object Day07Meter extends Bench.OfflineReport {
+object Day09Meter extends Bench.OfflineReport {
 
   val nGen = for {
     n <- Gen.range("n")(1, 5, 1)
@@ -14,7 +14,7 @@ object Day07Meter extends Bench.OfflineReport {
   performance of "Part1" in {
     measure method "solve" in {
       using(nGen) in {
-        _ => Day07.Part1.solve(Day07.input)
+        _ => Day09.Part1.solve(Day09.input)
       }
     }
   }
@@ -22,7 +22,7 @@ object Day07Meter extends Bench.OfflineReport {
   performance of "Part2" in {
     measure method "solve" in {
       using(nGen) in {
-        _ => Day07.Part2.solve(Day07.input)
+        _ => Day09.Part2.solve(Day09.input)
       }
     }
   }
