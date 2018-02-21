@@ -1,38 +1,26 @@
 package aoc
 
+/** Problem: [[https://adventofcode.com/2017/day/9]]
+  *
+  * Solution:
+  *
+  * General - My first implementation was based on a recursive processing
+  * of the input stream. Hard to read. Hard to understand. Hard to extend/
+  * maintain. And hard to run (needs a special -Xss setting (more/large
+  * stack).
+  *
+  * This (refactored) implementation is using a state machine. The states
+  * are OutOfGroup, InGroup, InGarbage, InCanceled ([[https://www.dropbox.com/s/pwogl9jhc8x7rqe/2018-02-21%2013.01.24.jpg?dl=0 pic]]). While I am running the
+  * state machine I am collecting stats that will allow me (at the end) to
+  * answer (the given) questions about the input stream.
+  *
+  * Part1 - Trivial. Collect and show the right stats.
+  *
+  * Part2 - Trivial. Collect and show the right stats.
+  */
 object Day09 {
 
   val input = Util.readInput("Day09input.txt").head.toList
-
-  def score(stream: List[Char]): (List[Int], Int) = {
-    def goGroup(stream: List[Char], level: Int, scores: List[Int], garbageCounter: Int): (List[Int], Int) = stream match {
-      case Nil => assert(false); (List(), 0)
-      case h :: Nil => assert(h == '}'); (scores, garbageCounter)
-      case h :: rest if(h == '{') => goGroup(rest, level + 1, scores, garbageCounter)
-      case h :: rest if(h == '}') => goGroup(rest, level - 1, level :: scores, garbageCounter)
-      case h :: rest if(h == '<') => goGarbage(rest, level, scores, garbageCounter)
-      case h :: rest => goGroup(rest, level, scores, garbageCounter)
-      case _ => assert(false); (List(), 0)
-    }
-
-    def goGarbage(stream: List[Char], level: Int, scores: List[Int], garbageCounter: Int): (List[Int], Int) = stream match {
-      case Nil => assert(false); (List(), 0)
-      case h :: Nil => assert(false); (List(), 0)
-      case h :: rest if(h == '!') => goCanceled(rest, level, scores, garbageCounter)
-      case h :: rest if(h == '>') => goGroup(rest, level, scores, garbageCounter)
-      case h :: rest => goGarbage(rest, level, scores, garbageCounter + 1)
-      case _ => assert(false); (List(), 0)
-    }
-
-    def goCanceled(stream: List[Char], level: Int, scores: List[Int], garbageCounter: Int): (List[Int], Int) = stream match {
-      case Nil => assert(false); (List(), 0)
-      case h :: Nil => assert(false); (List(), 0)
-      case h :: rest => goGarbage(rest, level, scores, garbageCounter)
-      case _ => assert(false); (List(), 0)
-    }
-
-    goGroup(stream, 0, List(1), 0)
-  }
 
   case class Statistics(scores: List[Int] = List.empty[Int], garbageCharCounter: Int = 0) {
     def collectScore(score: Int): Statistics = {
@@ -107,6 +95,7 @@ object Day09 {
   object Part2 {
     def solve(input: List[Char]): Int = {
       val finalState = StateMachine(input).run
+      assert(finalState.isInstanceOf[OutOfGroup], s"finalState.isInstanceOf[OutOfGroup] failed")
       finalState.stats.garbageCharCounter
     }
   }
