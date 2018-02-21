@@ -6,7 +6,7 @@ class Day09Spec extends FlatSpec with Matchers {
 
   behavior of "readInput()"
   it should "read the input" in {
-    Day09.input.take(10) should be ("{{{{{},{<>".toList)
+    Day09.input.take(10) should be("{{{{{},{<>".toList)
   }
 
   behavior of "score()"
@@ -43,12 +43,38 @@ class Day09Spec extends FlatSpec with Matchers {
     Day09.Part1.solve("{<{o\"i!a,<{i<a>}".toList) shouldBe 1
   }
 
-  it should "solve the puzzle" taggedAs(SolutionTest) in {
+  it should "solve the puzzle" taggedAs (SolutionTest) in {
     Day09.Part1.solve(Day09.input) shouldBe 10800
   }
 
   behavior of "solve() - Part2"
-  it should "solve the puzzle" taggedAs(SolutionTest) in {
+  it should "solve the puzzle" taggedAs (SolutionTest) in {
     Day09.Part2.solve(Day09.input) shouldBe 4522
+  }
+
+  behavior of "run() - Part1"
+  it should "solve the testcase(s)" in {
+    val testcases = List(
+      ("{}", 1),
+      ("{{{}}}", 6),
+      ("{{},{}}", 5),
+      ("{{{},{},{{}}}}", 16),
+      ("{<a>,<a>,<a>,<a>}", 1),
+      ("{{<ab>},{<ab>},{<ab>},{<ab>}}", 9),
+      ("{{<!!>},{<!!>},{<!!>},{<!!>}}", 9),
+      ("{{<a!>},{<a!>},{<a!>},{<ab>}}", 3)
+    )
+
+    testcases.foreach { tc => {
+      val (stream, expectedResult) = tc
+      val finalState = Day09.StateMachine(stream.toList).run
+      finalState.stats.scores.sum shouldBe expectedResult
+    }}
+  }
+
+  it should "solve the puzzle" in {
+    val finalState = Day09.StateMachine(Day09.input).run
+    finalState shouldBe a [Day09.OutOfGroup]
+    finalState.stats.scores.sum shouldBe 10800
   }
 }
