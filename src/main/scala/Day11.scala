@@ -1,9 +1,23 @@
 package aoc
 
-// @note https://stackoverflow.com/a/47749887/2374327
+/** Problem: [[https://adventofcode.com/2017/day/11]]
+  *
+  * Solution:
+  *
+  * General - Calculating the [[https://en.wikipedia.org/wiki/Taxicab_geometry manhatten distance]] on a [[https://stackoverflow.com/a/47749887/2374327 hexagon grid]]
+  * is a well understood problem. The implementation of the algorithm will go
+  * through the grid and will collect/calculate the finalDistance and the maxDistance
+  * that was found/encountered on the way to the final tile.
+  *
+  * Part1 - Return the (manhatten) distance of the final tile
+  * from the center (tile).
+  *
+  * Part2 - Return the max distance that was encountered while
+  * getting/going to the final/target tile.
+  */
 object Day11 {
 
-  val in = Util.readInput("Day11input.txt").head.split(',').toList
+  val input = Util.readInput("Day11input.txt").head.split(',').toList
 
   case class Tile(x: Int, y: Int, z: Int) {
     def distance(that: Tile): Int = {
@@ -11,6 +25,8 @@ object Day11 {
     }
   }
 
+  /** @see [[https://stackoverflow.com/a/47749887/2374327]]
+    */
   def calcSteps(path: List[String]): (Int, Int) = {
     val centerTile = Tile(0, 0, 0)
     val (finalTile, finalMax) = path.foldLeft(centerTile, 0)((current, move) => {
@@ -27,5 +43,17 @@ object Day11 {
       (nextTile, Math.max(currentMax, centerTile.distance(nextTile)))
     })
     (centerTile.distance(finalTile), finalMax)
+  } ensuring(result => result._1 >= 0 && result._2 >= result._1)
+
+  object Part1 {
+    def solve(input: List[String]): Int = {
+      calcSteps(input)._1
+    }
+  }
+
+  object Part2 {
+    def solve(input: List[String]): Int = {
+      calcSteps(input)._2
+    }
   }
 }
