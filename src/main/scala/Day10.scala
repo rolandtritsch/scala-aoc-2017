@@ -1,5 +1,17 @@
 package aoc
 
+/** Problem: [[https://adventofcode.com/2017/day/10]]
+  *
+  * Solution:
+  *
+  * General - Nothing special here. Just very careful reading
+  * of the problem statement and the requirements that come
+  * with it.
+  *
+  * Part1 - Implement the knot.
+  *
+  * Part2 - Implement the sparse/dense hash.
+  */
 object Day10 {
 
   val input = Util.readInput("Day10input.txt").head.filterNot(_.isWhitespace)
@@ -47,6 +59,14 @@ object Day10 {
     lengths.foldLeft(seed)((currentHash, length) => currentHash.next(length))
   }
 
+  object Part1 {
+    def solve(input: String): Int = {
+      val seed = Hash(List.range(0, 256), 0, 0)
+      val hash = knot(input2Lengths(input), seed).hash
+      hash(0) * hash(1)
+    }
+  }
+
   val suffix = List(17, 31, 73, 47, 23)
   def encode(input: String, suffix: List[Int]): List[Int] = {
     input.map(_.toInt).toList ++ suffix
@@ -74,14 +94,6 @@ object Day10 {
 
   def dense2hex(hash: List[Int]): String = {
     hash.foldLeft(List.empty[String])((acc, i) => acc :+ f"${i}%02x").mkString
-  }
-
-  object Part1 {
-    def solve(input: String): Int = {
-      val seed = Hash(List.range(0, 256), 0, 0)
-      val hash = knot(input2Lengths(input), seed).hash
-      hash(0) * hash(1)
-    }
   }
 
   object Part2 {
