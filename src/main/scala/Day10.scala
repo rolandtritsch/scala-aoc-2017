@@ -2,7 +2,7 @@ package aoc
 
 object Day10 {
 
-  val in = Util.readInput("Day10input.txt").head.split(',').map(_.toInt).toList
+  val input = Util.readInput("Day10input.txt").head.filterNot(_.isWhitespace)
 
   def shiftLeft(hash: List[Int], times: Int): List[Int] = {
     require(hash.nonEmpty, s"hash.nonEmpty failed; with >${hash}<")
@@ -38,12 +38,55 @@ object Day10 {
     }
   }
 
+  def input2Lengths(input: String): List[Int] = {
+    input.split(',').map(_.toInt).toList
+  }
+
+  val seed = Hash(List.range(0, 256), 0, 0)
   def knot(lengths: List[Int], seed: Hash): Hash = {
     lengths.foldLeft(seed)((currentHash, length) => currentHash.next(length))
   }
 
-  def solve(lengths: List[Int], seed: List[Int]): Int = {
-    val hash = knot(lengths, Hash(seed, 0, 0)).hash
-    hash(0) * hash(1)
+  val suffix = List(17, 31, 73, 47, 23)
+  def encode(input: String, suffix: List[Int]): List[Int] = {
+    input.map(_.toInt).toList ++ suffix
+  }
+
+  val rounds = 64
+  def sparse(lengths: List[Int], seed: Hash, rounds: Int): Hash = {
+    require(rounds >= 1, s"rounds >= 1 failed; with >${rounds}<")
+
+    if(rounds == 1) knot(lengths, seed)
+    else sparse(lengths, knot(lengths, seed), rounds - 1)
+  } ensuring(_.hash.forall(n => n >= 0 && n < 256))
+
+  def xorHashSlice(slice: List[Int]): Int = {
+    slice.foldLeft(0)((acc, i) => acc ^ i)
+  }
+
+  def dense(hash: List[Int]): List[Int] = {
+    require(hash.size == 256, s"hash.size == 256 failed; with >${hash.size}<")
+    require(hash.forall(n => n >= 0 && n < 256), s"hash.forall(n => n >= 0 && n < 256) failed")
+
+    val hashSlices = hash.sliding(16, 16).toList
+    hashSlices.map(xorHashSlice(_))
+  } ensuring(_.size == 16)
+
+  def dense2hex(hash: List[Int]): String = {
+    hash.foldLeft(List.empty[String])((acc, i) => acc :+ f"${i}%02x").mkString
+  }
+
+  object Part1 {
+    def solve(input: String): Int = {
+      val seed = Hash(List.range(0, 256), 0, 0)
+      val hash = knot(input2Lengths(input), seed).hash
+      hash(0) * hash(1)
+    }
+  }
+
+  object Part2 {
+    def solve(input: String): String = {
+      dense2hex(dense(sparse(encode(input, suffix), seed, rounds).hash))
+    }
   }
 }
