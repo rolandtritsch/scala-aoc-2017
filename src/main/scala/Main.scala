@@ -26,8 +26,8 @@ object Main {
     println(s"Day10: Part2: hash -> ${Day10.Part2.solve(Day10.input)}")
     println(s"Day11: Part1: steps -> ${Day11.Part1.solve(Day11.input)}")
     println(s"Day11: Part2: max -> ${Day11.Part2.solve(Day11.input)}")
-    println(s"Day12: FindPrograms -> ${Day12.findPrograms(0, Day12.parseInput(Day12.in)).size}")
-    println(s"Day12: FindGroups -> ${Day12.findGroups(Day12.parseInput(Day12.in)).size}")
+    println(s"Day12: Part1: programs -> ${Day12.Part1.solve(Day12.input)}")
+    println(s"Day12: Part2: groups -> ${Day12.Part2.solve(Day12.input)}")
     println(s"Day13: SecurityScore -> ${Day13.FireWall.runSimulation(Day13.FireWall.build(Day13.parseInput(Day13.in), 0)).securityScore}")
     // @todo Day13 - Part2 - println(s"Day13: FindWayThrough -> ${Day13.findWayThrough(Day13.parseInput(Day13.in))}")
     // @todo Day14
