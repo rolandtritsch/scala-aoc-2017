@@ -1,13 +1,30 @@
 package aoc
 
+/** Problem: [[http://adventofcode.com/2017/day/13]]
+  *
+  * Solution:
+  *
+  * General - Let's build a simulation. The simulation has [[aoc.Day13.SecurityScanner]]s.
+  * The scanners are working on a [[aoc.Day13.Layer]]. The layer has a depth (it's *location*
+  * in the firewall) and a range. The [[aoc.Day13.FireWall]] is constructed from layers.
+  * With every [[aoc.Day13.FireWall.tick]] (aka. picosecond) the entire simulation makes
+  * a step forward. Means all layers get updated, the packet moves to the next later and
+  * we check, if the packet was caught/detected and if so, we calculate the security score.
+  *
+  * Part1 - Just run the simulation and report the security score.
+  *
+  * Part2 - Run the simulation with increasing delays, until we can get through undetected.
+  */
 object Day13 {
 
-  val in = Util.readInput("Day13input.txt")
+  val input = Util.readInput("Day13input.txt")
 
   def parseInput(lines: List[String]): Map[Int, Int] = {
     lines.map(l => {
       val tokens = l.split("[ :]")
-      (tokens(0).toInt, tokens(2).toInt)
+      val depth = tokens(0).toInt
+      val range = tokens(2).toInt
+      (depth, range)
     }).toMap
   }
 
@@ -52,7 +69,6 @@ object Day13 {
 
     def runSimulation(fw: FireWall): FireWall = {
       def go(fw: FireWall, count: Int): FireWall = {
-        //println(count); println(fw); println("---")
         if (count <= 0) fw.tick
         else go(fw.tick, count - 1)
       }
@@ -64,7 +80,6 @@ object Day13 {
   case class FireWall(layers: List[Layer], threatPosition: Int, securityScore: Int, threatDetected: Boolean) {
     def tick: FireWall = {
       val newThreats = layers.map(l => {
-        //println(s"${l.depth}/${l.securityScanner.range}/${threadPosition}/${l.securityScanner.pos}")
         if (threatPosition == l.depth && l.securityScanner.isTop) (l.depth * l.securityScanner.range, true)
         else (0, false)
       })
@@ -87,11 +102,22 @@ object Day13 {
   def findWayThrough(input: Map[Int, Int]): Int = {
     def go(input: Map[Int, Int], delay: Int): Int = {
       val fw = FireWall.runSimulation(FireWall.build(input, delay))
-      //if(delay % 1000 == 0) {println(delay); println(fw); println("---")}
       if (fw.threatDetected) go(input, delay + 1)
       else delay
     }
 
     go(input, 0)
+  }
+
+  object Part1 {
+    def solve(input: List[String]): Int = {
+      FireWall.runSimulation(FireWall.build(parseInput(input), 0)).securityScore
+    }
+  }
+
+  object Part2 {
+    def solve(input: List[String]): Int = {
+      findWayThrough(parseInput(input))
+    }
   }
 }

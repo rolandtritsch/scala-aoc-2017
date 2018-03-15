@@ -35,7 +35,7 @@ class Day12Spec extends FlatSpec with Matchers {
   }
 
   behavior of "solve() - Part1"
-  it should "solve the puzzle" in {
+  it should "solve the puzzle" taggedAs(SolutionTest) in {
     Day12.Part1.solve(Day12.input) shouldBe 152
   }
 
@@ -45,7 +45,7 @@ class Day12Spec extends FlatSpec with Matchers {
   }
 
   behavior of "solve() - Part2"
-  it should "solve the puzzle" in {
+  it should "solve the puzzle" taggedAs(SolutionTest) in {
     Day12.Part2.solve(Day12.input) shouldBe 186
   }
 }

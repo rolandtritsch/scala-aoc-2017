@@ -28,7 +28,7 @@ object Main {
     println(s"Day11: Part2: max -> ${Day11.Part2.solve(Day11.input)}")
     println(s"Day12: Part1: programs -> ${Day12.Part1.solve(Day12.input)}")
     println(s"Day12: Part2: groups -> ${Day12.Part2.solve(Day12.input)}")
-    println(s"Day13: SecurityScore -> ${Day13.FireWall.runSimulation(Day13.FireWall.build(Day13.parseInput(Day13.in), 0)).securityScore}")
+    println(s"Day13: Part1: score -> ${Day13.Part1.solve(Day13.input)}")
     // @todo Day13 - Part2 - println(s"Day13: FindWayThrough -> ${Day13.findWayThrough(Day13.parseInput(Day13.in))}")
     // @todo Day14
     // @todo Too slow - println(s"Day15: CountMatchingPairs -> ${Day15.Part1.countMatchingPairs((Day15.Default.startA, Day15.Default.startB), Day15.Default.depth)}")
