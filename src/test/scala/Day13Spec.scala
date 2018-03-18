@@ -37,7 +37,7 @@ class Day13Spec extends FlatSpec with Matchers {
     Day13.Part2.solve(testInput) shouldBe 10
   }
 
-  ignore should "solve the puzzle" taggedAs(SolutionTest) in {
-    Day13.Part2.solve(Day13.input) shouldBe 0
+  it should "solve the puzzle" taggedAs(SolutionTest) in {
+    Day13.Part2.solve(Day13.input) shouldBe 3834136
   }
 }

@@ -54,15 +54,17 @@ object Day13 {
     }
   }
 
-  def buildNextFw(fw: List[(Int, Int)]): List[(Int, Int)] = {
-    List((0, 0)) ++ fw.map {case (d, r) => (d + 1, r)}
+  def passThrough(fw: List[(Int, Int)], delay: Int): Boolean = {
+    fw.forall {case (depth, range) => {
+      !threatDedected(depth + delay, range)
+    }}
   }
 
   object Part2 {
     def solve(input: List[String]): Int = {
       def go(fw: List[(Int, Int)], delay: Int): Int = {
-        if(calcSecScore(fw) == 0) delay
-        else go(buildNextFw(fw), delay + 1)
+        if(passThrough(fw, delay)) delay
+        else go(fw, delay + 1)
       }
 
       go(buildFw(parseInput(input)), 0)
