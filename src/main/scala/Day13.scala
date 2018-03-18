@@ -28,96 +28,44 @@ object Day13 {
     }).toMap
   }
 
-  object Direction extends Enumeration {
-    type Direction = Value
-    val UP, DOWN = Value
+  def buildFw(input: Map[Int, Int]): List[(Int, Int)] = {
+    (for {
+      d <- 0 to input.keys.max
+      r = input.getOrElse(d, 0)
+    } yield (d, r)).toList
   }
 
-  case class SecurityScanner(range: Int, pos: Int = 1, direction: Direction.Direction = Direction.DOWN) {
-    def tick: SecurityScanner = {
-      if (range > 1)
-        if (direction == Direction.DOWN)
-          if (pos + 1 > range) SecurityScanner(range, pos - 1, Direction.UP)
-          else SecurityScanner(range, pos + 1, Direction.DOWN)
-        else
-          if (pos - 1 == 0) SecurityScanner(range, pos + 1, Direction.DOWN)
-          else SecurityScanner(range, pos - 1, Direction.UP)
-      else
-        this
-    }
-
-    def isTop: Boolean = (pos == 1 && range > 0)
+  def threatDedected(depth: Int, range: Int): Boolean = {
+    if(range == 0) false
+    else depth % ((range - 1) * 2) == 0
   }
 
-  case class Layer(depth: Int, securityScanner: SecurityScanner) {
-    def tick: Layer = Layer(depth, securityScanner.tick)
-  }
-
-  object FireWall {
-    /** Build a firewall.
-      *
-      * @note If the layer has no range (is not defined in the input), a [[Layer]] with range 0 is created.
-      * @note For all layers the security scanner starts at position 1 (the top).
-      */
-    def build(inputLayers: Map[Int, Int], delay: Int): FireWall = {
-      val layers = (for {
-        l <- 0 to inputLayers.keys.max
-        r = inputLayers.getOrElse(l, 0)
-      } yield Layer(l, SecurityScanner(r))).toList
-      FireWall(layers, delay * (-1), 0, false)
-    }
-
-    def runSimulation(fw: FireWall): FireWall = {
-      def go(fw: FireWall, count: Int): FireWall = {
-        if (count <= 0) fw.tick
-        else go(fw.tick, count - 1)
-      }
-
-      go(fw, Math.abs(fw.threatPosition) + fw.layers.size)
-    }
-  }
-
-  case class FireWall(layers: List[Layer], threatPosition: Int, securityScore: Int, threatDetected: Boolean) {
-    def tick: FireWall = {
-      val newThreats = layers.map(l => {
-        if (threatPosition == l.depth && l.securityScanner.isTop) (l.depth * l.securityScanner.range, true)
-        else (0, false)
-      })
-      val newSecurityScore = newThreats.map(_._1).sum
-      val newThreatDetected = !(newThreats.map(_._2).forall(!_))
-      FireWall(layers.map(_.tick), threatPosition + 1, securityScore + newSecurityScore, threatDetected || newThreatDetected)
-    }
-
-    override def toString: String = {
-      layers.map(l => {
-        val depthStr = if (l.depth == threatPosition) s"(${l.depth}): " else s" ${l.depth} : "
-        val rangeStr = (for (r <- 1 to l.securityScanner.range) yield
-          if (l.securityScanner.pos == r) "[S]" else "[ ]"
-          ).mkString
-        depthStr + rangeStr
-      }).mkString("\n")
-    }
-  }
-
-  def findWayThrough(input: Map[Int, Int]): Int = {
-    def go(input: Map[Int, Int], delay: Int): Int = {
-      val fw = FireWall.runSimulation(FireWall.build(input, delay))
-      if (fw.threatDetected) go(input, delay + 1)
-      else delay
-    }
-
-    go(input, 0)
+  def calcSecScore(fw: List[(Int, Int)]): Int = {
+    fw.foldLeft(0) {(secScore, layer) => {
+      val (depth, range) = layer
+      if(threatDedected(depth, range)) secScore + depth * range
+      else secScore
+    }}
   }
 
   object Part1 {
     def solve(input: List[String]): Int = {
-      FireWall.runSimulation(FireWall.build(parseInput(input), 0)).securityScore
+      calcSecScore(buildFw(parseInput(input)))
     }
+  }
+
+  def buildNextFw(fw: List[(Int, Int)]): List[(Int, Int)] = {
+    List((0, 0)) ++ fw.map {case (d, r) => (d + 1, r)}
   }
 
   object Part2 {
     def solve(input: List[String]): Int = {
-      findWayThrough(parseInput(input))
+      def go(fw: List[(Int, Int)], delay: Int): Int = {
+        if(calcSecScore(fw) == 0) delay
+        else go(buildNextFw(fw), delay + 1)
+      }
+
+      go(buildFw(parseInput(input)), 0)
     }
   }
 }
