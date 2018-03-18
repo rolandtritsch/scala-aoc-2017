@@ -4,16 +4,18 @@ package aoc
   *
   * Solution:
   *
-  * General - Let's build a simulation. The simulation has [[aoc.Day13.SecurityScanner]]s.
-  * The scanners are working on a [[aoc.Day13.Layer]]. The layer has a depth (it's *location*
-  * in the firewall) and a range. The [[aoc.Day13.FireWall]] is constructed from layers.
-  * With every [[aoc.Day13.FireWall.tick]] (aka. picosecond) the entire simulation makes
-  * a step forward. Means all layers get updated, the packet moves to the next later and
-  * we check, if the packet was caught/detected and if so, we calculate the security score.
+  * General - First implementation was a simulation. That turned out to be too slow
+  * for Part2. Second implementation is calculating the solution/collisions. The main
+  * idea is that the layers correspond to the number of picosecs, after 0 picosecs we
+  * are on layer 0, after 1 on layer 1, and so on. With that it is easy to calculate,
+  * if the packet gets dedected at/on that layer in the firewall ((number of picosecs)
+  * modolo (the range of the scanner)).
   *
-  * Part1 - Just run the simulation and report the security score.
+  * Part1 - Fold through the layers of the firewall and sum up the security score of
+  * every layer, where the threat gets detected.
   *
-  * Part2 - Run the simulation with increasing delays, until we can get through undetected.
+  * Part2 - Add an offset/delay to the depth of the layers of the firewall. Increase
+  * the delay until we can pass through the firewall undetected.
   */
 object Day13 {
 
@@ -35,7 +37,7 @@ object Day13 {
     } yield (d, r)).toList
   }
 
-  def threatDedected(depth: Int, range: Int): Boolean = {
+  def threatDetected(depth: Int, range: Int): Boolean = {
     if(range == 0) false
     else depth % ((range - 1) * 2) == 0
   }
@@ -43,7 +45,7 @@ object Day13 {
   def calcSecScore(fw: List[(Int, Int)]): Int = {
     fw.foldLeft(0) {(secScore, layer) => {
       val (depth, range) = layer
-      if(threatDedected(depth, range)) secScore + depth * range
+      if(threatDetected(depth, range)) secScore + depth * range
       else secScore
     }}
   }
@@ -56,7 +58,7 @@ object Day13 {
 
   def passThrough(fw: List[(Int, Int)], delay: Int): Boolean = {
     fw.forall {case (depth, range) => {
-      !threatDedected(depth + delay, range)
+      !threatDetected(depth + delay, range)
     }}
   }
 
