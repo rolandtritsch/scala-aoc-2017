@@ -16,7 +16,9 @@ val jvmSettings = Seq(
 
   testFrameworks += new TestFramework(
     "org.scalameter.ScalaMeterFramework"
-  )
+  ),
+
+  scalacOptions ++= Seq("-unchecked", "-deprecation")
 )
 
 val nativeSettings = Seq(
@@ -31,5 +33,5 @@ lazy val aoc = crossProject(JVMPlatform, NativePlatform)
   .jvmSettings(jvmSettings)
   .nativeSettings(nativeSettings)
 
-lazy val aocJVM    = aoc.jvm
+lazy val aocJVM = aoc.jvm
 lazy val aocNative = aoc.native
