@@ -47,11 +47,13 @@ object Day13 {
 
     // Here we go: If the layer on the current depth has no range
     // the packet can never be caught (the layer is not able to
-    // catch the packet, right). Otherwise we just do the modolo
-    // operation, but ... we need to take into consideration that
-    // the scanner is moving down and then up again (this is why
+    // catch the packet, right). And if the range of the layer is
+    // 1 the packet will always be caught. Otherwise we just do the
+    // modolo operation, but ... we need to take into consideration
+    // that the scanner is moving down and then up again (this is why
     // it is "*2".
     if(range == 0) false
+    else if(range == 1) true
     else depth % ((range - 1) * 2) == 0
   }
 
