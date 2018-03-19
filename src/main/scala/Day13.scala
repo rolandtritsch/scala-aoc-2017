@@ -22,6 +22,8 @@ object Day13 {
   val input = Util.readInput("Day13input.txt")
 
   def parseInput(lines: List[String]): Map[Int, Int] = {
+    require(lines.nonEmpty, s"lines.nonEmpty failed")
+
     lines.map(l => {
       val tokens = l.split("[ :]")
       val depth = tokens(0).toInt
@@ -31,24 +33,37 @@ object Day13 {
   }
 
   def buildFw(input: Map[Int, Int]): List[(Int, Int)] = {
+    require(input.nonEmpty, s"input.nonEmpty failed")
+
     (for {
       d <- 0 to input.keys.max
       r = input.getOrElse(d, 0)
-    } yield (d, r)).toList
-  }
+    } yield (d, r)).toList.sorted
+  } ensuring(result => result.size == input.keys.max + 1)
 
   def threatDetected(depth: Int, range: Int): Boolean = {
+    require(depth >= 0, s"depth >= 0 failed; with >${depth}<")
+    require(range >= 0, s"range >= 0 failed; with >${range}<")
+
+    // Here we go: If the layer on the current depth has no range
+    // the packet can never be caught (the layer is not able to
+    // catch the packet, right). Otherwise we just do the modolo
+    // operation, but ... we need to take into consideration that
+    // the scanner is moving down and then up again (this is why
+    // it is "*2".
     if(range == 0) false
     else depth % ((range - 1) * 2) == 0
   }
 
   def calcSecScore(fw: List[(Int, Int)]): Int = {
+    require(fw.nonEmpty, s"fw.nonEmpty failed")
+
     fw.foldLeft(0) {(secScore, layer) => {
       val (depth, range) = layer
       if(threatDetected(depth, range)) secScore + depth * range
       else secScore
     }}
-  }
+  } ensuring(result => result >= 0 && result <= fw.map {case (d, r) => d * r}.sum)
 
   object Part1 {
     def solve(input: List[String]): Int = {
@@ -57,6 +72,8 @@ object Day13 {
   }
 
   def passThrough(fw: List[(Int, Int)], delay: Int): Boolean = {
+    require(fw.nonEmpty, s"fw.nonEmpty failed")
+
     fw.forall {case (depth, range) => {
       !threatDetected(depth + delay, range)
     }}

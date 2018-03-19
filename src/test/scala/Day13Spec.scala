@@ -23,6 +23,24 @@ class Day13Spec extends FlatSpec with Matchers {
     parsed(98) shouldBe 18
   }
 
+  behavior of "buildFw()"
+  it should "build a fw with the testcase(s)" in {
+    Day13.buildFw(Day13.parseInput(testInput)) should be (List((0, 3), (1, 2), (2, 0), (3, 0), (4, 4), (5, 0), (6, 4)))
+  }
+
+  it should "build a fw with the input" in {
+    val fw = Day13.buildFw(Day13.parseInput(Day13.input))
+    fw.take(10) should be (List((0, 4), (1, 2), (2, 3), (3, 0), (4, 5), (5, 0), (6, 6), (7, 0), (8, 6), (9, 0)))
+    fw.size shouldBe 99
+    fw(98) shouldBe (98, 18)
+  }
+
+  behavior of "threatDetected()"
+  it should "work correctly" in {
+    val threats = Day13.buildFw(Day13.parseInput(testInput)).map {case(d, r) => Day13.threatDetected(d, r)}
+    threats should be (List(true, false, false, false, false, false, true))
+  }
+
   behavior of "solve() - Part1"
   it should "solve the testcase(s)" in {
     Day13.Part1.solve(testInput) shouldBe 24
