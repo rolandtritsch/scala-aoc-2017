@@ -27,7 +27,7 @@ class Day14Spec extends FlatSpec with Matchers {
   it should "return the correct grid for the input" taggedAs (SlowTest) in {
     val grid = Day14.buildGrid(Day14.input)
     grid(0).take(10) should be(List(false, false, true, true, true, true, true, true, true, false))
-    grid(0).size shouldBe 32
+    grid(0).size shouldBe 128
     grid.size shouldBe 128
   }
 
