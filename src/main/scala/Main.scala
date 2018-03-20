@@ -30,7 +30,8 @@ object Main {
     println(s"Day12: Part2: groups -> ${Day12.Part2.solve(Day12.input)}")
     println(s"Day13: Part1: score -> ${Day13.Part1.solve(Day13.input)}")
     println(s"Day13: Part2: pass -> ${Day13.Part2.solve(Day13.input)}")
-    // @todo Day14
+    println(s"Day14: Part1: used -> ${Day14.Part1.solve(Day14.input)}")
+    println(s"Day14: Part2: regions -> ${Day14.Part2.solve(Day14.input)}")
     // @todo Too slow - println(s"Day15: CountMatchingPairs -> ${Day15.Part1.countMatchingPairs((Day15.Default.startA, Day15.Default.startB), Day15.Default.depth)}")
     // @todo Too slow - println(s"Day15: CountMatchingPairs(modolo) -> ${Day15.Part2.countMatchingPairs((Day15.Default.startA, Day15.Default.startB), Day15.Default.depth2)}")
     println(s"Day16: ExecuteMoves -> ${Day16.executeMoves(Day16.programs, Day16.parseInput(Day16.in))}")

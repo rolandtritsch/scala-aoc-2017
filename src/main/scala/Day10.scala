@@ -61,7 +61,6 @@ object Day10 {
 
   object Part1 {
     def solve(input: String): Int = {
-      val seed = Hash(List.range(0, 256), 0, 0)
       val hash = knot(input2Lengths(input), seed).hash
       hash(0) * hash(1)
     }
@@ -84,13 +83,14 @@ object Day10 {
     slice.foldLeft(0)((acc, i) => acc ^ i)
   }
 
+  val sliceSize = 16
   def dense(hash: List[Int]): List[Int] = {
-    require(hash.size == 256, s"hash.size == 256 failed; with >${hash.size}<")
-    require(hash.forall(n => n >= 0 && n < 256), s"hash.forall(n => n >= 0 && n < 256) failed")
+    require(hash.size % sliceSize == 0, s"hash.size % sliceSize == 0 failed; with >${hash.size}<")
+    require(hash.forall(n => n >= 0 && n < hash.size), s"hash.forall(n => n >= 0 && n < hash.size) failed")
 
-    val hashSlices = hash.sliding(16, 16).toList
+    val hashSlices = hash.grouped(sliceSize).toList
     hashSlices.map(xorHashSlice(_))
-  } ensuring(_.size == 16)
+  } ensuring(result => result.size == hash.size / sliceSize)
 
   def dense2hex(hash: List[Int]): String = {
     hash.foldLeft(List.empty[String])((acc, i) => acc :+ f"${i}%02x").mkString
