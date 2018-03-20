@@ -13,7 +13,7 @@ before_install:
   - bash bin/travis_setup.sh
 
 script:
-  - sbt "aocJVM/testOnly aoc.Day*Spec -- -l SlowTest"
+  - sbt "aocJVM/testOnly aoc.Day*Spec -- -n aoc.SolutionTest"
   - sbt aocJVM/run
   - sbt aocNative/run
 
