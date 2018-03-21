@@ -15,6 +15,6 @@ before_install:
 script:
   - sbt "aocJVM/testOnly aoc.Day*Spec -- -n aoc.BuildTest"
   - sbt aocJVM/run
-  - sbt aocNative/run
+  #- sbt aocNative/run
 
 
