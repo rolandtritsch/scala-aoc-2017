@@ -13,7 +13,7 @@ class Day05Spec extends FlatSpec with Matchers {
   val testStack2= List.fill(100)(1)
 
   behavior of "solve() - Part1"
-  it should "solve the testcase(s)" in {
+  it should "solve the testcase(s)" taggedAs(BuildTest) in {
     Day05.Part1.solve(testStack) shouldBe 5
     Day05.Part1.solve(testStack2) shouldBe testStack2.size
   }
@@ -23,7 +23,7 @@ class Day05Spec extends FlatSpec with Matchers {
   }
 
   behavior of "solve() - Part2"
-  it should "solve the testcase(s)" in {
+  it should "solve the testcase(s)" taggedAs(BuildTest) in {
     Day05.Part2.solve(testStack) shouldBe 10
     Day05.Part2.solve(testStack2) shouldBe testStack2.size
   }

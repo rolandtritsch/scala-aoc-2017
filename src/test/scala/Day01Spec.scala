@@ -10,7 +10,7 @@ class Day01Spec extends FlatSpec with Matchers {
   }
 
   behavior of "solve() - Part1"
-  it should "solve the testcases" in {
+  it should "solve the testcases" taggedAs(BuildTest) in {
     Day01.Part1.solve("1122") shouldBe 3
     Day01.Part1.solve("1111") shouldBe 4
     Day01.Part1.solve("1234") shouldBe 0
@@ -31,7 +31,7 @@ class Day01Spec extends FlatSpec with Matchers {
   }
 
   behavior of "solve() - Part2"
-  it should "solve the testcases" in {
+  it should "solve the testcases" taggedAs(BuildTest) in {
     Day01.Part2.solve("1212") shouldBe 6
     Day01.Part2.solve("1221") shouldBe 0
     Day01.Part2.solve("123425") shouldBe 4

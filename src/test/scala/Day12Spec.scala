@@ -30,7 +30,7 @@ class Day12Spec extends FlatSpec with Matchers {
   }
 
   behavior of "findPrograms()"
-  it should "return the right result(s)" in {
+  it should "return the right result(s)" taggedAs(BuildTest) in {
     Day12.findPrograms(0, Day12.parseInput(testInput)).size shouldBe 6
   }
 
@@ -40,7 +40,7 @@ class Day12Spec extends FlatSpec with Matchers {
   }
 
   behavior of "findGroups()"
-  it should "return the right result(s)" in {
+  it should "return the right result(s)" taggedAs(BuildTest) in {
     Day12.findGroups(Day12.parseInput(testInput)).size shouldBe 2
   }
 

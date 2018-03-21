@@ -41,12 +41,12 @@ class Day09Spec extends FlatSpec with Matchers {
     }}
   }
 
-  it should "solve the puzzle" taggedAs (SolutionTest) in {
+  it should "solve the puzzle" taggedAs (SolutionTest, BuildTest) in {
     Day09.Part1.solve(Day09.input) shouldBe 10800
   }
 
   behavior of "solve() - Part2"
-  it should "solve the puzzle" taggedAs (SolutionTest) in {
+  it should "solve the puzzle" taggedAs (SolutionTest, BuildTest) in {
     Day09.Part2.solve(Day09.input) shouldBe 4522
   }
 }

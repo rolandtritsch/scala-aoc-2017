@@ -36,7 +36,7 @@ class Day10Spec extends FlatSpec with Matchers {
   }
 
   behavior of "knot()"
-  it should "return the right test hashes" in {
+  it should "return the right test hashes" taggedAs(BuildTest) in {
     val seed = Day10.Hash(List.range(0, 5), 0, 0)
     Day10.knot(List(3), seed).hash should be (List(2, 1, 0, 3, 4))
     Day10.knot(List(3, 4), seed).hash should be (List(4, 3, 0, 1, 2))
@@ -83,7 +83,7 @@ class Day10Spec extends FlatSpec with Matchers {
   }
 
   behavior of "solve() - Part2"
-  it should "solve the testcase(s)" in {
+  it should "solve the testcase(s)" taggedAs(BuildTest) in {
     Day10.Part2.solve("") shouldBe "a2582a3a0e66e6e86e3812dcb672a272"
     Day10.Part2.solve("AoC 2017") shouldBe "33efeb34ea91902bb2f59c9920caa6cd"
     Day10.Part2.solve("1,2,3") shouldBe "3efbe78a8d82f29979031a4aa0b16a9d"

@@ -18,12 +18,12 @@ class Day11Spec extends FlatSpec with Matchers {
   }
 
   behavior of "solve() - Part1"
-  it should "solve the puzzle" taggedAs(SolutionTest) in {
+  it should "solve the puzzle" taggedAs(SolutionTest, BuildTest) in {
     Day11.Part1.solve(Day11.input) shouldBe 810
   }
 
   behavior of "solve() - Part2"
-  it should "solve the puzzle" taggedAs(SolutionTest) in {
+  it should "solve the puzzle" taggedAs(SolutionTest, BuildTest) in {
     Day11.Part2.solve(Day11.input) shouldBe 1567
   }
 }

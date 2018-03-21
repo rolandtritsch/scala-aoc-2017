@@ -24,7 +24,7 @@ class Day03Spec extends FlatSpec with Matchers {
   }
 
   behavior of "solve() - Part1"
-  it should "solve the testcases" in {
+  it should "solve the testcases" taggedAs(BuildTest) in {
     Day03.Part1.solve(1) shouldBe 0
     Day03.Part1.solve(12) shouldBe 3
     Day03.Part1.solve(23) shouldBe 2
@@ -43,7 +43,7 @@ class Day03Spec extends FlatSpec with Matchers {
     spiral.take(values.size).map(_.value).toList should be (values)
   }
 
-  it should "solve the testcases" in {
+  it should "solve the testcases" taggedAs(BuildTest) in {
     Day03.Part2.solve(750) shouldBe 806
   }
 

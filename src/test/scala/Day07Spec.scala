@@ -66,7 +66,7 @@ class Day07Spec extends FlatSpec with Matchers {
   }
 
   behavior of "solve() - Part1"
-  it should "solve the testcase(s)" in {
+  it should "solve the testcase(s)" taggedAs(BuildTest) in {
     Day07.Part1.solve(testInput) shouldBe "tknk"
   }
 
@@ -107,7 +107,7 @@ class Day07Spec extends FlatSpec with Matchers {
   }
 
   behavior of "solve() - Part2"
-  it should "solve the testcase(s)" in {
+  it should "solve the testcase(s)" taggedAs(BuildTest) in {
     Day07.Part2.solve(testInput) shouldBe 60
   }
 
