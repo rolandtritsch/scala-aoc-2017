@@ -1,88 +1,64 @@
 package aoc
 
+/** Problem: [[http://adventofcode.com/2017/day/15]]
+  *
+  * Solution:
+  *
+  * General -
+  *
+  * Part1 -
+  *
+  * Part2 -
+  */
+
 object Day15 {
   // val in = ... - the only one with no *in*, means I am not reading Day15input.txt.
   // I just copied the values from it :).
 
   object Default {
-    val factorA = BigInt(16807)
-    val factorB = BigInt(48271)
-    val devider = BigInt(2147483647)
-    val depth = BigInt(40000000)
-    val depth2 = BigInt(5000000)
+    val factorA = 16807
+    val factorB = 48271
+    val devider = Int.MaxValue // 2147483647
+    val depth = 40000000
+    val depth2 = 5000000
 
-    val startA = BigInt(703)
-    val startB = BigInt(516)
+    val startA = 703
+    val startB = 516
   }
 
-  def dec2bin(in: BigInt): String = {
-    in.toString(2).reverse.padTo(32, '0').reverse
-  }
-
-  case class Generator(previous: BigInt, factor: BigInt, devider: BigInt = Default.devider) {
-    def numbers: Stream[BigInt] = next((previous * factor) % devider, factor, devider)
-    def next(p: BigInt, f: BigInt, d: BigInt): Stream[BigInt] = p #:: next((p*f) % d, f, d)
+  case class Generator(previous: Long, factor: Long, devider: Long = Default.devider) {
+    def numbers: Stream[Long] = next((previous * factor) % devider, factor, devider)
+    def next(p: Long, f: Long, d: Long): Stream[Long] = p #:: next((p*f) % d, f, d)
   }
 
   case class BinaryPairGenerator(genA: Generator, genB: Generator) {
-    val numbers: Stream[(String, String)] = genA.numbers.zip(genB.numbers).map{case (nA, nB) => (dec2bin(nA), dec2bin(nB))}
+    val numbers: Stream[(Long, Long)] = genA.numbers.zip(genB.numbers)
   }
 
-  def matchingStr(pair: (String, String)): Boolean = {
+  def matching(pair: (Long, Long)): Boolean = {
     val (thiz, thaz) = pair
-    thiz.endsWith(thaz.substring(16))
+    val mask = 0xffff
+    (thiz & mask) == (thaz & mask)
   }
 
-  def matching(pair: (BigInt, BigInt)): Boolean = {
-    val (thiz, thaz) = pair
-    dec2bin(thiz).endsWith(dec2bin(thaz).substring(16))
-  }
-
-  def countMatchingPair(binPairs: Stream[(String, String)], depth: BigInt, count: Int = 0): Int = {
-    if(depth <= 0) count
-    else {
-      if(matchingStr(binPairs.head)) countMatchingPair(binPairs.tail, depth - 1, count + 1)
-      else countMatchingPair(binPairs.tail, depth - 1, count)
-    }
+  def countMatchingPair(binPairs: Stream[(Long, Long)], depth: Int): Int = {
+    binPairs.take(depth).count(matching(_))
   }
 
   object Part1 {
-    def countMatchingPairs(start: (BigInt, BigInt), depth: BigInt): Int = {
-      def go(previous: (BigInt, BigInt), depth: BigInt, count: Int): Int = {
-        if(depth <= 0) count
-        else {
-          val (previousA, previousB) = previous
-          val nextA = (previousA * Default.factorA) % Default.devider
-          val nextB = (previousB * Default.factorB) % Default.devider
-          val next = (nextA, nextB)
-          if(matching(previous)) go(next, depth - 1, count + 1)
-          else go(next, depth - 1, count)
-        }
-      }
-      go(start, depth, 0)
+    def solve: Int = {
+      val genA = Generator(Default.startA, Default.factorA)
+      val genB = Generator(Default.startB, Default.factorB)
+
+      val binPairGen = BinaryPairGenerator(genA, genB)
+
+      countMatchingPair(binPairGen.numbers, 4000000)
     }
   }
 
   object Part2 {
-    def countMatchingPairs(start: (BigInt, BigInt), depth: BigInt): Int = {
-      def findNext(previous: BigInt, factor: BigInt, devider: BigInt, modolo: Int): BigInt = {
-        val next = (previous * factor) % devider
-        if(next % modolo == 0) next
-        else findNext(next, factor, devider, modolo)
-      }
-
-      def go(previous: (BigInt, BigInt), depth: BigInt, count: Int): Int = {
-        if(depth <= 0) count
-        else {
-          val (previousA, previousB) = previous
-          val nextA = findNext(previousA, Default.factorA, Default.devider, 4)
-          val nextB = findNext(previousB, Default.factorB, Default.devider, 8)
-          val next = (nextA, nextB)
-          if(matching(previous)) go(next, depth - 1, count + 1)
-          else go(next, depth - 1, count)
-        }
-      }
-      go(start, depth, 0)
+    def solve: Int = {
+      0
     }
   }
 }
