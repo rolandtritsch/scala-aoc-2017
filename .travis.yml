@@ -10,7 +10,7 @@ notifications:
     on_failure: always
 
 before_install:
-  - bash bin/travis_setup.sh
+  - curl https://raw.githubusercontent.com/scala-native/scala-native/master/scripts/travis_setup.sh | bash -x
 
 script:
   - sbt "aocJVM/testOnly aoc.Day*Spec -- -n aoc.BuildTest"
