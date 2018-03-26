@@ -1,8 +1,21 @@
 package aoc
 
+/** Problem: [[https://adventofcode.com/2017/day/16]]
+  *
+  * Solution:
+  *
+  * General - Kind of simple. Take a program and a move and execute
+  * the move on the program. Take all moves and execute all of them
+  * one after the other (executeMoves; moves.foldLeft). Then (for
+  * Part2) execute all moves on a/the program 1000000000 times.
+  *
+  * Part1 - execute the moves (once).
+  *
+  * Part2 - execute the moves 1000000000 times (execute the dance).
+  */
 object Day16 {
 
-  val in = Util.readInput("Day16input.txt").head.split(',').toList
+  val input = Util.readInput("Day16input.txt").head.split(',').toList
 
   val programs = ('a' to 'p').mkString
   val times = 1000000000
@@ -12,13 +25,14 @@ object Day16 {
   case class Exchange(thiz: Int, thaz: Int) extends Move
   case class Partner(thiz: Char, thaz: Char) extends Move
 
-  def parseInput(in: List[String]): List[Move] = {
-    in.map(l => l(0) match {
+  def parseInput(input: List[String]): List[Move] = {
+    input.map(l => l(0) match {
       case 's' => {
         val s = l.substring(1).toInt
         assert(s >= 1 && s <= programs.size, s"s >= 1 && s <= programs.size failed; with >${s}}<")
         Spin(s)
       }
+
       case 'x' => {
         val ps = l.substring(1).split('/')
         assert(ps.size == 2)
@@ -29,6 +43,7 @@ object Day16 {
         assert(thiz != thaz, s"thiz != thaz failed; with >${thiz}</>${thaz}<")
         Exchange(thiz, thaz)
       }
+
       case 'p' => {
         val ps = l.substring(1).split('/')
         assert(ps.size == 2)
@@ -49,11 +64,13 @@ object Day16 {
         val (head, tail) = programs.splitAt(programs.size - s)
         tail + head
       }
+
       case Exchange(thiz, thaz) => {
         val thizProgram = programs.charAt(thiz)
         val thazProgram = programs.charAt(thaz)
         programs.updated(thiz, thazProgram).updated(thaz, thizProgram)
       }
+
       case Partner(thiz, thaz) => {
         val thizPos = programs.indexOf(thiz)
         val thazPos = programs.indexOf(thaz)
@@ -64,45 +81,19 @@ object Day16 {
     moves.foldLeft(programs)((current, move) => executeMove(current, move))
   }
 
-  def executeMoves2(programs: StringBuilder, moves: List[Move]): StringBuilder = {
-    def executeMove2(programs: StringBuilder, move: Move): StringBuilder = move match {
-      case Spin(s) => {
-        // Note: The Spin rotates counter-clockwise
-        val (head, tail) = programs.splitAt(programs.size - s)
-        new scala.collection.mutable.StringBuilder((tail ++ head).toString)
-      }
-      case Exchange(thiz, thaz) => {
-        val thizProgram = programs.charAt(thiz)
-        val thazProgram = programs.charAt(thaz)
-        programs.update(thiz, thazProgram)
-        programs.update(thaz, thizProgram)
-        programs
-      }
-      case Partner(thiz, thaz) => {
-        val thizPos = programs.indexOf(thiz)
-        val thazPos = programs.indexOf(thaz)
-        programs.update(thizPos, thaz)
-        programs.update(thazPos, thiz)
-        programs
-      }
-    }
-
-    moves.foldLeft(programs)((current, move) => executeMove2(current, move))
-  }
-
   def executeDance(programs: String, moves: List[Move], times: BigInt): String = {
     (BigInt(1) to times).foldLeft(programs)((current, _) => executeMoves(current, moves))
   }
 
-  def executeDance2(programs: String, moves: List[Move], times: BigInt): String = {
-    if(times % 100000 == 0) println(times)
-    if(times <= 1) executeMoves(programs, moves)
-    else executeDance2(executeMoves(programs, moves), moves, times - 1)
+  object Part1 {
+    def solve(input: List[String]): String = {
+      executeMoves(programs, parseInput(input))
+    }
   }
 
-  def executeDance22(programs: StringBuilder, moves: List[Move], times: BigInt): String = {
-    if(times % 100000 == 0) println(times)
-    if(times <= 1) executeMoves2(programs, moves).result
-    else executeDance22(executeMoves2(programs, moves), moves, times - 1)
+  object Part2 {
+    def solve(input: List[String]): String = {
+      executeDance(programs, parseInput(input), times)
+    }
   }
 }
