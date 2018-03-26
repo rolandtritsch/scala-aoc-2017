@@ -4,11 +4,16 @@ package aoc
   *
   * Solution:
   *
-  * General -
+  * General - This was heavily refactored. Twice :). I started with a stream
+  * based/recursive approach. Then I tried to *just* use the stream (with take/count),
+  * but stream is an IteraterableAgain and that means it keeps the front of the stream
+  * around and that means we (sooner or later) run out of mem (initially using Strings
+  * did not help either; with the mem and the performance). The right approach is
+  * obviously to use an Iterator. And then do a recursion.
   *
-  * Part1 -
+  * Part1 - solve the puzzle with a modolo of (1, 1) and a depth of 40 * 10e6.
   *
-  * Part2 -
+  * Part2 - solve the puzzle with a modolo of (4, 8) and a depth of 5 * 10e6.
   */
 
 object Day15 {
@@ -22,20 +27,13 @@ object Day15 {
     val factorA = 16807
     val factorB = 48271
 
-    val devider = Int.MaxValue // 2147483647
-
-    val modolo = 1
-    val modoloA2 = 4
-    val modoloB2 = 8
+    val devider = 2147483647 //Int.MaxValue
 
     def next(c: Long, f: Long, d: Long, m: Long): Long = {
       val n = (c * f) % d
       if(n % m == 0) n
       else next(n, f, d, m)
     }
-
-    val depth = 40000000
-    val depth2 = 5000000
   }
 
   case class GeneratorConfig(start: Long, factor: Long, devider: Long, modolo: Long, next: (Long, Long, Long, Long) => Long)
@@ -58,23 +56,19 @@ object Day15 {
     go(gen, depth, 0)
   }
 
-  object Part1 {
-    def solve: Int = {
-      val genA1 = GeneratorConfig(Default.startA, Default.factorA, Default.devider, Default.modolo, Default.next)
-      val genB1 = GeneratorConfig(Default.startB, Default.factorB, Default.devider, Default.modolo, Default.next)
-      val gen = generator(genA1, genB1)
+  def run(modolo: (Long, Long), depth: Int): Int = {
+    val genA = GeneratorConfig(Default.startA, Default.factorA, Default.devider, modolo._1, Default.next)
+    val genB = GeneratorConfig(Default.startB, Default.factorB, Default.devider, modolo._2, Default.next)
+    val gen = generator(genA, genB)
 
-      countMatchingPairs(gen, Default.depth)
-    }
+    countMatchingPairs(gen, depth)
+  }
+
+  object Part1 {
+    def solve: Int = run((1, 1), 40000000)
   }
 
   object Part2 {
-    def solve: Int = {
-      val genA2 = GeneratorConfig(Default.startA, Default.factorA, Default.devider, Default.modoloA2, Default.next)
-      val genB2 = GeneratorConfig(Default.startB, Default.factorB, Default.devider, Default.modoloB2, Default.next)
-      val gen = generator(genA2, genB2)
-
-      countMatchingPairs(gen, Default.depth2)
-    }
+    def solve: Int = run((4, 8), 5000000)
   }
 }

@@ -27,26 +27,36 @@ class Day15Spec extends FlatSpec with Matchers {
 
   behavior of "generator()"
   it should "produce the correct pairs of numbers for the testcase(s)" in {
-    val genA = Day15.GeneratorConfig(testAstart, Day15.Default.factorA, Day15.Default.devider, Day15.Default.modolo, Day15.Default.next)
-    val genB = Day15.GeneratorConfig(testBstart, Day15.Default.factorB, Day15.Default.devider, Day15.Default.modolo, Day15.Default.next)
-    Day15.generator(genA, genB).take(6).toList should be (testDecPairs)
+    val genA1 = Day15.GeneratorConfig(testAstart, Day15.Default.factorA, Day15.Default.devider, 1, Day15.Default.next)
+    val genB1 = Day15.GeneratorConfig(testBstart, Day15.Default.factorB, Day15.Default.devider, 1, Day15.Default.next)
+    Day15.generator(genA1, genB1).take(6).toList should be (testDecPairs)
+
+    val genA2 = Day15.GeneratorConfig(testAstart, Day15.Default.factorA, Day15.Default.devider, 4, Day15.Default.next)
+    val genB2 = Day15.GeneratorConfig(testBstart, Day15.Default.factorB, Day15.Default.devider, 8, Day15.Default.next)
+    Day15.generator(genA2, genB2).take(6).toList should be (test2DecPairs)
   }
 
   behavior of "countMatchingPairs()"
   it should "return the correct result(s) for the testcase(s)" taggedAs (BuildTest) in {
-    val genA = Day15.GeneratorConfig(testAstart, Day15.Default.factorA, Day15.Default.devider, Day15.Default.modolo, Day15.Default.next)
-    val genB = Day15.GeneratorConfig(testBstart, Day15.Default.factorB, Day15.Default.devider, Day15.Default.modolo, Day15.Default.next)
-    val gen3 = Day15.generator(genA, genB)
+    val genA1 = Day15.GeneratorConfig(testAstart, Day15.Default.factorA, Day15.Default.devider, 1, Day15.Default.next)
+    val genB1 = Day15.GeneratorConfig(testBstart, Day15.Default.factorB, Day15.Default.devider, 1, Day15.Default.next)
+    val gen3 = Day15.generator(genA1, genB1)
     Day15.countMatchingPairs(gen3, 3) shouldBe 0
 
-    val gen4 = Day15.generator(genA, genB)
+    val gen4 = Day15.generator(genA1, genB1)
     Day15.countMatchingPairs(gen4, 4) shouldBe 1
 
-    val gen1000000 = Day15.generator(genA, genB)
+    val gen1000000 = Day15.generator(genA1, genB1)
     Day15.countMatchingPairs(gen1000000, 1000000) shouldBe 12
 
-    val genDefaultDepth = Day15.generator(genA, genB)
-    Day15.countMatchingPairs(genDefaultDepth, Day15.Default.depth) shouldBe 588
+    val genDefaultDepth = Day15.generator(genA1, genB1)
+    Day15.countMatchingPairs(genDefaultDepth, 40000000) shouldBe 588
+
+    val genA2 = Day15.GeneratorConfig(testAstart, Day15.Default.factorA, Day15.Default.devider, 4, Day15.Default.next)
+    val genB2 = Day15.GeneratorConfig(testBstart, Day15.Default.factorB, Day15.Default.devider, 8, Day15.Default.next)
+    val genDefaultDepth2 = Day15.generator(genA2, genB2)
+    Day15.countMatchingPairs(genDefaultDepth2, 5000000) shouldBe 309
+
   }
 
   behavior of "solve() - Part1"
