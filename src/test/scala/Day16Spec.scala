@@ -11,7 +11,7 @@ class Day16Spec extends FlatSpec with Matchers {
     "x11/0"
   )
 
-  val testProgram = ('a' to 'e').mkString.toCharArray
+  val testProgram = ('a' to 'e').toArray
 
   val testInput = List(
     "s1",
@@ -69,6 +69,6 @@ class Day16Spec extends FlatSpec with Matchers {
 
   behavior of "solve() - Part2"
   it should "solve the puzzle" taggedAs(SolutionTest) in {
-    Day16.Part2.solve(Day16.input) shouldBe ""
+    Day16.Part2.solve(Day16.input) shouldBe "bpjahknliomefdgc"
   }
 }

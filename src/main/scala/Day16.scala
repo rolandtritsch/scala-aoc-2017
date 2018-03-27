@@ -6,18 +6,22 @@ package aoc
   *
   * General - Kind of simple. Take a program and a move and execute
   * the move on the program. Take all moves and execute all of them
-  * one after the other (executeMoves; moves.foldLeft). Then (for
-  * Part2) execute all moves on a/the program 1000000000 times.
+  * one after the other (executeMoves). Then (for Part2) execute all
+  * moves on a/the program 1000000000 times.
   *
   * Part1 - execute the moves (once).
   *
   * Part2 - execute the moves 1000000000 times (execute the dance).
+  * The big trick here is to realize that there is a loop in the
+  * dance and that the dance is repeating itself after N iterations,
+  * means you can ignore the first M times the dance is executed and
+  * need todo the remainder to find the final position.
   */
 object Day16 {
 
   val input = Util.readInput("Day16input.txt").head.split(',').toList
 
-  val programs = ('a' to 'p').mkString.toCharArray
+  val initial = ('a' to 'p').toArray
   val times = 1000000000
 
   sealed abstract class Move
@@ -29,7 +33,7 @@ object Day16 {
     input.map(l => l(0) match {
       case 's' => {
         val s = l.substring(1).toInt
-        assert(s >= 1 && s <= programs.size, s"s >= 1 && s <= programs.size failed; with >${s}}<")
+        assert(s >= 1 && s <= initial.size, s"s >= 1 && s <= initial.size failed; with >${s}}<")
         Spin(s)
       }
 
@@ -37,9 +41,9 @@ object Day16 {
         val ps = l.substring(1).split('/')
         assert(ps.size == 2)
         val thiz = ps(0).toInt
-        assert(thiz >= 0 && thiz <= programs.size - 1, s"thiz >= 0 && thiz <= programs.size - 1 failed; with >${thiz}}<")
+        assert(thiz >= 0 && thiz <= initial.size - 1, s"thiz >= 0 && thiz <= initial.size - 1 failed; with >${thiz}}<")
         val thaz = ps(1).toInt
-        assert(thaz >= 0 && thaz <= programs.size - 1, s"thaz >= 0 && thaz <= programs.size - 1 failed; with >${thaz}}<")
+        assert(thaz >= 0 && thaz <= initial.size - 1, s"thaz >= 0 && thaz <= initial.size - 1 failed; with >${thaz}}<")
         assert(thiz != thaz, s"thiz != thaz failed; with >${thiz}</>${thaz}<")
         Exchange(thiz, thaz)
       }
@@ -48,9 +52,9 @@ object Day16 {
         val ps = l.substring(1).split('/')
         assert(ps.size == 2)
         val thiz = ps(0).charAt(0)
-        assert(programs.contains(thiz), s"programs.contains(thiz) failed; with >${thiz}<")
+        assert(initial.contains(thiz), s"initial.contains(thiz) failed; with >${thiz}<")
         val thaz = ps(1).charAt(0)
-        assert(programs.contains(thaz), s"programs.contains(thaz) failed; with >${thaz}<")
+        assert(initial.contains(thaz), s"initial.contains(thaz) failed; with >${thaz}<")
         assert(thiz != thaz, s"thiz != thaz failed; with >${thiz}</>${thaz}<")
         Partner(thiz, thaz)
       }
@@ -83,27 +87,31 @@ object Day16 {
       case Nil => programs
       case m :: ms => executeMoves(executeMove(programs, m), ms)
     }
-
-    //moves.foldLeft(programs)((current, move) => executeMove(current, move))
   }
 
   @scala.annotation.tailrec
   def executeDance(programs: Array[Char], moves: List[Move], times: BigInt): Array[Char] = {
     if(times <= 0) programs
     else executeDance(executeMoves(programs, moves), moves, times - 1)
+  }
 
-    //(BigInt(1) to times).foldLeft(programs)((current, _) => executeMoves(current, moves))
+  @scala.annotation.tailrec
+  def findLoop(programs: Array[Char], moves: List[Move], times: BigInt): BigInt = {
+    if(programs.sameElements(initial)) times
+    else findLoop(executeMoves(programs, moves), moves, times + 1)
   }
 
   object Part1 {
     def solve(input: List[String]): String = {
-      executeMoves(programs, parseInput(input)).mkString
+      executeMoves(initial, parseInput(input)).mkString
     }
   }
 
   object Part2 {
     def solve(input: List[String]): String = {
-      executeDance(programs, parseInput(input), 10000).mkString
+      val moves = parseInput(input)
+      val loopTimes = findLoop(executeMoves(initial, moves), moves, 1)
+      executeDance(initial, moves, times % loopTimes).mkString
     }
   }
 }
