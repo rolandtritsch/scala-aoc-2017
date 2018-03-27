@@ -11,7 +11,7 @@ class Day16Spec extends FlatSpec with Matchers {
     "x11/0"
   )
 
-  val testProgram = ('a' to 'e').toString.toCharArray
+  val testProgram = ('a' to 'e').mkString.toCharArray
 
   val testInput = List(
     "s1",
@@ -36,23 +36,30 @@ class Day16Spec extends FlatSpec with Matchers {
     Day16.executeMoves(testProgram, List(Day16.Spin(1))).mkString shouldBe "eabcd"
     Day16.executeMoves(testProgram, List(Day16.Spin(3))).mkString shouldBe "cdeab"
     Day16.executeMoves(testProgram, List(Day16.Exchange(0, 1))).mkString shouldBe "bacde"
-    Day16.executeMoves(testProgram, List(Day16.Exchange(0, 4))).mkString shouldBe "ebcda"
-    Day16.executeMoves(testProgram, List(Day16.Exchange(4, 0))).mkString shouldBe "ebcda"
-    Day16.executeMoves(testProgram, List(Day16.Partner('a', 'b'))).mkString shouldBe "bacde"
-    Day16.executeMoves(testProgram, List(Day16.Partner('a', 'b'))).mkString shouldBe "abcde"
+
+    val firstExchange = Day16.executeMoves(testProgram, List(Day16.Exchange(0, 4)))
+    val secondExchange = Day16.executeMoves(testProgram, List(Day16.Exchange(4, 0)))
+    firstExchange.mkString shouldBe "ebcda"
+    firstExchange.mkString shouldBe secondExchange.mkString
+
+    val firstPartner = Day16.executeMoves(testProgram, List(Day16.Partner('a', 'b')))
+    val secondPartner = Day16.executeMoves(firstPartner, List(Day16.Partner('a', 'b')))
+    firstPartner.mkString shouldBe "bacde"
+    secondPartner.mkString shouldBe testProgram.mkString
+
     Day16.executeMoves(testProgram, List(Day16.Partner('a', 'e'))).mkString shouldBe "ebcda"
     Day16.executeMoves(testProgram, List(Day16.Partner('e', 'a'))).mkString shouldBe "ebcda"
 
     val firstDance = Day16.executeMoves(testProgram, Day16.parseInput(testInput))
-    firstDance.mkString shouldBe "baedc"
     val secondDance = Day16.executeMoves(firstDance, Day16.parseInput(testInput))
+    firstDance.mkString shouldBe "baedc"
     secondDance.mkString shouldBe "ceadb"
   }
 
   behavior of "executeDance()"
   it should "solve the testcase(s)" in {
-    Day16.executeDance(testProgram, Day16.parseInput(testInput), 1) shouldBe "baedc"
-    Day16.executeDance(testProgram, Day16.parseInput(testInput), 2) shouldBe "ceadb"
+    Day16.executeDance(testProgram, Day16.parseInput(testInput), 1).mkString shouldBe "baedc"
+    Day16.executeDance(testProgram, Day16.parseInput(testInput), 2).mkString shouldBe "ceadb"
   }
 
   behavior of "solve() - Part1"

@@ -17,7 +17,7 @@ object Day16 {
 
   val input = Util.readInput("Day16input.txt").head.split(',').toList
 
-  val programs = ('a' to 'p').toString.toCharArray
+  val programs = ('a' to 'p').mkString.toCharArray
   val times = 1000000000
 
   sealed abstract class Move
@@ -57,6 +57,7 @@ object Day16 {
     })
   }
 
+  @scala.annotation.tailrec
   def executeMoves(programs: Array[Char], moves: List[Move]): Array[Char] = {
     def executeMove(programs: Array[Char], move: Move): Array[Char] = move match {
       case Spin(s) => {
@@ -78,11 +79,20 @@ object Day16 {
       }
     }
 
-    moves.foldLeft(programs)((current, move) => executeMove(current, move))
+    moves match {
+      case Nil => programs
+      case m :: ms => executeMoves(executeMove(programs, m), ms)
+    }
+
+    //moves.foldLeft(programs)((current, move) => executeMove(current, move))
   }
 
+  @scala.annotation.tailrec
   def executeDance(programs: Array[Char], moves: List[Move], times: BigInt): Array[Char] = {
-    (BigInt(1) to times).foldLeft(programs)((current, _) => executeMoves(current, moves))
+    if(times <= 0) programs
+    else executeDance(executeMoves(programs, moves), moves, times - 1)
+
+    //(BigInt(1) to times).foldLeft(programs)((current, _) => executeMoves(current, moves))
   }
 
   object Part1 {
@@ -93,7 +103,7 @@ object Day16 {
 
   object Part2 {
     def solve(input: List[String]): String = {
-      executeDance(programs, parseInput(input), 100000).mkString
+      executeDance(programs, parseInput(input), 10000).mkString
     }
   }
 }
