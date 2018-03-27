@@ -17,7 +17,7 @@ object Day16 {
 
   val input = Util.readInput("Day16input.txt").head.split(',').toList
 
-  val programs = ('a' to 'p').mkString
+  val programs = ('a' to 'p').toString.toCharArray
   val times = 1000000000
 
   sealed abstract class Move
@@ -57,12 +57,12 @@ object Day16 {
     })
   }
 
-  def executeMoves(programs: String, moves: List[Move]): String = {
-    def executeMove(programs: String, move: Move): String = move match {
+  def executeMoves(programs: Array[Char], moves: List[Move]): Array[Char] = {
+    def executeMove(programs: Array[Char], move: Move): Array[Char] = move match {
       case Spin(s) => {
         // Note: The Spin rotates counter-clockwise
         val (head, tail) = programs.splitAt(programs.size - s)
-        tail + head
+        tail ++ head
       }
 
       case Exchange(thiz, thaz) => {
@@ -81,19 +81,19 @@ object Day16 {
     moves.foldLeft(programs)((current, move) => executeMove(current, move))
   }
 
-  def executeDance(programs: String, moves: List[Move], times: BigInt): String = {
+  def executeDance(programs: Array[Char], moves: List[Move], times: BigInt): Array[Char] = {
     (BigInt(1) to times).foldLeft(programs)((current, _) => executeMoves(current, moves))
   }
 
   object Part1 {
     def solve(input: List[String]): String = {
-      executeMoves(programs, parseInput(input))
+      executeMoves(programs, parseInput(input)).mkString
     }
   }
 
   object Part2 {
     def solve(input: List[String]): String = {
-      executeDance(programs, parseInput(input), times)
+      executeDance(programs, parseInput(input), 100000).mkString
     }
   }
 }
