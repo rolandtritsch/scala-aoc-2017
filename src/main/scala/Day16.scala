@@ -30,6 +30,8 @@ object Day16 {
   case class Partner(thiz: Char, thaz: Char) extends Move
 
   def parseInput(input: List[String]): List[Move] = {
+    require(input.nonEmpty, s"input.nonEmpty failed")
+
     input.map(l => l(0) match {
       case 's' => {
         val s = l.substring(1).toInt
@@ -63,6 +65,8 @@ object Day16 {
 
   @scala.annotation.tailrec
   def executeMoves(programs: Array[Char], moves: List[Move]): Array[Char] = {
+    require(programs.nonEmpty, s"programs.nonEmpty failed")
+
     def executeMove(programs: Array[Char], move: Move): Array[Char] = move match {
       case Spin(s) => {
         // Note: The Spin rotates counter-clockwise
@@ -91,12 +95,18 @@ object Day16 {
 
   @scala.annotation.tailrec
   def executeDance(programs: Array[Char], moves: List[Move], times: BigInt): Array[Char] = {
+    require(programs.nonEmpty, s"programs.nonEmpty failed")
+    require(moves.nonEmpty, s"moves.nonEmpty failed")
+
     if(times <= 0) programs
     else executeDance(executeMoves(programs, moves), moves, times - 1)
   }
 
   @scala.annotation.tailrec
   def findLoop(programs: Array[Char], moves: List[Move], times: BigInt): BigInt = {
+    require(programs.nonEmpty, s"programs.nonEmpty failed")
+    require(moves.nonEmpty, s"moves.nonEmpty failed")
+
     if(programs.sameElements(initial)) times
     else findLoop(executeMoves(programs, moves), moves, times + 1)
   }
@@ -110,7 +120,7 @@ object Day16 {
   object Part2 {
     def solve(input: List[String]): String = {
       val moves = parseInput(input)
-      val loopTimes = findLoop(executeMoves(initial, moves), moves, 1)
+      val loopTimes = findLoop(executeMoves(initial, moves), moves,1)
       executeDance(initial, moves, times % loopTimes).mkString
     }
   }
