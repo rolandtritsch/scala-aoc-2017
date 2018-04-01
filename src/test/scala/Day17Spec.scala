@@ -64,21 +64,24 @@ class Day17Spec extends FlatSpec with Matchers {
 
   behavior of "solve() - Part1"
   it should "solve the testcase(s)" taggedAs(BuildTest) in {
-    val (position, buffer) = Day17.buildBuffer(mutable.ListBuffer(0), 3, Day17.times)
-    buffer(position) shouldBe Day17.times
-    buffer(position + 1) shouldBe 638
+    Day17.Part1.solve(3, Day17.times)shouldBe 638
   }
 
   it should "solve the puzzle" taggedAs(SolutionTest) in {
-    val (position, buffer) = Day17.buildBuffer(mutable.ListBuffer(0), Day17.steps, Day17.times)
-    buffer(position) shouldBe Day17.times
-    buffer(position + 1) shouldBe 1311
+    Day17.Part1.solve(Day17.steps, Day17.times) shouldBe 1311
   }
 
   behavior of "solve() - Part2"
-  ignore should "solve the puzzle (Part2)" taggedAs(SolutionTest) in {
-    val (position, buffer) = Day17.buildBuffer(mutable.ListBuffer(0), Day17.steps, Day17.times2)
-    buffer(position) shouldBe Day17.times2
-    buffer(1) shouldBe 0
+  it should "solve the testcase(s)" taggedAs(BuildTest) in {
+    Day17.Part2.solve(3, 1) shouldBe 1
+    Day17.Part2.solve(3, 2) shouldBe 2
+    Day17.Part2.solve(3, 3) shouldBe 2
+    Day17.Part2.solve(3, 4) shouldBe 2
+    Day17.Part2.solve(3, 5) shouldBe 5
+    Day17.Part2.solve(3, 9) shouldBe 9
+  }
+
+  it should "solve the puzzle" taggedAs(SolutionTest, SlowTest) in {
+    Day17.Part2.solve(Day17.steps, Day17.times2) shouldBe 39170601
   }
 }
