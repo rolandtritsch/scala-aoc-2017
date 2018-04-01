@@ -36,8 +36,8 @@ object Main {
     println(s"Day15: Part2: count -> ${Day15.Part2.solve}")
     println(s"Day16: Part1: moves -> ${Day16.Part1.solve(Day16.input)}")
     println(s"Day16: Part2: dance -> ${Day16.Part2.solve(Day16.input)}")
-    println(s"Day17: BuildBuffer -> ${Day17.Part1.solve(Day17.steps, Day17.times)}")
-    // @todo Too slow - println(s"Day17: BuildBuffer (big) -> ${Day17.Part2.solve(Day17.steps, Day17.times2)}")
+    println(s"Day17: Part1: next -> ${Day17.Part1.solve(Day17.steps, Day17.times)}")
+    println(s"Day17: Part2: zero -> ${Day17.Part2.solve(Day17.steps, Day17.times2)}")
     // @todo Refactor to make signature smaller (get rid of the channels) - println(s"Day18: RunProgram -> ${Day18.solveRun(Day18.Program(0, Day18.parseInput(Day18.in), Map.empty[Char, Long].withDefaultValue(0), readChannel, writeChannel))}")
     // @todo Day18 - Part2
     println(s"Day19: WalkTheMaze (path) -> ${Day19.walkTheMaze(Day19.in)._1}")

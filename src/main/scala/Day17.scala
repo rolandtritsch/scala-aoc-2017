@@ -1,11 +1,22 @@
 package aoc
 
+/** Problem: [[http://adventofcode.com/2017/day/17]]
+  *
+  * Solution:
+  *
+  * General - Straight-forward. Take a mutable ListBuffer (for performance reasons) and
+  * define the required operations on it.
+  *
+  * Part1 - Run the algorithm `input` (371) times.
+  *
+  * Part2 -
+  */
 object Day17 {
   import scala.collection.mutable
 
-  val in = Util.readInput("Day17input.txt").head.toInt
+  val input = Util.readInput("Day17input.txt").head.toInt
 
-  val steps = in
+  val steps = input
   val times = 2017
   val times2 = 50000000
 
@@ -29,9 +40,8 @@ object Day17 {
   def buildBuffer(buffer: mutable.ListBuffer[Int], steps: Int, times: Int): (Int, mutable.ListBuffer[Int]) = {
     require(steps >= 1, s"step >= 1 failed; with >${steps}<")
     require(times >= 1, s"times >= 1 failed; with >${times}<")
-    (1 to times).foldLeft(0, buffer)((current, n) => {
+    (1.to(times)).foldLeft(0, buffer)((current, n) => {
       val (currentPosition, currentBuffer) = current
-      //if(currentBuffer.size % 100000 == 0) println(currentBuffer.size)
       nextBuffer(currentPosition, currentBuffer, steps, n)
     })
   }

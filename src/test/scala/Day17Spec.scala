@@ -18,12 +18,12 @@ class Day17Spec extends FlatSpec with Matchers {
     (1, List(0, 9, 5, 7, 2, 4, 3, 8, 6, 1))
   )
 
-  behavior of "readInput"
+  behavior of "readInput()"
   it should "read the input" in {
-    Day17.in shouldBe 371
+    Day17.input shouldBe 371
   }
 
-  behavior of "moveForward"
+  behavior of "moveForward()"
   it should "return the right result(s)" in {
     Day17.moveForward(0, 1, 3) shouldBe 0
     Day17.moveForward(1, 2, 3) shouldBe 0
@@ -31,14 +31,14 @@ class Day17Spec extends FlatSpec with Matchers {
     Day17.moveForward(2, 4, 3) shouldBe 1
   }
 
-  behavior of "insertAfter"
+  behavior of "insertAfter()"
   it should "return the right result(s)" in {
     Day17.insertAfter(0, mutable.ListBuffer(0), 1) should be (List(0, 1))
     Day17.insertAfter(0, mutable.ListBuffer(0, 1), 2) should be (List(0, 2, 1))
     Day17.insertAfter(1, mutable.ListBuffer(0, 2, 1), 3) should be (List(0, 2, 3, 1))
   }
 
-  behavior of "nextBuffer"
+  behavior of "nextBuffer()"
   it should "return the next buffer" in {
     val step1 = Day17.nextBuffer(0, mutable.ListBuffer(0), 3, 1)
     step1 should be (1, List(0, 1))
@@ -50,7 +50,7 @@ class Day17Spec extends FlatSpec with Matchers {
     step3 should be (2, List(0, 2, 3, 1))
   }
 
-  behavior of "buildBuffer"
+  behavior of "buildBuffer()"
   it should "return the right result(s)" in {
     Day17.buildBuffer(mutable.ListBuffer(0), 3, 1) should be (1, List(0, 1))
     Day17.buildBuffer(mutable.ListBuffer(0), 3, 2) should be (1, List(0, 2, 1))
@@ -62,13 +62,21 @@ class Day17Spec extends FlatSpec with Matchers {
     buffer(position + 1) shouldBe 638
   }
 
-  it should "solve the puzzle" in {
+  behavior of "solve() - Part1"
+  it should "solve the testcase(s)" taggedAs(BuildTest) in {
+    val (position, buffer) = Day17.buildBuffer(mutable.ListBuffer(0), 3, Day17.times)
+    buffer(position) shouldBe Day17.times
+    buffer(position + 1) shouldBe 638
+  }
+
+  it should "solve the puzzle" taggedAs(SolutionTest) in {
     val (position, buffer) = Day17.buildBuffer(mutable.ListBuffer(0), Day17.steps, Day17.times)
     buffer(position) shouldBe Day17.times
     buffer(position + 1) shouldBe 1311
   }
 
-  ignore should "solve the puzzle (Part2)" in {
+  behavior of "solve() - Part2"
+  ignore should "solve the puzzle (Part2)" taggedAs(SolutionTest) in {
     val (position, buffer) = Day17.buildBuffer(mutable.ListBuffer(0), Day17.steps, Day17.times2)
     buffer(position) shouldBe Day17.times2
     buffer(1) shouldBe 0
