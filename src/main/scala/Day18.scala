@@ -16,135 +16,81 @@ object Day18 {
   case class Send(r: Char) extends Operation {
     def execute(program: Program): Program = {
       assert(program.writeChannel.offerFirst(program.register(r)))
-      Program(
-        program.id,
-        program.counter + 1,
-        program.instructions,
-        program.register,
-        program.readChannel,
-        program.writeChannel,
-        if(program.id == 1) program.writeCount + 1 else program.writeCount,
-        program.checkRegisterOnReceive
+      program.copy(
+        counter = program.counter + 1,
+        writeCount = if(program.id == 1) program.writeCount + 1 else program.writeCount
       )
     }
   }
 
   case class Set(r: Char, v: Long) extends Operation {
     def execute(program: Program): Program = {
-      Program(
-        program.id,
-        program.counter + 1,
-        program.instructions,
-        program.register + (r -> v),
-        program.readChannel,
-        program.writeChannel,
-        program.writeCount,
-        program.checkRegisterOnReceive
+      program.copy(
+        counter = program.counter + 1,
+        register = program.register + (r -> v)
       )
     }
   }
 
   case class SetR(r: Char, v: Char) extends Operation {
     def execute(program: Program): Program = {
-      Program(
-        program.id,
-        program.counter + 1,
-        program.instructions,
-        program.register + (r -> program.register(v)),
-        program.readChannel,
-        program.writeChannel,
-        program.writeCount,
-        program.checkRegisterOnReceive
+      program.copy(
+        counter = program.counter + 1,
+        register = program.register + (r -> program.register(v))
       )
     }
   }
 
   case class Add(r: Char, v: Long) extends Operation {
     def execute(program: Program): Program = {
-      Program(
-        program.id,
-        program.counter + 1,
-        program.instructions,
-        program.register + (r -> (program.register(r) + v)),
-        program.readChannel,
-        program.writeChannel,
-        program.writeCount,
-        program.checkRegisterOnReceive
+      program.copy(
+        counter = program.counter + 1,
+        register = program.register + (r -> (program.register(r) + v))
       )
     }
   }
 
   case class AddR(r: Char, v: Char) extends Operation {
     def execute(program: Program): Program = {
-      Program(
-        program.id,
-        program.counter + 1,
-        program.instructions,
-        program.register + (r -> (program.register(r) + program.register(v))),
-        program.readChannel,
-        program.writeChannel,
-        program.writeCount,
-        program.checkRegisterOnReceive
+      program.copy(
+        counter = program.counter + 1,
+        register = program.register + (r -> (program.register(r) + program.register(v)))
       )
     }
   }
 
   case class Multiply(r: Char, v: Long) extends Operation {
     def execute(program: Program): Program = {
-      Program(
-        program.id,
-        program.counter + 1,
-        program.instructions,
-        program.register + (r -> (program.register(r) * v)),
-        program.readChannel,
-        program.writeChannel,
-        program.writeCount,
-        program.checkRegisterOnReceive
+      program.copy(
+        counter = program.counter + 1,
+        register = program.register + (r -> (program.register(r) * v))
       )
     }
   }
 
   case class MultiplyR(r: Char, v: Char) extends Operation {
     def execute(program: Program): Program = {
-      Program(
-        program.id,
-        program.counter + 1,
-        program.instructions,
-        program.register + (r -> (program.register(r) * program.register(v))),
-        program.readChannel,
-        program.writeChannel,
-        program.writeCount,
-        program.checkRegisterOnReceive
+      program.copy(
+        counter = program.counter + 1,
+        register = program.register + (r -> (program.register(r) * program.register(v)))
       )
     }
   }
 
   case class Modulo(r: Char, v: Long) extends Operation {
     def execute(program: Program): Program = {
-      Program(
-        program.id,
-        program.counter + 1,
-        program.instructions,
-        program.register + (r -> (program.register(r) % v)),
-        program.readChannel,
-        program.writeChannel,
-        program.writeCount,
-        program.checkRegisterOnReceive
+      program.copy(
+        counter = program.counter + 1,
+        register = program.register + (r -> (program.register(r) % v))
       )
     }
   }
 
   case class ModuloR(r: Char, v: Char) extends Operation {
     def execute(program: Program): Program = {
-      Program(
-        program.id,
-        program.counter + 1,
-        program.instructions,
-        program.register + (r -> (program.register(r) % program.register(v))),
-        program.readChannel,
-        program.writeChannel,
-        program.writeCount,
-        program.checkRegisterOnReceive
+      program.copy(
+        counter = program.counter + 1,
+        register = program.register + (r -> (program.register(r) % program.register(v)))
       )
     }
   }
@@ -164,26 +110,13 @@ object Day18 {
             }
           }
 
-          Program(
-            program.id,
-            program.counter + 1,
-            program.instructions,
-            program.register + (r -> value),
-            program.readChannel,
-            program.writeChannel,
-            program.writeCount,
-            program.checkRegisterOnReceive
+          program.copy(
+            counter = program.counter + 1,
+            register = program.register + (r -> value)
           )
         } else {
-          Program(
-            program.id,
-            program.counter + 1,
-            program.instructions,
-            program.register,
-            program.readChannel,
-            program.writeChannel,
-            program.writeCount,
-            program.checkRegisterOnReceive
+          program.copy(
+            counter = program.counter + 1
           )
         }
       } else {
@@ -196,15 +129,9 @@ object Day18 {
           }
         }
 
-        Program(
-          program.id,
-          program.counter + 1,
-          program.instructions,
-          program.register + (r -> value),
-          program.readChannel,
-          program.writeChannel,
-          program.writeCount,
-          program.checkRegisterOnReceive
+        program.copy(
+          counter = program.counter + 1,
+          register = program.register + (r -> value)
         )
       }
     }
@@ -213,27 +140,13 @@ object Day18 {
   case class JumpIfGreaterThanZero(r: Char, v: Int) extends Operation {
     def execute(program: Program): Program = {
       if (program.register(r) > 0) {
-        Program(
-          program.id,
-          program.counter + v,
-          program.instructions,
-          program.register,
-          program.readChannel,
-          program.writeChannel,
-          program.writeCount,
-          program.checkRegisterOnReceive
+        program.copy(
+          counter = program.counter + v
         )
       }
       else {
-        Program(
-          program.id,
-          program.counter + 1,
-          program.instructions,
-          program.register,
-          program.readChannel,
-          program.writeChannel,
-          program.writeCount,
-          program.checkRegisterOnReceive
+        program.copy(
+          counter = program.counter + 1
         )
       }
     }
@@ -242,27 +155,13 @@ object Day18 {
   case class JumpIfGreaterThanZeroR(r: Char, v: Char) extends Operation {
     def execute(program: Program): Program = {
       if (program.register(r) > 0) {
-        Program(
-          program.id,
-          program.counter + program.register(v).toInt,
-          program.instructions,
-          program.register,
-          program.readChannel,
-          program.writeChannel,
-          program.writeCount,
-          program.checkRegisterOnReceive
+        program.copy(
+          counter = program.counter + program.register(v).toInt
         )
       }
       else {
-        Program(
-          program.id,
-          program.counter + 1,
-          program.instructions,
-          program.register,
-          program.readChannel,
-          program.writeChannel,
-          program.writeCount,
-          program.checkRegisterOnReceive
+        program.copy(
+          counter = program.counter + 1
         )
       }
     }
