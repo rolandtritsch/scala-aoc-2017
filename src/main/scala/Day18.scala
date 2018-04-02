@@ -6,7 +6,7 @@ object Day18 {
 
   import java.util.concurrent.{LinkedBlockingDeque, TimeUnit}
 
-  val in = Util.readInput("Day18input.txt")
+  val input = Util.readInput("Day18input.txt")
 
   sealed abstract class Operation {
     def execute(program: Program): Program
@@ -269,7 +269,7 @@ object Day18 {
   }
 
   def parseInput(in: List[String]): List[Operation] = {
-    val registerRange = ('a' to 'z').toList
+    val registerRange = ('a'to('z')).toList
 
     in.map(l => {
       val tokens = l.split(' ')
@@ -332,43 +332,54 @@ object Day18 {
     run(program, done, exit)
   }
 
-  def solveRun(program: Program): Long = {
-    def done(p: Program) = {
-      if (p.counter < 0 || p.counter >= p.instructions.size) true
-      else p.instructions(p.counter) match {
-        case Receive(r) if (p.register(r) > 0) => true
-        case _ => false
+  object Part1 {
+    def solve(input: List[String]): Long = {
+      def done(p: Program) = {
+        if (p.counter < 0 || p.counter >= p.instructions.size) true
+        else p.instructions(p.counter) match {
+          case Receive(r) if (p.register(r) > 0) => true
+          case _ => false
+        }
+      }
+
+      def exit(p: Program) = {
+        if (p.counter < 0 || p.counter >= p.instructions.size) -1L
+        else p.readChannel.pollFirst(5, TimeUnit.SECONDS)
+      }
+
+      val instructions = parseInput(input)
+      val registers = Map.empty[Char, Long].withDefaultValue(0L)
+      val channel = new java.util.concurrent.LinkedBlockingDeque[Long]()
+      val program = Program(0, 0, instructions, registers, channel, channel, 0, true)
+
+      run(program, done, exit)
+    }
+  }
+
+  object Part2 {
+    def solve(input: List[String]): Unit = {
+      val instructions = parseInput(input)
+      val p0Registers = Map.empty[Char, Long].withDefaultValue(0L) + ('p' -> 0L)
+      val p1Registers = Map.empty[Char, Long].withDefaultValue(0L) + ('p' -> 1L)
+      val p0Channel = new LinkedBlockingDeque[Long]()
+      val p1Channel = new LinkedBlockingDeque[Long]()
+      val p0 = Program(0, 0, instructions, p0Registers, p1Channel, p0Channel, 0, false)
+      val p1 = Program(1, 0, instructions, p1Registers, p0Channel, p1Channel, 0, false)
+
+      // @todo Consider using Futures instead of Threads
+      val threads = List(
+        new Thread(new Runner(p0)),
+        new Thread(new Runner(p1))
+      )
+      threads.foreach(t => t.start())
+      threads.foreach(t => t.join())
+    }
+
+    class Runner(program: Program) extends Runnable {
+      override def run(): Unit = {
+        fullRun(program)
       }
     }
-
-    def exit(p: Program) = {
-      if (p.counter < 0 || p.counter >= p.instructions.size) -1L
-      else p.readChannel.pollFirst(5, TimeUnit.SECONDS)
-    }
-
-    run(program, done, exit)
-  }
-
-  def concurrentRun(instructions: List[Operation]): Unit = {
-    val p0Registers = Map.empty[Char, Long].withDefaultValue(0L) + ('p' -> 0L)
-    val p1Registers = Map.empty[Char, Long].withDefaultValue(0L) + ('p' -> 1L)
-    val p0Channel = new LinkedBlockingDeque[Long]()
-    val p1Channel = new LinkedBlockingDeque[Long]()
-    val p0 = Program(0, 0, instructions, p0Registers, p1Channel, p0Channel, 0, false)
-    val p1 = Program(1, 0, instructions, p1Registers, p0Channel, p1Channel, 0, false)
-
-    // @todo Consider using Futures instead of Threads
-    val threads = List(
-      new Thread(new Runner(p0)),
-      new Thread(new Runner(p1))
-    )
-    threads.foreach(t => t.start())
-    threads.foreach(t => t.join())
   }
 }
 
-class Runner(program: Day18.Program) extends Runnable {
-  override def run(): Unit = {
-    Day18.fullRun(program)
-  }
-}

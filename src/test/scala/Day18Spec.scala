@@ -55,35 +55,33 @@ class Day18Spec extends FlatSpec with Matchers {
     "rcv d"
   )
 
-  behavior of "the input"
+  behavior of "readInput()"
   it should "be correct" in {
-    Day18.in.take(resultInput.size) should be (resultInput)
+    Day18.input.take(resultInput.size) should be (resultInput)
   }
 
-  behavior of "the parser"
+  behavior of "parseInput()"
   it should "return the correct result(s)" in {
     Day18.parseInput(testInput) should be (testOutput)
   }
 
-  behavior of "running the program"
-  it should "return the correct result(s)" in {
-    val channel = new java.util.concurrent.LinkedBlockingDeque[Long]()
-    Day18.solveRun(Day18.Program(0, 0, Day18.parseInput(testInput), Map.empty[Char, Long].withDefaultValue(0L), channel, channel, 0, true)) shouldBe 4
+  behavior of "solve() - Part1"
+  it should "solve the testcase(s)" taggedAs(BuildTest) in {
+    Day18.Part1.solve(testInput) shouldBe 4
   }
 
-  it should "solve the puzzle" in {
-    val channel = new java.util.concurrent.LinkedBlockingDeque[Long]()
-    Day18.solveRun(Day18.Program(0, 0, Day18.parseInput(Day18.in), Map.empty[Char, Long].withDefaultValue(0L), channel, channel, 0, true)) shouldBe 3188
+  it should "solve the puzzle" taggedAs(SolutionTest) in {
+    Day18.Part1.solve(Day18.input) shouldBe 3188
   }
 
-  behavior of "running the program concurrently"
-  ignore should "deadlock" in {
+  behavior of "solve() - Part2"
+  it should "solve the testcase(s)" taggedAs(BuildTest) in {
     // print 3
-    Day18.concurrentRun(Day18.parseInput(deadlockInput))
+    Day18.Part2.solve(deadlockInput)
   }
 
-  ignore should "solve the puzzle (again)" in {
+  it should "solve the puzzle" taggedAs(SolutionTest) in {
     // print 7112
-    Day18.concurrentRun(Day18.parseInput(Day18.in))
+    Day18.Part2.solve(Day18.input)
   }
 }
