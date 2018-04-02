@@ -1,7 +1,27 @@
 package aoc
 
-// @note The instruction on line 35 is >jgz 1 3<. Not sure, if this is a typo. I changed it to >jgz l 3< and added >set l 1< as the first instruction.
-// @todo This needs to be refactored
+/** Problem: [[https://adventofcode.com/2017/day/18]]
+  *
+  * General - First we need to implement all of the operations. We then
+  * execute the progrom by executing all instructions (the input). Running
+  * the program can be parameterized by `when is the program done?` and
+  * `what do we do when we exit?`.
+  *
+  * Note: To solve the puzzle(s) we need two program instances to talk
+  * to each other (send/receive register values (frequencies)). For that
+  * to happen I am using a blocking queue between the instances.
+  *
+  * Note: The instruction on line 35 is >jgz 1 3<. Not sure, if this is
+  * a typo. I changed it to >jgz l 3< and added >set l 1< as the first
+  * instruction in the input file.
+  *
+  * Part1 - Simple. Run the program. When we exit we need to return the
+  * value of the recovered frequency (the value of the most recently
+  * played sound; basically most recent value in the queue). We are done,
+  * the first time a receive instruction is executed with a non-zero value.
+  *
+  * Part2 -
+  */
 object Day18 {
 
   import java.util.concurrent.{LinkedBlockingDeque, TimeUnit}
