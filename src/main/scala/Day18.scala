@@ -1,5 +1,7 @@
 package aoc
 
+import java.util.concurrent
+
 /** Problem: [[https://adventofcode.com/2017/day/18]]
   *
   * General - First we need to implement all of the operations. We then
@@ -14,6 +16,13 @@ package aoc
   * Note: The instruction on line 35 is >jgz 1 3<. Not sure, if this is
   * a typo. I changed it to >jgz l 3< and added >set l 1< as the first
   * instruction in the input file.
+  *
+  * Note: Refactored an earlier solution into using Future and Promises
+  * to make the solution for Part2 more elegant. Based on that approach
+  * for Part1 the run will return a Failure, if it fails to find a frequency
+  * that can be recovered. Otherwise it will return a Success(frequency).
+  * For Part2 it will return a Success(writeCount), if/when a/the deadlock
+  * is detected. Otherwise it will return a failure.
   *
   * Part1 - Simple. Run the program. When we exit we need to return the
   * value of the recovered frequency (the value of the most recently
@@ -234,10 +243,17 @@ object Day18 {
     })
   }
 
-  // @todo Refactor Program. This class is too big. It is passing around to much state. Consider to pass along some of the parameters as implicits.
-  case class Program(id: Int, counter: Int, instructions: List[Operation], register: Map[Char, Long], readChannel: LinkedBlockingDeque[Long], writeChannel: LinkedBlockingDeque[Long], writeCount: Int, checkRegisterOnReceive: Boolean)
+  case class Program(
+    id: Int,
+    counter: Int,
+    instructions: List[Operation],
+    register: Map[Char, Long],
+    readChannel: LinkedBlockingDeque[Long],
+    writeChannel: LinkedBlockingDeque[Long],
+    writeCount: Int,
+    checkRegisterOnReceive: Boolean
+  )
 
-  // @todo This should be/could be a method on Program.
   def run(program: Program, done: Program => Boolean, exit: Program => Long): Long = {
     if (done(program)) exit(program)
     else run(program.instructions(program.counter).execute(program), done, exit)
@@ -245,15 +261,22 @@ object Day18 {
 
   def fullRun(program: Program): Long = {
     def done(p: Program) = p.counter < 0 || p.counter >= p.instructions.size
-
     def exit(p: Program) = -1L
 
     run(program, done, exit)
   }
 
   object Part1 {
+    import scala.concurrent.{Promise, Await}
+    import scala.concurrent.duration._
+
     def solve(input: List[String]): Long = {
-      def done(p: Program) = {
+      def run(program: Program, done: Program => Boolean, exit: Program => Promise[Long]): Promise[Long] = {
+        if (done(program)) exit(program)
+        else run(program.instructions(program.counter).execute(program), done, exit)
+      }
+
+      def done(p: Program): Boolean = {
         if (p.counter < 0 || p.counter >= p.instructions.size) true
         else p.instructions(p.counter) match {
           case Receive(r) if (p.register(r) > 0) => true
@@ -261,17 +284,18 @@ object Day18 {
         }
       }
 
-      def exit(p: Program) = {
-        if (p.counter < 0 || p.counter >= p.instructions.size) -1L
-        else p.readChannel.pollFirst(5, TimeUnit.SECONDS)
+      def exit(p: Program): Promise[Long] = {
+        if (p.counter < 0 || p.counter >= p.instructions.size) Promise.failed(new RuntimeException)
+        else Promise.successful(p.readChannel.pollFirst(5, TimeUnit.SECONDS))
       }
 
       val instructions = parseInput(input)
       val registers = Map.empty[Char, Long].withDefaultValue(0L)
-      val channel = new java.util.concurrent.LinkedBlockingDeque[Long]()
+      val channel = new LinkedBlockingDeque[Long]()
       val program = Program(0, 0, instructions, registers, channel, channel, 0, true)
 
-      run(program, done, exit)
+      val thread = run(program, done, exit).future
+      Await.result(thread, 1 minute)
     }
   }
 
