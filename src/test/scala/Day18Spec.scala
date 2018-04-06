@@ -76,12 +76,10 @@ class Day18Spec extends FlatSpec with Matchers {
 
   behavior of "solve() - Part2"
   it should "solve the testcase(s)" taggedAs(BuildTest) in {
-    // print 3
-    Day18.Part2.solve(deadlockInput)
+    Day18.Part2.solve(deadlockInput) shouldBe 3
   }
 
   it should "solve the puzzle" taggedAs(SolutionTest) in {
-    // print 7112
-    Day18.Part2.solve(Day18.input)
+    Day18.Part2.solve(Day18.input) shouldBe 7112
   }
 }

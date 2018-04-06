@@ -139,6 +139,7 @@ object Day18 {
             }
 
             case None => {
+              println(s"Deadlock0 detected. WriteCount ${program.writeCount}")
               program.copy(
                 counter = program.counter + 1,
                 deadlocked = true
@@ -159,7 +160,9 @@ object Day18 {
             )
 
           }
+
           case None => {
+            println(s"Deadlock1 detected. WriteCount ${program.writeCount}")
             program.copy(
               counter = program.counter + 1,
               deadlocked = true
@@ -313,8 +316,11 @@ object Day18 {
 
       val thread0 = fullRun(p0).future
       val thread1 = fullRun(p1).future
-      Await.result(thread0, 1 minute) + Await.result(thread1, 1 minute)
+      val result0 = Await.result(thread0, 1 minute)
+      val result1 = Await.result(thread1, 1 minute)
+      println(result0)
+      println(result1)
+      result0 + result1
     }
   }
 }
-
