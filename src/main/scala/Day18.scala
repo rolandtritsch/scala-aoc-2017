@@ -34,6 +34,8 @@ import java.util.concurrent
 object Day18 {
 
   import java.util.concurrent.{LinkedBlockingDeque, TimeUnit}
+  import scala.concurrent.{Promise, Await}
+  import scala.concurrent.duration._
 
   val input = Util.readInput("Day18input.txt")
 
@@ -128,40 +130,42 @@ object Day18 {
     def execute(program: Program): Program = {
       if (program.checkRegisterOnReceive) {
         if (program.register(r) != 0) {
-          val value = Option(program.readChannel.pollLast(5, TimeUnit.SECONDS)) match {
-            case Some(v) => v
+          Option(program.readChannel.pollLast(5, TimeUnit.SECONDS)) match {
+            case Some(v) => {
+              program.copy(
+                counter = program.counter + 1,
+                register = program.register + (r -> v)
+              )
+            }
+
             case None => {
-              // @todo Find a way to return the writeCount
-              println(s"Deadlock detected (${program.id}/${program.writeCount})")
-              // @todo Do not *just* stop the thread. Find a way to terminate gracefully
-              Thread.currentThread.stop()
-              0L
+              program.copy(
+                counter = program.counter + 1,
+                deadlocked = true
+              )
             }
           }
-
-          program.copy(
-            counter = program.counter + 1,
-            register = program.register + (r -> value)
-          )
         } else {
           program.copy(
             counter = program.counter + 1
           )
         }
       } else {
-        val value = Option(program.readChannel.pollLast(5, TimeUnit.SECONDS)) match {
-          case Some(v) => v
+        Option(program.readChannel.pollLast(5, TimeUnit.SECONDS)) match {
+          case Some(v) => {
+            program.copy(
+              counter = program.counter + 1,
+              register = program.register + (r -> v)
+            )
+
+          }
           case None => {
-            println(s"Deadlock detected (${program.id}/${program.writeCount})")
-            Thread.currentThread.stop()
-            0L
+            program.copy(
+              counter = program.counter + 1,
+              deadlocked = true
+            )
           }
         }
-
-        program.copy(
-          counter = program.counter + 1,
-          register = program.register + (r -> value)
-        )
       }
     }
   }
@@ -251,25 +255,16 @@ object Day18 {
     readChannel: LinkedBlockingDeque[Long],
     writeChannel: LinkedBlockingDeque[Long],
     writeCount: Int,
-    checkRegisterOnReceive: Boolean
+    checkRegisterOnReceive: Boolean,
+    deadlocked: Boolean
   )
 
-  def run(program: Program, done: Program => Boolean, exit: Program => Long): Long = {
+  def run(program: Program, done: Program => Boolean, exit: Program => Promise[Long]): Promise[Long] = {
     if (done(program)) exit(program)
     else run(program.instructions(program.counter).execute(program), done, exit)
   }
 
-  def fullRun(program: Program): Long = {
-    def done(p: Program) = p.counter < 0 || p.counter >= p.instructions.size
-    def exit(p: Program) = -1L
-
-    run(program, done, exit)
-  }
-
   object Part1 {
-    import scala.concurrent.{Promise, Await}
-    import scala.concurrent.duration._
-
     def solve(input: List[String]): Long = {
       def run(program: Program, done: Program => Boolean, exit: Program => Promise[Long]): Promise[Long] = {
         if (done(program)) exit(program)
@@ -292,7 +287,7 @@ object Day18 {
       val instructions = parseInput(input)
       val registers = Map.empty[Char, Long].withDefaultValue(0L)
       val channel = new LinkedBlockingDeque[Long]()
-      val program = Program(0, 0, instructions, registers, channel, channel, 0, true)
+      val program = Program(0, 0, instructions, registers, channel, channel, 0, true, false)
 
       val thread = run(program, done, exit).future
       Await.result(thread, 1 minute)
@@ -300,28 +295,25 @@ object Day18 {
   }
 
   object Part2 {
-    def solve(input: List[String]): Unit = {
+    def fullRun(program: Program): Promise[Long] = {
+      def done(p: Program): Boolean = p.counter < 0 || p.counter >= p.instructions.size || p.deadlocked
+      def exit(p: Program): Promise[Long] = if(p.deadlocked) Promise.successful(p.writeCount) else Promise.failed(new RuntimeException)
+
+      run(program, done, exit)
+    }
+
+    def solve(input: List[String]): Long = {
       val instructions = parseInput(input)
       val p0Registers = Map.empty[Char, Long].withDefaultValue(0L) + ('p' -> 0L)
       val p1Registers = Map.empty[Char, Long].withDefaultValue(0L) + ('p' -> 1L)
       val p0Channel = new LinkedBlockingDeque[Long]()
       val p1Channel = new LinkedBlockingDeque[Long]()
-      val p0 = Program(0, 0, instructions, p0Registers, p1Channel, p0Channel, 0, false)
-      val p1 = Program(1, 0, instructions, p1Registers, p0Channel, p1Channel, 0, false)
+      val p0 = Program(0, 0, instructions, p0Registers, p1Channel, p0Channel, 0, false, false)
+      val p1 = Program(1, 0, instructions, p1Registers, p0Channel, p1Channel, 0, false, false)
 
-      // @todo Consider using Futures instead of Threads
-      val threads = List(
-        new Thread(new Runner(p0)),
-        new Thread(new Runner(p1))
-      )
-      threads.foreach(t => t.start())
-      threads.foreach(t => t.join())
-    }
-
-    class Runner(program: Program) extends Runnable {
-      override def run(): Unit = {
-        fullRun(program)
-      }
+      val thread0 = fullRun(p0).future
+      val thread1 = fullRun(p1).future
+      Await.result(thread0, 1 minute) + Await.result(thread1, 1 minute)
     }
   }
 }
