@@ -1,7 +1,5 @@
 package aoc
 
-import java.util.concurrent
-
 /** Problem: [[https://adventofcode.com/2017/day/18]]
   *
   * General - First we need to implement all of the operations. We then
@@ -32,10 +30,6 @@ import java.util.concurrent
   * Part2 -
   */
 object Day18 {
-
-  import java.util.concurrent.{LinkedBlockingDeque, TimeUnit}
-  import scala.concurrent.{Promise, Await}
-  import scala.concurrent.duration._
 
   val input = Util.readInput("Day18input.txt")
 
@@ -126,11 +120,12 @@ object Day18 {
     }
   }
 
+  import java.util.concurrent.{LinkedBlockingDeque, TimeUnit}
   case class Receive(r: Char) extends Operation {
     def execute(program: Program): Program = {
       if (program.checkRegisterOnReceive) {
         if (program.register(r) != 0) {
-          Option(program.readChannel.pollLast(5, TimeUnit.SECONDS)) match {
+          Option(program.readChannel.pollLast(1, TimeUnit.SECONDS)) match {
             case Some(v) => {
               program.copy(
                 counter = program.counter + 1,
@@ -139,7 +134,6 @@ object Day18 {
             }
 
             case None => {
-              println(s"Deadlock0 detected. WriteCount ${program.writeCount}")
               program.copy(
                 counter = program.counter + 1,
                 deadlocked = true
@@ -152,7 +146,7 @@ object Day18 {
           )
         }
       } else {
-        Option(program.readChannel.pollLast(5, TimeUnit.SECONDS)) match {
+        Option(program.readChannel.pollLast(1, TimeUnit.SECONDS)) match {
           case Some(v) => {
             program.copy(
               counter = program.counter + 1,
@@ -162,7 +156,6 @@ object Day18 {
           }
 
           case None => {
-            println(s"Deadlock1 detected. WriteCount ${program.writeCount}")
             program.copy(
               counter = program.counter + 1,
               deadlocked = true
@@ -262,14 +255,14 @@ object Day18 {
     deadlocked: Boolean
   )
 
-  def run(program: Program, done: Program => Boolean, exit: Program => Promise[Long]): Promise[Long] = {
+  def run(program: Program, done: Program => Boolean, exit: Program => Long): Long = {
     if (done(program)) exit(program)
     else run(program.instructions(program.counter).execute(program), done, exit)
   }
 
   object Part1 {
     def solve(input: List[String]): Long = {
-      def run(program: Program, done: Program => Boolean, exit: Program => Promise[Long]): Promise[Long] = {
+      def run(program: Program, done: Program => Boolean, exit: Program => Long): Long = {
         if (done(program)) exit(program)
         else run(program.instructions(program.counter).execute(program), done, exit)
       }
@@ -282,9 +275,9 @@ object Day18 {
         }
       }
 
-      def exit(p: Program): Promise[Long] = {
-        if (p.counter < 0 || p.counter >= p.instructions.size) Promise.failed(new RuntimeException)
-        else Promise.successful(p.readChannel.pollFirst(5, TimeUnit.SECONDS))
+      def exit(p: Program): Long = {
+        if (p.counter < 0 || p.counter >= p.instructions.size) -1L
+        else p.readChannel.pollFirst(5, TimeUnit.SECONDS)
       }
 
       val instructions = parseInput(input)
@@ -292,20 +285,24 @@ object Day18 {
       val channel = new LinkedBlockingDeque[Long]()
       val program = Program(0, 0, instructions, registers, channel, channel, 0, true, false)
 
-      val thread = run(program, done, exit).future
-      Await.result(thread, 1 minute)
+      run(program, done, exit)
     }
   }
 
   object Part2 {
-    def fullRun(program: Program): Promise[Long] = {
+    def fullRun(program: Program): Long = {
       def done(p: Program): Boolean = p.counter < 0 || p.counter >= p.instructions.size || p.deadlocked
-      def exit(p: Program): Promise[Long] = if(p.deadlocked) Promise.successful(p.writeCount) else Promise.failed(new RuntimeException)
+      def exit(p: Program): Long = if(p.deadlocked) p.writeCount else -1L
 
       run(program, done, exit)
     }
 
     def solve(input: List[String]): Long = {
+
+      import scala.concurrent.ExecutionContext.Implicits.global
+      import scala.concurrent.{Future, Await}
+      import scala.concurrent.duration._
+
       val instructions = parseInput(input)
       val p0Registers = Map.empty[Char, Long].withDefaultValue(0L) + ('p' -> 0L)
       val p1Registers = Map.empty[Char, Long].withDefaultValue(0L) + ('p' -> 1L)
@@ -314,12 +311,10 @@ object Day18 {
       val p0 = Program(0, 0, instructions, p0Registers, p1Channel, p0Channel, 0, false, false)
       val p1 = Program(1, 0, instructions, p1Registers, p0Channel, p1Channel, 0, false, false)
 
-      val thread0 = fullRun(p0).future
-      val thread1 = fullRun(p1).future
+      val thread0 = Future { fullRun(p0) }
+      val thread1 = Future { fullRun(p1) }
       val result0 = Await.result(thread0, 1 minute)
       val result1 = Await.result(thread1, 1 minute)
-      println(result0)
-      println(result1)
       result0 + result1
     }
   }
