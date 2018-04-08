@@ -15,19 +15,15 @@ package aoc
   * a typo. I changed it to >jgz l 3< and added >set l 1< as the first
   * instruction in the input file.
   *
-  * Note: Refactored an earlier solution into using Future and Promises
-  * to make the solution for Part2 more elegant. Based on that approach
-  * for Part1 the run will return a Failure, if it fails to find a frequency
-  * that can be recovered. Otherwise it will return a Success(frequency).
-  * For Part2 it will return a Success(writeCount), if/when a/the deadlock
-  * is detected. Otherwise it will return a failure.
-  *
   * Part1 - Simple. Run the program. When we exit we need to return the
   * value of the recovered frequency (the value of the most recently
   * played sound; basically most recent value in the queue). We are done,
   * the first time a receive instruction is executed with a non-zero value.
   *
-  * Part2 -
+  * Part2 - Also (kind of) simple (after some refactoring; using Future and
+  * replacing LinkedBlockingDeque with Queue). Run until both sides are waiting
+  * (i.e. are deadlocked) and (at that point in time) return/exit with the
+  * writeCount.
   */
 object Day18 {
 
