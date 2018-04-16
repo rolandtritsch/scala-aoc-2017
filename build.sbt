@@ -18,7 +18,7 @@ val jvmSettings = Seq(
     "org.scalameter.ScalaMeterFramework"
   ),
 
-  scalacOptions ++= Seq("-unchecked", "-deprecation")
+  scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 )
 
 val nativeSettings = Seq(
@@ -27,7 +27,7 @@ val nativeSettings = Seq(
 )
 
 lazy val aoc = crossProject(JVMPlatform, NativePlatform)
-  .crossType(CrossType.Pure)
+  .crossType(CrossType.Full)
   .in(file("."))
   .settings(sharedSettings)
   .jvmSettings(jvmSettings)

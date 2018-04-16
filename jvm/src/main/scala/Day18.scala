@@ -24,6 +24,9 @@ package aoc
   * replacing LinkedBlockingDeque with Queue). Run until both sides are waiting
   * (i.e. are deadlocked) and (at that point in time) return/exit with the
   * writeCount.
+  *
+  * Note: This solution will not compile with scala native (because there
+  * is no implementation of LinkedBlockingDequeue in scala native).
   */
 object Day18 {
 
