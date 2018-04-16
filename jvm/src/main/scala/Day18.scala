@@ -301,6 +301,7 @@ object Day18 {
       import scala.concurrent.ExecutionContext.Implicits.global
       import scala.concurrent.{Future, Await}
       import scala.concurrent.duration._
+      import scala.language.postfixOps
 
       val instructions = parseInput(input)
       val p0Registers = Map.empty[Char, Long].withDefaultValue(0L) + ('p' -> 0L)
