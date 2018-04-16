@@ -32,10 +32,12 @@ object Day18 {
 
   val input = Util.readInput("Day18input.txt")
 
-  def parseInput(in: List[String]): List[Operation] = {
+  def parseInput(input: List[String]): List[Operation] = {
+    require(input.nonEmpty, s"input.nonEmpty failed")
+
     val registerRange = ('a'to('z')).toList
 
-    in.map(l => {
+    input.map(l => {
       val tokens = l.split(' ')
       assert(tokens.size >= 2)
       val operation = tokens(0)
@@ -77,7 +79,7 @@ object Day18 {
         case _ => assert(false); Send('a')
       }
     })
-  }
+  } ensuring(_.nonEmpty, s"_.nonEmpty failed")
 
   import java.util.concurrent.{LinkedBlockingDeque, TimeUnit}
   case class Program(
@@ -94,12 +96,12 @@ object Day18 {
 
   sealed abstract class Operation {
     def execute(program: Program): Program
-
   }
 
   case class Send(r: Char) extends Operation {
     def execute(program: Program): Program = {
-      assert(program.writeChannel.offerFirst(program.register(r)))
+      val success = program.writeChannel.offerFirst(program.register(r))
+      assert(success)
       program.copy(
         counter = program.counter + 1,
         writeCount = if(program.id == 1) program.writeCount + 1 else program.writeCount
