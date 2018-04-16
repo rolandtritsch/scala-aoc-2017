@@ -6,7 +6,7 @@ import org.scalameter.picklers.Implicits._
 object Day16Meter extends Bench.OfflineReport {
 
   val nGen = for {
-    n <- Gen.range("n")(1, 5, 1)
+    n <- Gen.range("n")(1, 1, 1)
   } yield {
     n
   }

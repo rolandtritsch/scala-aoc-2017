@@ -7,8 +7,7 @@ object Day03Meter extends Bench.OfflineReport {
 
   val startRange = 100
   val numGen = for {
-  //num <- Gen.exponential("num")(0, 100000, 10000)
-  num <- Gen.range("num")(startRange, startRange + 10, 1)
+    num <- Gen.range("num")(startRange, startRange + 10, 1)
   } yield {
     num
   }
