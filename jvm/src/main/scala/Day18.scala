@@ -32,6 +32,66 @@ object Day18 {
 
   val input = Util.readInput("Day18input.txt")
 
+  def parseInput(in: List[String]): List[Operation] = {
+    val registerRange = ('a'to('z')).toList
+
+    in.map(l => {
+      val tokens = l.split(' ')
+      assert(tokens.size >= 2)
+      val operation = tokens(0)
+      val register = tokens(1).charAt(0)
+      assert(registerRange.contains(register))
+      operation match {
+        case "snd" => Send(register)
+        case "set" => {
+          assert(tokens.size == 3)
+          val operand = tokens(2)
+          if (registerRange.contains(operand.charAt(0))) SetR(register, operand.charAt(0))
+          else Set(register, operand.toLong)
+        }
+        case "add" => {
+          assert(tokens.size == 3)
+          val operand = tokens(2)
+          if (registerRange.contains(operand.charAt(0))) AddR(register, operand.charAt(0))
+          else Add(register, operand.toLong)
+        }
+        case "mul" => {
+          assert(tokens.size == 3)
+          val operand = tokens(2)
+          if (registerRange.contains(operand.charAt(0))) MultiplyR(register, operand.charAt(0))
+          else Multiply(register, operand.toLong)
+        }
+        case "mod" => {
+          assert(tokens.size == 3)
+          val operand = tokens(2)
+          if (registerRange.contains(operand.charAt(0))) ModuloR(register, operand.charAt(0))
+          else Modulo(register, operand.toLong)
+        }
+        case "rcv" => Receive(register)
+        case "jgz" => {
+          assert(tokens.size == 3)
+          val operand = tokens(2)
+          if (registerRange.contains(operand.charAt(0))) JumpIfGreaterThanZeroR(register, operand.charAt(0))
+          else JumpIfGreaterThanZero(register, operand.toInt)
+        }
+        case _ => assert(false); Send('a')
+      }
+    })
+  }
+
+  import java.util.concurrent.{LinkedBlockingDeque, TimeUnit}
+  case class Program(
+    id: Int,
+    counter: Int,
+    instructions: List[Operation],
+    register: Map[Char, Long],
+    readChannel: LinkedBlockingDeque[Long],
+    writeChannel: LinkedBlockingDeque[Long],
+    writeCount: Int,
+    checkRegisterOnReceive: Boolean,
+    deadlocked: Boolean
+  )
+
   sealed abstract class Operation {
     def execute(program: Program): Program
 
@@ -119,7 +179,6 @@ object Day18 {
     }
   }
 
-  import java.util.concurrent.{LinkedBlockingDeque, TimeUnit}
   case class Receive(r: Char) extends Operation {
     def execute(program: Program): Program = {
       if (program.checkRegisterOnReceive) {
@@ -195,65 +254,6 @@ object Day18 {
     }
   }
 
-  def parseInput(in: List[String]): List[Operation] = {
-    val registerRange = ('a'to('z')).toList
-
-    in.map(l => {
-      val tokens = l.split(' ')
-      assert(tokens.size >= 2)
-      val operation = tokens(0)
-      val register = tokens(1).charAt(0)
-      assert(registerRange.contains(register))
-      operation match {
-        case "snd" => Send(register)
-        case "set" => {
-          assert(tokens.size == 3)
-          val operand = tokens(2)
-          if (registerRange.contains(operand.charAt(0))) SetR(register, operand.charAt(0))
-          else Set(register, operand.toLong)
-        }
-        case "add" => {
-          assert(tokens.size == 3)
-          val operand = tokens(2)
-          if (registerRange.contains(operand.charAt(0))) AddR(register, operand.charAt(0))
-          else Add(register, operand.toLong)
-        }
-        case "mul" => {
-          assert(tokens.size == 3)
-          val operand = tokens(2)
-          if (registerRange.contains(operand.charAt(0))) MultiplyR(register, operand.charAt(0))
-          else Multiply(register, operand.toLong)
-        }
-        case "mod" => {
-          assert(tokens.size == 3)
-          val operand = tokens(2)
-          if (registerRange.contains(operand.charAt(0))) ModuloR(register, operand.charAt(0))
-          else Modulo(register, operand.toLong)
-        }
-        case "rcv" => Receive(register)
-        case "jgz" => {
-          assert(tokens.size == 3)
-          val operand = tokens(2)
-          if (registerRange.contains(operand.charAt(0))) JumpIfGreaterThanZeroR(register, operand.charAt(0))
-          else JumpIfGreaterThanZero(register, operand.toInt)
-        }
-        case _ => assert(false); Send('a')
-      }
-    })
-  }
-
-  case class Program(
-    id: Int,
-    counter: Int,
-    instructions: List[Operation],
-    register: Map[Char, Long],
-    readChannel: LinkedBlockingDeque[Long],
-    writeChannel: LinkedBlockingDeque[Long],
-    writeCount: Int,
-    checkRegisterOnReceive: Boolean,
-    deadlocked: Boolean
-  )
-
   def run(program: Program, done: Program => Boolean, exit: Program => Long): Long = {
     if (done(program)) exit(program)
     else run(program.instructions(program.counter).execute(program), done, exit)
@@ -261,11 +261,6 @@ object Day18 {
 
   object Part1 {
     def solve(input: List[String]): Long = {
-      def run(program: Program, done: Program => Boolean, exit: Program => Long): Long = {
-        if (done(program)) exit(program)
-        else run(program.instructions(program.counter).execute(program), done, exit)
-      }
-
       def done(p: Program): Boolean = {
         if (p.counter < 0 || p.counter >= p.instructions.size) true
         else p.instructions(p.counter) match {
@@ -289,14 +284,14 @@ object Day18 {
   }
 
   object Part2 {
-    def fullRun(program: Program): Long = {
-      def done(p: Program): Boolean = p.counter < 0 || p.counter >= p.instructions.size || p.deadlocked
-      def exit(p: Program): Long = if(p.deadlocked) p.writeCount else -1L
-
-      run(program, done, exit)
-    }
-
     def solve(input: List[String]): Long = {
+      def done(p: Program): Boolean = {
+        p.counter < 0 || p.counter >= p.instructions.size || p.deadlocked
+      }
+
+      def exit(p: Program): Long = {
+        if(p.deadlocked) p.writeCount else -1L
+      }
 
       import scala.concurrent.ExecutionContext.Implicits.global
       import scala.concurrent.{Future, Await}
@@ -311,8 +306,8 @@ object Day18 {
       val p0 = Program(0, 0, instructions, p0Registers, p1Channel, p0Channel, 0, false, false)
       val p1 = Program(1, 0, instructions, p1Registers, p0Channel, p1Channel, 0, false, false)
 
-      val thread0 = Future { fullRun(p0) }
-      val thread1 = Future { fullRun(p1) }
+      val thread0 = Future { run(p0, done, exit) }
+      val thread1 = Future { run(p1, done, exit) }
       val result0 = Await.result(thread0, 1 minute)
       val result1 = Await.result(thread1, 1 minute)
       result0 + result1
