@@ -10,7 +10,7 @@ class Day18Check extends PropSpec with GeneratorDrivenPropertyChecks with Matche
   import org.scalacheck.Shrink
   implicit def noShrink[T]: Shrink[T] = Shrink.shrinkAny
 
-  property("") {
+  property("Dummy - do not know, what to test here") {
     forAll(Gen.posNum[Int]) {n => {
     }}
   }
