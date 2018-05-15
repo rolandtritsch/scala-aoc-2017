@@ -16,7 +16,7 @@ package aoc
   */
 object Day19 {
 
-  val in = Util.readInput("Day19input.txt").map(_.toCharArray).toArray
+  val input = Util.readInput("Day19input.txt").map(_.toCharArray).toArray
 
   object Direction {
     val UP = 'U'
@@ -85,19 +85,20 @@ object Day19 {
       if(s.done) s
       else go(s.next)
     }
+
     val finalState = go(State(0, maze(0).indexOf('|'), Direction.DOWN, maze, 0, "", false))
     (finalState.path, finalState.steps)
   }
 
   object Part1 {
-    def solve(in: Array[Array[Char]]): String = {
-      walkTheMaze(in)._1
+    def solve(input: Array[Array[Char]]): String = {
+      walkTheMaze(input)._1
     }
   }
 
   object Part2 {
-    def solve(in: Array[Array[Char]]): Int = {
-      walkTheMaze(in)._2
+    def solve(input: Array[Array[Char]]): Int = {
+      walkTheMaze(input)._2
     }
   }
 }
