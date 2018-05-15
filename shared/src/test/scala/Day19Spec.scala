@@ -13,17 +13,23 @@ class Day19Spec extends FlatSpec with Matchers {
     "      +B-+  +--+"
   ).map(_.toCharArray)
 
-  behavior of "the input"
+  behavior of "readInput()"
   it should "have the first line in it" in {
     Day19.in.head.indexOf('|') shouldBe 163
   }
 
-  behavior of "walking the maze"
-  it should "give the right result(s)" in {
+  behavior of "walkTheMaze()"
+  it should "give the right result(s)" taggedAs(BuildTest) in {
     Day19.walkTheMaze(testInput) shouldBe ("ABCDEF", 38)
   }
 
-  it should "solve the puzzle" in {
-    Day19.walkTheMaze(Day19.in) shouldBe ("PVBSCMEQHY", 17736)
+  behavior of "solve() - Part1"
+  it should "solve the puzzle" taggedAs(SolutionTest) in {
+    Day19.Part1.solve(Day19.in) shouldBe "PVBSCMEQHY"
+  }
+
+  behavior of "solve() - Part2"
+  it should "solve the puzzle" taggedAs(SolutionTest) in {
+    Day19.Part2.solve(Day19.in) shouldBe 17736
   }
 }

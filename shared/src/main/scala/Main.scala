@@ -40,8 +40,8 @@ object Main {
     println(s"Day17: Part2: zero -> ${Day17.Part2.solve(Day17.steps, Day17.times2)}")
     println(s"Day18: Part1: frequency -> ${Day18.Part1.solve(Day18.input)}")
     println(s"Day18: Part2: deadlock -> ${Day18.Part2.solve(Day18.input)}")
-    println(s"Day19: WalkTheMaze (path) -> ${Day19.walkTheMaze(Day19.in)._1}")
-    println(s"Day19: WalkTheMaze (steps) -> ${Day19.walkTheMaze(Day19.in)._2}")
+    println(s"Day19: Part1: path -> ${Day19.Part1.solve(Day19.in)}")
+    println(s"Day19: Part2: steps -> ${Day19.Part2.solve(Day19.in)}")
     println(s"Day20: FindClosest -> ${Day20.findClosest(Day20.run(Day20.parseInput(Day20.in), 1000))}")
     println(s"Day20: NoCollisions -> ${Day20.runWithCollisionDetection(Day20.parseInput(Day20.in), 1000).size}")
     // @todo Day21

@@ -68,11 +68,22 @@ object Day19 {
 
   def walkTheMaze(maze: Array[Array[Char]]): (String, Int) = {
     def go(s: State): State = {
-      //print(maze(s.row)(s.col)); println(s)
       if(s.done) s
       else go(s.next)
     }
     val finalState = go(State(0, maze(0).indexOf('|'), Direction.DOWN, maze, 0, "", false))
     (finalState.path, finalState.steps)
+  }
+
+  object Part1 {
+    def solve(in: Array[Array[Char]]): String = {
+      walkTheMaze(in)._1
+    }
+  }
+
+  object Part2 {
+    def solve(in: Array[Array[Char]]): Int = {
+      walkTheMaze(in)._2
+    }
   }
 }
