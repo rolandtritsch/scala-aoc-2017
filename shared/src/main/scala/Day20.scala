@@ -1,8 +1,19 @@
 package aoc
 
+/** Problem: [[http://adventofcode.com/2017/day/20]]
+  *
+  * Solution:
+  *
+  * General -
+  *
+  * Part1 -
+  *
+  * Part2 -
+  *
+  */
 object Day20 {
 
-  val in = Util.readInput("Day20input.txt")
+  val input = Util.readInput("Day20input.txt")
 
   case class Position(x: Int, y: Int, z: Int) {
     def add(v: Velocity): Position = {
@@ -16,7 +27,9 @@ object Day20 {
       Velocity(x + a.x, y + a.y, z + a.z)
     }
   }
+
   case class Acceleration(x: Int, y: Int, z: Int)
+
   case class Particle(p: Position, v: Velocity, a: Acceleration) {
     def tick: Particle = {
       Particle(p.add(v.add(a)), v.add(a), a)
@@ -51,5 +64,18 @@ object Day20 {
   def runWithCollisionDetection(ps: List[Particle], depth: Int): List[Particle] = {
     if(depth <= 0) ps
     else runWithCollisionDetection(removeCollisions(ps.map(_.tick)), depth - 1)
+  }
+
+  val defaultDepth = 1000
+  object Part1 {
+    def solve(input: List[String]): Int = {
+      findClosest(run(parseInput(input), defaultDepth))
+    }
+  }
+
+  object Part2 {
+    def solve(input: List[String]): Int = {
+      runWithCollisionDetection(parseInput(input), defaultDepth).size
+    }
   }
 }
