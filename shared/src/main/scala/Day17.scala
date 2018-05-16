@@ -16,6 +16,7 @@ package aoc
   * something after position 0 gives us the solution.
   */
 object Day17 {
+
   import scala.collection.mutable
 
   val input = Util.readInput("Day17input.txt").head.toInt
