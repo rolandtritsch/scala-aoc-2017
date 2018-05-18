@@ -4,11 +4,15 @@ package aoc
   *
   * Solution:
   *
-  * General -
+  * General - A [[Particle]] got a [[Position]] and a [[Velocity]]
+  * and an [[Acceleration]]. With every *tick* the Particle will get
+  * a new Position. Run a/the simulation for a while (defaultDepth).
   *
-  * Part1 -
+  * Part1 - Check on/in the resulting list of particles, where the
+  * minimum is and find the closest particle to the center.
   *
-  * Part2 -
+  * Part2 - Run a/the simulation again, but filter out all collisions.
+  * And then *just* take teh size of the resulting list.
   *
   */
 object Day20 {
@@ -19,7 +23,7 @@ object Day20 {
     def add(v: Velocity): Position = {
       Position(x + v.x, y + v.y, z + v.z)
     }
-    def distance: Int = Math.abs(x) + Math.abs(y) + Math.abs(z)
+    def distance: Int = Math.abs(Math.abs(x) + Math.abs(y) + Math.abs(z))
   }
 
   case class Velocity(x: Int, y: Int, z: Int) {
@@ -60,7 +64,7 @@ object Day20 {
 
     val min = ps.map(_.p.distance).min
     ps.indexWhere(p => p.p.distance == min)
-  } ensuring(_ >= 0)
+  } ensuring(_ >= 0, "_ >= 0 failed")
 
   def removeCollisions(ps: List[Particle]): List[Particle] = {
     require(ps.nonEmpty, "ps.nonEmpty failed")
