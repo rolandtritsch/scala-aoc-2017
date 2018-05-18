@@ -19,7 +19,7 @@ object Day20 {
     def add(v: Velocity): Position = {
       Position(x + v.x, y + v.y, z + v.z)
     }
-    def sumAbs: Int = Math.abs(x) + Math.abs(y) + Math.abs(z)
+    def distance: Int = Math.abs(x) + Math.abs(y) + Math.abs(z)
   }
 
   case class Velocity(x: Int, y: Int, z: Int) {
@@ -36,8 +36,10 @@ object Day20 {
     }
   }
 
-  def parseInput(in: List[String]): List[Particle] = {
-    in.map(l => {
+  def parseInput(input: List[String]): List[Particle] = {
+    require(input.nonEmpty, "input.nonEmpty failed")
+
+    input.map(l => {
       // p=<1199,-2918,1457>, v=<-13,115,-8>, a=<-7,8,-10>
       val tokens = l.split("[<>,]").map(_.trim)
       val p = Position(tokens(1).toInt, tokens(2).toInt, tokens(3).toInt)
@@ -45,37 +47,41 @@ object Day20 {
       val a = Acceleration(tokens(11).toInt, tokens(12).toInt, tokens(13).toInt)
       Particle(p, v, a)
     })
-  }
+  } ensuring(_.nonEmpty, "_.nonEmpty failed")
 
-  def run(ps: List[Particle], depth: Int): List[Particle] = {
+  private val defaultDepth = 1000
+  def run(ps: List[Particle], depth: Int = defaultDepth): List[Particle] = {
     if(depth <= 0) ps
     else run(ps.map(_.tick), depth - 1)
   }
 
   def findClosest(ps: List[Particle]): Int = {
-    val min = ps.map(_.p.sumAbs).min
-    ps.indexWhere(p => p.p.sumAbs == min)
-  }
+    require(ps.nonEmpty, "ps.nonEmpty failed")
+
+    val min = ps.map(_.p.distance).min
+    ps.indexWhere(p => p.p.distance == min)
+  } ensuring(_ >= 0)
 
   def removeCollisions(ps: List[Particle]): List[Particle] = {
-    ps.groupBy(_.p).map{case (k, v) => (k, v, v.size)}.filter{case (_, v, s) => s == 1}.toList.map{case (_, v, _) => v.head}
-  }
+    require(ps.nonEmpty, "ps.nonEmpty failed")
 
-  def runWithCollisionDetection(ps: List[Particle], depth: Int): List[Particle] = {
+    ps.groupBy(_.p).map { case (k, v) => (k, v, v.size) }.filter { case (_, v, s) => s == 1 }.toList.map { case (_, v, _) => v.head }
+  } ensuring(_.nonEmpty, "_.nonEmpty failed")
+
+  def runWithCollisionDetection(ps: List[Particle], depth: Int = defaultDepth): List[Particle] = {
     if(depth <= 0) ps
     else runWithCollisionDetection(removeCollisions(ps.map(_.tick)), depth - 1)
   }
 
-  val defaultDepth = 1000
   object Part1 {
     def solve(input: List[String]): Int = {
-      findClosest(run(parseInput(input), defaultDepth))
+      findClosest(run(parseInput(input)))
     }
   }
 
   object Part2 {
     def solve(input: List[String]): Int = {
-      runWithCollisionDetection(parseInput(input), defaultDepth).size
+      runWithCollisionDetection(parseInput(input)).size
     }
   }
 }

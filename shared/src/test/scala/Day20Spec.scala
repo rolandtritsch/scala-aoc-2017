@@ -42,7 +42,7 @@ class Day20Spec extends FlatSpec with Matchers {
   }
 
   behavior of "run()"
-  it should "return the right results for the test cases" taggedAs(BuildTest) in {
+  it should "return the right results for the testcase(s)" taggedAs(BuildTest) in {
     Day20.run(Day20.parseInput(testInput), 1) should be (Day20.parseInput(tick1Result))
     Day20.run(Day20.parseInput(testInput), 2) should be (Day20.parseInput(tick2Result))
     Day20.run(Day20.parseInput(testInput), 3) should be (Day20.parseInput(tick3Result))
