@@ -62,8 +62,7 @@ object Day20 {
   def findClosest(ps: List[Particle]): Int = {
     require(ps.nonEmpty, "ps.nonEmpty failed")
 
-    val min = ps.map(_.p.distance).min
-    ps.indexWhere(p => p.p.distance == min)
+    ps.indexOf(ps.minBy(_.p.distance))
   } ensuring(_ >= 0, "_ >= 0 failed")
 
   def removeCollisions(ps: List[Particle]): List[Particle] = {
