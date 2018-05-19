@@ -44,6 +44,8 @@ object Main {
     println(s"Day19: Part2: steps -> ${Day19.Part2.solve(Day19.input)}")
     println(s"Day20: Part1: findclosest -> ${Day20.Part1.solve(Day20.input)}")
     println(s"Day20: Part2: nocollisions -> ${Day20.Part2.solve(Day20.input)}")
+    println(s"Day21: Part1: after5 -> ${Day21.Part1.solve(Day21.input)}")
+    println(s"Day21: Part2: after18 -> ${Day21.Part2.solve(Day21.input)}")
     println(s"Day22: SimpleGrid -> ${Day22.run(Day22.SimpleGrid(1001).mapInput(Day22.parseInput(Day22.in)), Day22.Default.ticks1).numOfInfections}")
     println(s"Day22: AdvancedGrid -> ${Day22.run(Day22.AdvancedGrid(1001).mapInput(Day22.parseInput(Day22.in)), Day22.Default.ticks2).numOfInfections}")
     println(s"Day23: RunProgram -> ${Day23.solveRun(Day23.Program(0, Day23.parseInput(Day23.in), Map.empty[Char, Long].withDefaultValue(0), Map.empty[String, Long].withDefaultValue(0)))}")

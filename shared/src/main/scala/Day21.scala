@@ -1,8 +1,21 @@
 package aoc
 
+/** Problem: [[http://adventofcode.com/2017/day/21]]
+  *
+  * Solution:
+  *
+  * General -
+  * and an [[Acceleration]]. With every *tick* the Particle will get
+  * a new Position. Run a/the simulation for a while (defaultDepth).
+  *
+  * Part1 -
+  *
+  * Part2 -
+  *
+  */
 object Day21 {
 
-  val in = Util.readInput("Day21input.txt")
+  val input = Util.readInput("Day21input.txt")
 
   val start = Array(
     ".#.".toCharArray,
@@ -20,12 +33,11 @@ object Day21 {
 
   case class Rule(from: String, to: Grid)
 
-  def parseInput(in: List[String]): List[Rule] = {
+  def parseInput(input: List[String]): List[Rule] = {
     def rotations(fromGrid: Grid) = (1 to 3).scanLeft(fromGrid)((g, _) => rotateClockWise(g))
-    //def flips(fromGrid: Grid) = rotations(fromGrid) ++ rotations(flipVertical(fromGrid))  ++ rotations(flipHorizontal(fromGrid))
     def flips(fromGrid: Grid) = rotations(fromGrid) ++ rotations(flipVertical(fromGrid))
 
-    in.flatMap(l => {
+    input.flatMap(l => {
       // ../.. => ###/.##/#..
       val from = l.substring(0, l.indexOf('=') - 1)
       val to = l.substring(l.indexOf('=') + 3)
@@ -85,15 +97,24 @@ object Day21 {
       }
       rule.to
     }}
-    //println(thiz.map(Grid.toString(_)).mkString("\n"))
-    //println("---")
-    //println(result.map(Grid.toString(_)).mkString("\n"))
-    //println("***")
+
     result
   }
 
   def run(current: List[Grid], rules: List[Rule], iterations: Int): List[Grid] = {
     if (iterations <= 0) current
     else run(enhance(divide(current), rules), rules, iterations - 1)
+  }
+
+  object Part1 {
+    def solve(input: List[String]): Int = {
+      run(List(start), parseInput(input), 5).flatten.flatten.count(_ == '#')
+    }
+  }
+
+  object Part2 {
+    def solve(input: List[String]): Int = {
+      run(List(start), parseInput(input), 38).flatten.flatten.count(_ == '#')
+    }
   }
 }
