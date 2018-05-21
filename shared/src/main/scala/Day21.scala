@@ -34,8 +34,18 @@ object Day21 {
   case class Rule(from: String, to: Grid)
 
   def parseInput(input: List[String]): List[Rule] = {
-    def rotations(fromGrid: Grid) = (1 to 3).scanLeft(fromGrid)((g, _) => rotateClockWise(g))
-    def flips(fromGrid: Grid) = rotations(fromGrid) ++ rotations(flipVertical(fromGrid))
+    def rotations(fromGrid: Grid): List[Grid] = {
+      (1 to 3).scanLeft(fromGrid)((g, _) => rotateClockWise(g)).toList
+    }
+
+    def flips(fromGrid: Grid): List[Grid] = {
+      List(fromGrid) ++
+      rotations(fromGrid) ++
+      rotations(flipVertical(fromGrid)) ++
+      rotations(flipHorizontal(fromGrid)) ++
+      List(flipVertical(fromGrid)) ++
+      List(flipHorizontal(fromGrid))
+    }
 
     input.flatMap(l => {
       // ../.. => ###/.##/#..
@@ -61,13 +71,41 @@ object Day21 {
   }
 
   def copy(row: Int, col: Int, size: Int, thiz: Grid): Grid = {
-    (for (r <- row until row + size) yield for (c <- col until col + size) yield thiz(r)(c)).toArray.map(_.toArray)
+    (for {
+      r <- row until row + size
+    } yield {
+      for {
+        c <- col until col + size
+      } yield {
+        thiz(r)(c)
+      }
+    }).map(_.toArray).toArray
   }
 
-  def divide(thiz: List[Grid]): List[Grid] = {
-    thiz.flatMap {g => {
-      if (g.size % 2 == 0) {
-        if (g.size == 2) List(g)
+  def divide(thiz: Grid): List[Grid] = {
+    val stepSize =
+      if(thiz.size % 2 == 0) 2
+      else if(thiz.size % 3 == 0) 3
+      else {
+        assert(false)
+        0
+      }
+
+    val grids = for {
+      row <- 0 until thiz.size by stepSize
+      col <- 0 until thiz.size by stepSize
+    } yield {
+      copy(row, col, stepSize, thiz)
+    }
+
+    println(s"${grids.size} -> ${grids(0).size}x${grids(0)(0).size} -> ${Math.sqrt(grids.size).toInt * grids(0).size}")
+    grids.toList
+  }
+
+  def divide2(thiz: List[Grid]): List[Grid] = {
+    thiz.flatMap { g => {
+      if(g.size % 2 == 0) {
+        if(g.size == 2) List(g)
         else {
           val splitAt = g.size / 2
           val upperLeft = copy(0, 0, splitAt, g)
@@ -76,8 +114,8 @@ object Day21 {
           val lowerRight = copy(splitAt, splitAt, splitAt, g)
           List(upperLeft) ++ List(upperRight) ++ List(lowerLeft) ++ List(lowerRight)
         }
-      } else if (g.size % 3 == 0) {
-        if (g.size == 3) List(g)
+      } else if(g.size % 3 == 0) {
+        if(g.size == 3) List(g)
         else {
           assert(false)
           List(Array(Array.emptyCharArray))
@@ -90,7 +128,7 @@ object Day21 {
   }
 
   def enhance(thiz: List[Grid], rules: List[Rule]): List[Grid] = {
-    val result = thiz.map {g => {
+    val result = thiz.map { g => {
       val rule = rules.find(r => r.from == Grid.toString(g)).getOrElse {
         assert(false)
         Rule("", Array(Array.emptyCharArray))
@@ -101,20 +139,35 @@ object Day21 {
     result
   }
 
-  def run(current: List[Grid], rules: List[Rule], iterations: Int): List[Grid] = {
-    if (iterations <= 0) current
-    else run(enhance(divide(current), rules), rules, iterations - 1)
+  def join(thiz: List[Grid]): Grid = {
+    val gridDimensions = thiz(0)(0).size
+
+    val elements = (for {
+      row <- 0 until gridDimensions
+    } yield {
+      thiz.map(g => g(row)).flatten
+    }).flatten
+
+    val joinedGridDimensions = Math.sqrt(elements.size).toInt
+
+    val rows = elements.sliding(joinedGridDimensions, joinedGridDimensions).toList
+    rows.map(_.toArray).toArray
+  }
+
+  def run(current: Grid, rules: List[Rule], iterations: Int): Grid = {
+    if(iterations <= 0) current
+    else run(join(enhance(divide(current), rules)), rules, iterations - 1)
   }
 
   object Part1 {
     def solve(input: List[String]): Int = {
-      run(List(start), parseInput(input), 5).flatten.flatten.count(_ == '#')
+      run(start, parseInput(input), 5).flatten.count(_ == '#')
     }
   }
 
   object Part2 {
     def solve(input: List[String]): Int = {
-      run(List(start), parseInput(input), 38).flatten.flatten.count(_ == '#')
+      run(start, parseInput(input), 38).flatten.count(_ == '#')
     }
   }
 }
