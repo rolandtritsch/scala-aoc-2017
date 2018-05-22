@@ -16,8 +16,8 @@ class Day21Spec extends FlatSpec with Matchers {
 
   behavior of "parseInput()"
   it should "produce the correct results" in {
-    Day21.parseInput(testInput).size shouldBe 30
-    Day21.parseInput(Day21.input).size shouldBe 1620
+    Day21.parseInput(testInput).size shouldBe 20
+    Day21.parseInput(Day21.input).size shouldBe 1080
   }
 
   behavior of "flipHorizontal()"
@@ -35,23 +35,6 @@ class Day21Spec extends FlatSpec with Matchers {
     )
 
     Day21.flipHorizontal(in) should be (out)
-  }
-
-  behavior of "flipVertical()"
-  it should "produce the correct result(s)" in {
-    val in = Array(
-      "###".toCharArray,
-      "#..".toCharArray,
-      "...".toCharArray
-    )
-
-    val out = Array(
-      "###".toCharArray,
-      "..#".toCharArray,
-      "...".toCharArray
-    )
-
-    Day21.flipVertical(in) should be (out)
   }
 
   behavior of "rotateClockwise()"
