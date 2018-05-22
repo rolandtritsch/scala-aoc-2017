@@ -1,13 +1,25 @@
 package aoc
 
-import scala.collection.mutable
+/** Problem: [[http://adventofcode.com/2017/day/22]]
+  *
+  * Solution:
+  *
+  * General - ???
+  *
+  * Part1 - ???
+  *
+  * Part2 - ???
+  *
+  */
 
 object Day22 {
 
-  val in = Util.readInput("Day22input.txt")
+  import scala.collection.mutable
 
-  def parseInput(in: List[String]): Array[Array[Char]] = {
-    in.map(_.toCharArray).toArray
+  val input = Util.readInput("Day22input.txt")
+
+  def parseInput(input: List[String]): Array[Array[Char]] = {
+    input.map(_.toCharArray).toArray
   }
 
   object Default {
@@ -16,7 +28,6 @@ object Day22 {
   }
 
   abstract class Grid(private val dimension: Int) {
-    // @todo Make the grid infinite (not fixed)
     protected val grid = Array.fill(dimension)(mutable.ArrayBuffer.fill(dimension)(State.CLEAN))
     protected var currentPosition = (midPoint, midPoint)
     protected var currentDirection = Direction.UP
@@ -53,13 +64,13 @@ object Day22 {
 
     def midPoint: Int = grid.size / 2
 
-    def mapInput(in: Array[Array[Char]]): Grid = {
-      val offset = (grid.size - in.size) / 2
+    def mapInput(input: Array[Array[Char]]): Grid = {
+      val offset = (grid.size - input.size) / 2
 
       for {
-        r <- 0 until in.size
-        c <- 0 until in.size
-      } grid(r + offset)(c + offset) = in(r)(c)
+        r <- 0 until input.size
+        c <- 0 until input.size
+      } grid(r + offset)(c + offset) = input(r)(c)
 
       this
     }
@@ -143,5 +154,17 @@ object Day22 {
   def run(grid: Grid, ticks: Int): Grid = {
     if(ticks <= 0) grid
     else run(grid.tick, ticks - 1)
+  }
+
+  object Part1 {
+    def solve(input: List[String]): Int = {
+      run(Day22.SimpleGrid(1001).mapInput(parseInput(input)), Default.ticks1).numOfInfections
+    }
+  }
+
+  object Part2 {
+    def solve(input: List[String]): Int = {
+      run(Day22.AdvancedGrid(1001).mapInput(parseInput(input)), Default.ticks2).numOfInfections
+    }
   }
 }
