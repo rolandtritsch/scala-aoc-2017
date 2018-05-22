@@ -164,14 +164,13 @@ class Day21Spec extends FlatSpec with Matchers {
     val grids = Day21.enhance(List(Day21.start), rules)
     grids should have size 1
     Day21.Grid.toString(grids.head) shouldBe "#..#/..../..../#..#"
-  /*
-    val nextGrids = Day21.divide(grids)
+
+    val nextGrids = Day21.divide(Day21.join(grids))
     nextGrids should have size 4
     val squares = Day21.enhance(nextGrids, rules)
     squares should have size 4
     val head = Day21.Grid.toString(squares.head)
     head shouldBe "##./#../..."
-  */
   }
 
   behavior of "join()"
@@ -268,7 +267,7 @@ class Day21Spec extends FlatSpec with Matchers {
     grid5.flatten.count(_ == '#') shouldBe 205
   }
 
-  it should "show all the right numbers on the way to the solution" in {
+  it should "show all the right numbers on the way to the solution" taggedAs(SlowTest) in {
     //val counts = List(5, 8, 25, 58, 78, 205, 516, 730, 1874, 4645, 6538, 16853, 41876, 58832, 151557, 376588, 529586, 1364380)
     val counts = List(5, 8, 25, 58, 78, 205, 516, 730, 1874, 4645, 6538)
     (0 to counts.size - 1).map (n => {
@@ -278,12 +277,12 @@ class Day21Spec extends FlatSpec with Matchers {
   }
 
   behavior of "solve() - Part1"
-  ignore should "solve the puzzle" taggedAs(SolutionTest) in {
+  it should "solve the puzzle" taggedAs(SolutionTest) in {
     Day21.Part1.solve(Day21.input) shouldBe 205
   }
 
   behavior of "solve() - Part2"
-  ignore should "solve the puzzle" taggedAs(SolutionTest) in {
+  it should "solve the puzzle" taggedAs(SolutionTest, SlowTest) in {
     Day21.Part2.solve(Day21.input) shouldBe 3389823
   }
 }

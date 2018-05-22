@@ -4,13 +4,11 @@ package aoc
   *
   * Solution:
   *
-  * General -
-  * and an [[Acceleration]]. With every *tick* the Particle will get
-  * a new Position. Run a/the simulation for a while (defaultDepth).
+  * General - ???
   *
-  * Part1 -
+  * Part1 - ???
   *
-  * Part2 -
+  * Part2 - ???
   *
   */
 object Day21 {
@@ -40,11 +38,11 @@ object Day21 {
 
     def flips(fromGrid: Grid): List[Grid] = {
       List(fromGrid) ++
+      List(flipVertical(fromGrid)) ++
+      List(flipHorizontal(fromGrid)) ++
       rotations(fromGrid) ++
       rotations(flipVertical(fromGrid)) ++
-      rotations(flipHorizontal(fromGrid)) ++
-      List(flipVertical(fromGrid)) ++
-      List(flipHorizontal(fromGrid))
+      rotations(flipHorizontal(fromGrid))
     }
 
     input.flatMap(l => {
@@ -98,33 +96,7 @@ object Day21 {
       copy(row, col, stepSize, thiz)
     }
 
-    println(s"${grids.size} -> ${grids(0).size}x${grids(0)(0).size} -> ${Math.sqrt(grids.size).toInt * grids(0).size}")
     grids.toList
-  }
-
-  def divide2(thiz: List[Grid]): List[Grid] = {
-    thiz.flatMap { g => {
-      if(g.size % 2 == 0) {
-        if(g.size == 2) List(g)
-        else {
-          val splitAt = g.size / 2
-          val upperLeft = copy(0, 0, splitAt, g)
-          val upperRight = copy(0, splitAt, splitAt, g)
-          val lowerLeft = copy(splitAt, 0, splitAt, g)
-          val lowerRight = copy(splitAt, splitAt, splitAt, g)
-          List(upperLeft) ++ List(upperRight) ++ List(lowerLeft) ++ List(lowerRight)
-        }
-      } else if(g.size % 3 == 0) {
-        if(g.size == 3) List(g)
-        else {
-          assert(false)
-          List(Array(Array.emptyCharArray))
-        }
-      } else {
-        assert(false)
-        List(Array(Array.emptyCharArray))
-      }
-    }}
   }
 
   def enhance(thiz: List[Grid], rules: List[Rule]): List[Grid] = {
@@ -140,18 +112,15 @@ object Day21 {
   }
 
   def join(thiz: List[Grid]): Grid = {
-    val gridDimensions = thiz(0)(0).size
-
-    val elements = (for {
-      row <- 0 until gridDimensions
+    val grid = for {
+      group <- thiz.grouped(Math.sqrt(thiz.size).toInt)
+      row <- 0 until thiz(0).size
+      line = group.map(g => g(row)).flatten
     } yield {
-      thiz.map(g => g(row)).flatten
-    }).flatten
+      line
+    }
 
-    val joinedGridDimensions = Math.sqrt(elements.size).toInt
-
-    val rows = elements.sliding(joinedGridDimensions, joinedGridDimensions).toList
-    rows.map(_.toArray).toArray
+    grid.map(_.toArray).toArray
   }
 
   def run(current: Grid, rules: List[Rule], iterations: Int): Grid = {
@@ -167,7 +136,7 @@ object Day21 {
 
   object Part2 {
     def solve(input: List[String]): Int = {
-      run(start, parseInput(input), 38).flatten.count(_ == '#')
+      run(start, parseInput(input), 18).flatten.count(_ == '#')
     }
   }
 }
