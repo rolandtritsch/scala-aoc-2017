@@ -38,6 +38,8 @@ object Day21 {
   case class Rule(from: String, to: Grid)
 
   def parseInput(input: List[String]): List[Rule] = {
+    require(input.nonEmpty, "input.nonEmpty failed")
+
     def rotations(fromGrid: Grid): List[Grid] = {
       (1 to 3).scanLeft(fromGrid)((g, _) => rotateClockWise(g)).toList
     }
@@ -58,7 +60,7 @@ object Day21 {
 
       flips(fromGrid).map(g => Rule(Grid.toString(g), toGrid))
     })
-  }
+  } ensuring(_.size >= input.size)
 
   def flipHorizontal(thiz: Grid): Grid = {
     thiz.reverse
@@ -69,6 +71,10 @@ object Day21 {
   }
 
   def copy(row: Int, col: Int, size: Int, thiz: Grid): Grid = {
+    require(row >= 0 && row < thiz.size, s"row >= 0 && row < thiz.size failed; with >${row}<")
+    require(col >= 0 && col < thiz.size, s"col >= 0 && col < thiz.size failed; with >${col}<")
+    require(size >= 1 && size <= thiz.size, s"size >= 1 && size <= thiz.size; with >${size}<")
+
     (for {
       r <- row until row + size
     } yield {
@@ -78,7 +84,7 @@ object Day21 {
         thiz(r)(c)
       }
     }).map(_.toArray).toArray
-  }
+  } ensuring(_.size == size)
 
   def divide(thiz: Grid): List[Grid] = {
     val stepSize =
@@ -97,9 +103,12 @@ object Day21 {
     }
 
     grids.toList
-  }
+  } ensuring(gs => gs.nonEmpty && gs.head.size <= thiz.size)
 
   def enhance(thiz: List[Grid], rules: List[Rule]): List[Grid] = {
+    require(thiz.nonEmpty, "thiz.nonEmpty failed")
+    require(rules.nonEmpty, "rules.nonEmpty failed")
+
     val result = thiz.map { g => {
       val rule = rules.find(r => r.from == Grid.toString(g)).getOrElse {
         assert(false)
@@ -109,9 +118,11 @@ object Day21 {
     }}
 
     result
-  }
+  } ensuring(gs => gs.nonEmpty && gs.head.size > thiz.head.size)
 
   def join(thiz: List[Grid]): Grid = {
+    require(thiz.nonEmpty, "thiz.nonEmpty failed")
+
     val grid = for {
       group <- thiz.grouped(Math.sqrt(thiz.size).toInt)
       row <- 0 until thiz(0).size
@@ -121,9 +132,12 @@ object Day21 {
     }
 
     grid.map(_.toArray).toArray
-  }
+  } ensuring(g => g.size == Math.sqrt(thiz.size).toInt * thiz(0).size)
 
   def run(current: Grid, rules: List[Rule], iterations: Int): Grid = {
+    require(current.nonEmpty, "current.nonEmpty failed")
+    require(rules.nonEmpty, "rules.nonEmpty failed")
+
     if(iterations <= 0) current
     else run(join(enhance(divide(current), rules)), rules, iterations - 1)
   }
