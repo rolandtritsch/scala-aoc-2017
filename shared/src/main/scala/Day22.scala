@@ -13,7 +13,6 @@ package aoc
   * Part2 - Walk the [[AdvancedGrid]] and count the infections.
   *
   */
-
 object Day22 {
 
   import scala.collection.mutable

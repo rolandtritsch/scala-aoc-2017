@@ -1,8 +1,19 @@
 package aoc
 
+/** Problem: [[http://adventofcode.com/2017/day/24]]
+  *
+  * Solution:
+  *
+  * General - ???
+  *
+  * Part1 - ???
+  *
+  * Part2 - ???
+  *
+  */
 object Day24 {
 
-  val in = Util.readInput("Day24input.txt")
+  val input = Util.readInput("Day24input.txt")
 
   case class Component(left: Int, right: Int) {
     def matches(port: Int) = left == port || right == port
@@ -32,7 +43,6 @@ object Day24 {
   }
 
   def findPath(head: List[Component], rest: List[Component], all: List[List[Component]]): List[List[Component]] = {
-    //println(s"${head}/${rest}")
     if (rest.isEmpty) all :+ head
     else {
       rest.filter(_.matches(head.last.right)) match {
@@ -55,5 +65,19 @@ object Day24 {
     val length = paths.map(p => (p.size, p.foldLeft(0)((acc, c) => acc + c.left + c.right), p))
     val maxLength = length.maxBy(_._1)._1
     length.filter(l => l._1 == maxLength).maxBy(_._2)
+  }
+
+  object Part1 {
+    def solve(input: List[String]): Int = {
+      val (maxStrength, _) = findStrongestPath(findPaths(parseInput(input)))
+      maxStrength
+    }
+  }
+
+  object Part2 {
+    def solve(input: List[String]): Int = {
+      val (_, maxLength, _) = findLongestPath(findPaths(parseInput(input)))
+      maxLength
+    }
   }
 }
