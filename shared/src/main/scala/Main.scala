@@ -48,8 +48,8 @@ object Main {
     println(s"Day21: Part2: after18 -> ${Day21.Part2.solve(Day21.input)}")
     println(s"Day22: Part1: simple -> ${Day22.Part1.solve(Day22.input)}")
     println(s"Day22: Part2: advanced -> ${Day22.Part2.solve(Day22.input)}")
-    println(s"Day23: RunProgram -> ${Day23.solveRun(Day23.Program(0, Day23.parseInput(Day23.in), Map.empty[Char, Long].withDefaultValue(0), Map.empty[String, Long].withDefaultValue(0)))}")
-    // @todo - Day23 - Part2
+    println(s"Day23: Part1: run -> ${Day23.Part1.solve(Day23.input)}")
+    println(s"Day23: Part2: run -> ${Day23.Part2.solve(Day23.input)}")
     // @todo - Day24 - too slow - println(s"Day24: FindStrongestPath -> ${Day24.findStrongestPath(Day24.findPaths(Day24.parseInput(Day24.in)))._1}")
     // @todo - Day24 - too slow - println(s"Day24: FindLongestPath -> ${Day24.findLongestPath(Day24.findPaths(Day24.parseInput(Day24.in)))._2}")
     // @todo - This does not compile with scala-native - println(s"Day25: RunProgram -> ${val tape = Day25.Tape(scala.collection.mutable.ArrayBuffer.fill(100001)(0)); Day25.run(Day25.StateA(tape.size / 2, tape), Day25.in).checkSum}")

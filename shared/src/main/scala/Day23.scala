@@ -1,8 +1,20 @@
 package aoc
 
+/** Problem: [[http://adventofcode.com/2017/day/23]]
+  *
+  * Solution:
+  *
+  * General - ???
+  *
+  * Part1 - ???
+  *
+  * Part2 - ???
+  *
+  */
+
 object Day23 {
 
-  val in = Util.readInput("Day23input.txt")
+  val input = Util.readInput("Day23input.txt")
 
   sealed abstract class Operation
   case class Set(register: Char, value: Long) extends Operation
@@ -56,8 +68,6 @@ object Day23 {
   case class Program(counter: Int, instructions: List[Operation], register: Map[Char, Long], instructionCounter: Map[String, Long])
 
   def run(program: Program, done: Program => Boolean, exit: Program => Long): Long = {
-    //println(s"${program.counter}/${program.instructions(program.counter)}/${program.register.toList}")
-    //println(s"${program.counter}/${program.instructions(program.counter)}/${program.instructionCounter("mul")}")
     if(done(program)) exit(program)
     else {
       val next = program.instructions(program.counter) match {
@@ -132,24 +142,30 @@ object Day23 {
     }
   }
 
-  def fullRun(program: Program): Long = {
-    def done(p: Program) = p.counter < 0 || p.counter >= p.instructions.size
-    def exit(p: Program) = -1
-
-    run(program, done, exit)
-  }
-
-  def solveRun(program: Program): Long = {
+  object Part1 {
     def done(p: Program) = p.counter < 0 || p.counter >= p.instructions.size
     def exit(p: Program) = p.instructionCounter("mul")
 
-    run(program, done, exit)
+    val program = Program(0, parseInput(input), Map.empty[Char, Long].withDefaultValue(0), Map.empty[String, Long].withDefaultValue(0))
+
+    def solve(input: List[String]): Long = {
+      run(program, done, exit)
+    }
   }
 
-  def solveRun2(program: Program): Long = {
+  object Part2 {
     def done(p: Program) = p.counter < 0 || p.counter >= p.instructions.size
     def exit(p: Program) = p.register('h')
 
-    run(program, done, exit)
+    val program = Program(0, parseInput(input), Map.empty[Char, Long].withDefaultValue(0L) + ('a' -> 1L), Map.empty[String, Long].withDefaultValue(0))
+
+    def isPrime(i: Int): Boolean = !(2 until i).exists(x => i % x == 0)
+
+    val b = 84 * 100 + 100000
+    val c = b + 17000
+
+    def solve(input: List[String]): Long = {
+      b.to(c).by(17).count(!isPrime(_))
+    }
   }
 }
