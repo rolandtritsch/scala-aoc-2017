@@ -19,6 +19,12 @@ class Day23Spec extends FlatSpec with Matchers {
     Day23.Part1.solve(Day23.input) shouldBe 6724
   }
 
+  behavior of "isPrime()"
+  it should "return the correct result(s)" in {
+    val primes = List(1, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31)
+    primes.forall(Day23.Part2.findPrime(_)) shouldBe true
+  }
+
   behavior of "solve() - Part2"
   it should "solve the puzzle" taggedAs(SolutionTest) in {
     Day23.Part2.solve(Day23.input) shouldBe 903

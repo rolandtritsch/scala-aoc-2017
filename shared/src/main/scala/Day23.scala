@@ -4,14 +4,73 @@ package aoc
   *
   * Solution:
   *
-  * General - ???
+  * General - This was a difficult one (at least for me). Part1 is
+  * straightforward enough, but I really struggled to get Part2 done.
+  * For Part1 I implemented a *normal* [[Operation]]-interpreter to
+  * run the [[Program]]. But this prooved to be way too slow to solve
+  * Part2. From the discussion group I then realized that I have to
+  * reverse engineer the code to find out what it is doing and write
+  * a compilable version of that code. First I annotated the code
+  * in Day23Input.txt.annotated. From this you can deduct the following
+  * code ...
+  * {{{
+  * b = c = 84
+  * if (a != 0)
+  *     b = b * 100 + 100000
+  *     c = b + 17000
+  * do
+  *     f = 1
+  *     d = 2
+  *     do
+  *         e = 2
+  *         do
+  *             g = d * e - b
+  *             if (g == 0)
+  *                 f = 0
+  *             e = e + 1
+  *             g = e - b
+  *         while g != 0
+  *         d = d + 1
+  *         g = d - b
+  *     while g != 0
+  *     if (f != 0)
+  *         h = h + 1
+  *     g = b - c
+  *     if (g != 0)
+  *         break
+  *     b = b + 17
+  * while (true)
+  * }}}
+  * Note that, for Part1 a == 0 and for Part2 a == 1, means for Part1
+  * `b` and `c` get initialized to 84, but for Part2 `b` and `c` get
+  * initialized to ...
+  * {{{
+  * b = 84 * 100 + 100000
+  * c = b + 17000
+  * }}}
+  * ... which explains, why Part2 is running very slow, because the algorithm
+  * will look for all non-prime numbers between `b` and `c` (with a stepsize
+  * of 17) ...
+  * {{{
+  * from = 84 * 100 + 100000
+  * to = from + 17000
+  * stepsize = 17
+  * for (n in range(from, to , stepsize) {
+  *     found = false
+  *     for first in range(2, n, 1) {
+  *         for (second in range(2, n, 1)
+  *             if (first * second == n) found = true
+  *         }
+  *     }
+  *     if (found) nonPrime= nonPrime + 1
+  * }
+  * }}}
   *
-  * Part1 - ???
+  * Part1 - Build a list of [[Operation]]s to run the [[Program]].
   *
-  * Part2 - ???
+  * Part2 - Implement the algorithm above in [[Part2.solve]].
   *
   */
-
 object Day23 {
 
   val input = Util.readInput("Day23input.txt")
@@ -27,8 +86,10 @@ object Day23 {
 
   val registerRange = ('a' to 'h').toList
 
-  def parseInput(in: List[String]): List[Operation] = {
-    in.map(l => {
+  def parseInput(input: List[String]): List[Operation] = {
+    require(input.nonEmpty, "input.nonEmpty failed")
+
+    input.map(l => {
       val tokens = l.split(' ')
       assert(tokens.size >= 2)
       val operation = tokens(0)
@@ -63,7 +124,7 @@ object Day23 {
         }
       }
     })
-  }
+  } ensuring(_.nonEmpty, "_.nonEmpty failed")
 
   case class Program(counter: Int, instructions: List[Operation], register: Map[Char, Long], instructionCounter: Map[String, Long])
 
@@ -154,18 +215,15 @@ object Day23 {
   }
 
   object Part2 {
-    def done(p: Program) = p.counter < 0 || p.counter >= p.instructions.size
-    def exit(p: Program) = p.register('h')
+    def findPrime(n: Int): Boolean = !(2 until n).exists(x => n % x == 0)
 
-    val program = Program(0, parseInput(input), Map.empty[Char, Long].withDefaultValue(0L) + ('a' -> 1L), Map.empty[String, Long].withDefaultValue(0))
-
-    def isPrime(i: Int): Boolean = !(2 until i).exists(x => i % x == 0)
-
-    val b = 84 * 100 + 100000
-    val c = b + 17000
+    val seed = 84
+    val start = seed * 100 + 100000
+    val end = start + 17000
+    val stepsize = 17
 
     def solve(input: List[String]): Long = {
-      b.to(c).by(17).count(!isPrime(_))
+      (start to end by stepsize).count(!findPrime(_))
     }
   }
 }
