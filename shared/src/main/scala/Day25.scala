@@ -1,5 +1,16 @@
 package aoc
 
+/** Problem: [[http://adventofcode.com/2017/day/25]]
+  *
+  * Solution:
+  *
+  * General - ???
+  *
+  * Part1 - ???
+  *
+  * Part2 - ???
+  *
+  */
 object Day25 {
   import scala.collection.mutable
 
