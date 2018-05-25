@@ -13,8 +13,7 @@ before_install:
   - bash bin/travis_setup.sh
 
 script:
-  - sbt "aocJVM/testOnly aoc.Day*Spec -- -n aoc.BuildTest"
+  #- sbt "aocJVM/testOnly aoc.Day*Spec -- -n aoc.BuildTest"
+  - sbt aocJVM/test
   - sbt aocJVM/run
-  #- sbt aocNative/run
-
-
+  - sbt aocNative/run
