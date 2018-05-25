@@ -6,13 +6,14 @@ import scala.collection.mutable
 
 class Day25Spec extends FlatSpec with Matchers {
 
-  "run" should "produce the right result(s)" in {
+  behavior of "run()"
+  it should "produce the right result(s)" taggedAs(BuildTest) in {
     val tape = Day25.Tape(mutable.ArrayBuffer.fill(101)(0))
     Day25.run(Day25.StateA(tape.size / 2, tape), 6).checkSum shouldBe 3
   }
 
-  it should "solve the puzzle" in {
-    val tape = Day25.Tape(mutable.ArrayBuffer.fill(100001)(0))
-    Day25.run(Day25.StateA(tape.size / 2, tape), Day25.in).checkSum shouldBe 4769
+  behavior of "solve() - Part1"
+  it should "solve the puzzle" taggedAs(SolutionTest) in {
+    Day25.Part1.solve(Day25.input) shouldBe 4769
   }
 }

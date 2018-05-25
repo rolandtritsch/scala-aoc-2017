@@ -52,6 +52,6 @@ object Main {
     println(s"Day23: Part2: run -> ${Day23.Part2.solve(Day23.input)}")
     println(s"Day24: Part1: strongest -> ${Day24.Part1.solve(Day24.input)}")
     println(s"Day24: Part2: longest -> ${Day24.Part2.solve(Day24.input)}")
-    // @todo - This does not compile with scala-native - println(s"Day25: RunProgram -> ${val tape = Day25.Tape(scala.collection.mutable.ArrayBuffer.fill(100001)(0)); Day25.run(Day25.StateA(tape.size / 2, tape), Day25.in).checkSum}")
+    println(s"Day25: Part1: run -> ${Day25.Part1.solve(Day25.input)}")
   }
 }

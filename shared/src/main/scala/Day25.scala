@@ -4,20 +4,20 @@ package aoc
   *
   * Solution:
   *
-  * General - ???
+  * General - And another [[State]] machine. Run the state machine for the
+  * given number of steps/iterations (on the [[Tape]]).
   *
-  * Part1 - ???
+  * Part1 - Calc and return the [[Tape.checksum]].
   *
-  * Part2 - ???
+  * Part2 - Merry Christmas :)
   *
   */
 object Day25 {
   import scala.collection.mutable
 
   //val in = Util.readInput("Day25input.txt").head.toInt
-  val in = 12667664
+  val input = 12667664
 
-  // @todo do not use a fixed size array as a tape (make it grow indefinetly (in both directions))
   case class Tape(private val init: mutable.ArrayBuffer[Int]) {
     def update(position: Int, value: Int): Tape = {
       init(position) = value
@@ -85,8 +85,14 @@ object Day25 {
   }
 
   def run(state: State, steps: Int): State = {
-    //if(steps % 100 == 0) println(steps)
     if(steps <= 0) state
     else run(state.tick, steps - 1)
+  }
+
+  object Part1 {
+    def solve(input: Int): Int = {
+      val tape = Tape(mutable.ArrayBuffer.fill(100001)(0))
+      run(StateA(tape.size / 2, tape), input).checkSum
+    }
   }
 }
