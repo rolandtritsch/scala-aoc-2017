@@ -14,8 +14,12 @@ before_install:
 
 script:
   #- sbt "aocJVM/testOnly aoc.Day*Spec -- -n aoc.BuildTest"
-  - travis_wait 60 sbt aocJVM/test
-  - travis_wait 30 sbt aocJVM/run
+  #- sbt "aocJVM/testOnly aoc.Day*Spec -- -n aoc.SolutionTest"
+  #- sbt "aocJVM/testOnly aoc.Day*Spec -- -l aoc.SlowTest"
+  #- sbt "aocJVM/testOnly aoc.Day*Meter"
+  #- sbt "aocJVM/testOnly aoc.Day*Check"
+  #- travis_wait 60 sbt aocJVM/test
+  #- travis_wait 30 sbt aocJVM/run
   - travis_wait 60 sbt aocNative/run
 
 addons:
