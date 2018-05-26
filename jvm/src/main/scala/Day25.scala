@@ -7,7 +7,7 @@ package aoc
   * General - And another [[State]] machine. Run the state machine for the
   * given number of steps/iterations (on the [[Tape]]).
   *
-  * Part1 - Calc and return the [[Tape.checksum]].
+  * Part1 - Calc and return the [[Tape.checkSum]].
   *
   * Part2 - Merry Christmas :)
   *

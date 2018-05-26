@@ -2,9 +2,6 @@ package aoc
 
 /** Problem: [[https://adventofcode.com/2017/day/3]]
   *
-  * @see [[https://oeis.org/A033951]]
-  * @see [[https://oeis.org/A141481]]
-  *
   * Solution:
   *
   * General - This is a/the refactored solution. I was only able to come
@@ -13,15 +10,15 @@ package aoc
   *
   * Now the idea is ...
   *
-  * - build a stream of moves
-  * - from these moves build a stream of cells
-  * - a cell has an index (starting from 0), coordinates (x, y - showing/
-  * describing the position of the cell relative to the center) and a value
-  * (the value of the cell)
-  * - Note: For Part1 constructing the cell value is trivial (based on the
-  * index). For Part2 it is more elaborate and requires to search the already
-  * evaluated stream for the 8 coordinates/values surrounding the cell that
-  * needs to be calculated.
+  *   - build a stream of moves
+  *   - from these moves build a stream of cells
+  *   - a cell has an index (starting from 0), coordinates (x, y - showing/
+  *     describing the position of the cell relative to the center) and a value
+  *     (the value of the cell)
+  *   - Note: For Part1 constructing the cell value is trivial (based on the
+  *     index). For Part2 it is more elaborate and requires to search the already
+  *     evaluated stream for the 8 coordinates/values surrounding the cell that
+  *     needs to be calculated.
   *
   * Part 1 - find the cell with the given value. Take the coordinates of
   * the cell and use them to calculate the Manhatten-Distance to the center
@@ -30,6 +27,10 @@ package aoc
   *
   * Part 2 - find the cell after the one with the given value and return
   * the value of that cell.
+  *
+  * @see [[https://oeis.org/A033951]]
+  * @see [[https://oeis.org/A141481]]
+  *
   */
 object Day03 {
 
