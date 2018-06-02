@@ -38,7 +38,7 @@ object Day03 {
 
   case class Move(x: Int, y: Int)
 
-  object Move {
+  object Advance {
     val up = Move(-1, 0)
     val down = Move(1, 0)
     val left = Move(0, -1)
@@ -48,11 +48,11 @@ object Day03 {
   type Moves = List[List[Move]]
 
   val firstLevelMoves = List(
-    List(Move.right),
-    List(Move.up),
-    List(Move.left, Move.left),
-    List(Move.down, Move.down),
-    List(Move.right, Move.right)
+    List(Advance.right),
+    List(Advance.up),
+    List(Advance.left, Advance.left),
+    List(Advance.down, Advance.down),
+    List(Advance.right, Advance.right)
   )
 
   def nextLevelMoves(currentLevelMoves: Moves): Moves = {
@@ -61,10 +61,10 @@ object Day03 {
 
     List(
       currentLevelMoves(0),
-      currentLevelMoves(1) ++ List(Move.up, Move.up),
-      currentLevelMoves(2) ++ List(Move.left, Move.left),
-      currentLevelMoves(3) ++ List(Move.down, Move.down),
-      currentLevelMoves(4) ++ List(Move.right, Move.right)
+      currentLevelMoves(1) ++ List(Advance.up, Advance.up),
+      currentLevelMoves(2) ++ List(Advance.left, Advance.left),
+      currentLevelMoves(3) ++ List(Advance.down, Advance.down),
+      currentLevelMoves(4) ++ List(Advance.right, Advance.right)
     )
   } ensuring(_.flatten.size == currentLevelMoves.flatten.size + 8)
 
