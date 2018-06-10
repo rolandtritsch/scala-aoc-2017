@@ -23,6 +23,7 @@ object Day05 {
 
   val input = Util.readInput("Day05input.txt").map(_.toInt)
 
+  @scala.annotation.tailrec
   def countSteps(stack: Vector[Int], stackCounter: Int, steps: Int, offset: Int => Int): Int = {
     require(stack.nonEmpty, s"stack.nonEmpty failed")
     require(steps >= 1, s"steps >= 1 failed; with >${steps}<")
