@@ -7,6 +7,8 @@ package aoc
   * Part1 - Is lambda + mu.
   *
   * Part2 - Is just lambda.
+  *
+  * @see [[https://en.wikipedia.org/wiki/Cycle_detection#Floyd's_Tortoise_and_Hare]]
   */
 object Day06 {
 
@@ -24,8 +26,6 @@ object Day06 {
     }}
   }
 
-  /** @see [[https://en.wikipedia.org/wiki/Cycle_detection#Floyd's_Tortoise_and_Hare]]
-    */
   def floyd(banks: MemoryBanks, cycle: MemoryBanks => MemoryBanks): (Int, Int) = {
     def phase1(tortoise: MemoryBanks, hare: MemoryBanks): MemoryBanks = {
       if(tortoise == hare) hare
