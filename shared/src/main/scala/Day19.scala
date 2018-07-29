@@ -91,13 +91,13 @@ object Day19 {
   }
 
   object Part1 {
-    def solve(input: Array[Array[Char]]): String = {
+    def solve(input: Array[Array[Char]]): (String, Long) = Util.measuredTimeMillis {
       walkTheMaze(input)._1
     }
   }
 
   object Part2 {
-    def solve(input: Array[Array[Char]]): Int = {
+    def solve(input: Array[Array[Char]]): (Int, Long) = Util.measuredTimeMillis {
       walkTheMaze(input)._2
     }
   }

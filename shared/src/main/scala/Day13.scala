@@ -68,7 +68,7 @@ object Day13 {
   } ensuring(result => result >= 0 && result <= fw.map {case (d, r) => d * r}.sum)
 
   object Part1 {
-    def solve(input: List[String]): Int = {
+    def solve(input: List[String]): (Int, Long) = Util.measuredTimeMillis {
       calcSecScore(buildFw(parseInput(input)))
     }
   }
@@ -82,7 +82,7 @@ object Day13 {
   }
 
   object Part2 {
-    def solve(input: List[String]): Int = {
+    def solve(input: List[String]): (Int, Long) = Util.measuredTimeMillis {
       def go(fw: List[(Int, Int)], delay: Int): Int = {
         if(passThrough(fw, delay)) delay
         else go(fw, delay + 1)

@@ -46,13 +46,13 @@ object Day11 {
   } ensuring(result => result._1 >= 0 && result._2 >= result._1)
 
   object Part1 {
-    def solve(input: List[String]): Int = {
+    def solve(input: List[String]): (Int, Long) = Util.measuredTimeMillis {
       calcSteps(input)._1
     }
   }
 
   object Part2 {
-    def solve(input: List[String]): Int = {
+    def solve(input: List[String]): (Int, Long) = Util.measuredTimeMillis {
       calcSteps(input)._2
     }
   }

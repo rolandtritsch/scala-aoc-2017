@@ -65,10 +65,14 @@ object Day15 {
   }
 
   object Part1 {
-    def solve: Int = run((1, 1), 40000000)
+    def solve: (Int, Long) = Util.measuredTimeMillis {
+      run((1, 1), 40000000)
+    }
   }
 
   object Part2 {
-    def solve: Int = run((4, 8), 5000000)
+    def solve: (Int, Long) = Util.measuredTimeMillis {
+      run((4, 8), 5000000)
+    }
   }
 }

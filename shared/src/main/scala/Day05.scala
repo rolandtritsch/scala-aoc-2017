@@ -36,11 +36,15 @@ object Day05 {
 
   object Part1 {
     def offset(sc: Int) = sc + 1
-    def solve(stack: List[Int]): Int = countSteps(stack.toVector, 0, 1, offset)
+    def solve(stack: List[Int]): (Int, Long) = Util.measuredTimeMillis {
+      countSteps(stack.toVector, 0, 1, offset)
+    }
   }
 
   object Part2 {
     def offset(sc: Int) = if(sc >= 3) sc - 1 else sc + 1
-    def solve(stack: List[Int]): Int = countSteps(stack.toVector, 0, 1, offset)
+    def solve(stack: List[Int]): (Int, Long) = Util.measuredTimeMillis {
+      countSteps(stack.toVector, 0, 1, offset)
+    }
   }
 }

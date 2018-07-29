@@ -118,13 +118,13 @@ object Day07 {
   }
 
   object Part1 {
-    def solve(input: List[String]): String = {
+    def solve(input: List[String]): (String, Long) = Util.measuredTimeMillis {
       Tree.findRoot(parseInput(input))
     }
   }
 
   object Part2 {
-    def solve(input: List[String]): Int = {
+    def solve(input: List[String]): (Int, Long) = Util.measuredTimeMillis {
       val pnodes = parseInput(input)
       val root = Tree.build(Day07.Tree.findRoot(pnodes), pnodes)
       val badNode = Tree.findBadNode(root)

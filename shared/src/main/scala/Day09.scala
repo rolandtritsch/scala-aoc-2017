@@ -85,7 +85,7 @@ object Day09 {
   }
 
   object Part1 {
-    def solve(input: List[Char]): Int = {
+    def solve(input: List[Char]): (Int, Long) = Util.measuredTimeMillis {
       val finalState = StateMachine(input).run
       assert(finalState.isInstanceOf[OutOfGroup], s"finalState.isInstanceOf[OutOfGroup] failed")
       finalState.stats.scores.sum
@@ -93,7 +93,7 @@ object Day09 {
   }
 
   object Part2 {
-    def solve(input: List[Char]): Int = {
+    def solve(input: List[Char]): (Int, Long) = Util.measuredTimeMillis {
       val finalState = StateMachine(input).run
       assert(finalState.isInstanceOf[OutOfGroup], s"finalState.isInstanceOf[OutOfGroup] failed")
       finalState.stats.garbageCharCounter

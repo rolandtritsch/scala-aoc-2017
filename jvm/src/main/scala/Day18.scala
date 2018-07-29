@@ -262,7 +262,7 @@ object Day18 {
   }
 
   object Part1 {
-    def solve(input: List[String]): Long = {
+    def solve(input: List[String]): (Long, Long) = Util.measuredTimeMillis {
       def done(p: Program): Boolean = {
         if (p.counter < 0 || p.counter >= p.instructions.size) true
         else p.instructions(p.counter) match {
@@ -286,7 +286,7 @@ object Day18 {
   }
 
   object Part2 {
-    def solve(input: List[String]): Long = {
+    def solve(input: List[String]): (Long, Long) = Util.measuredTimeMillis {
       def done(p: Program): Boolean = {
         p.counter < 0 || p.counter >= p.instructions.size || p.deadlocked
       }

@@ -61,13 +61,13 @@ object Day12 {
   }
 
   object Part1 {
-    def solve(input: List[String]): Int = {
+    def solve(input: List[String]): (Int, Long) = Util.measuredTimeMillis {
       findPrograms(0, parseInput(input)).size
     }
   }
 
   object Part2 {
-    def solve(input: List[String]): Int = {
+    def solve(input: List[String]): (Int, Long) = Util.measuredTimeMillis {
       findGroups(parseInput(input)).size
     }
   }

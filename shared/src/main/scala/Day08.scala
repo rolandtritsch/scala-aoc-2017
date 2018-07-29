@@ -88,7 +88,7 @@ object Day08 {
   }
 
   object Part1 {
-    def solve(input: List[String]): Int = {
+    def solve(input: List[String]): (Int, Long) = Util.measuredTimeMillis {
       val instructions = parseInput(input)
       val registers = buildRegisters(instructions)
       val allRegisterStates = runProgram(instructions, registers)
@@ -98,7 +98,7 @@ object Day08 {
   }
 
   object Part2 {
-    def solve(input: List[String]): Int = {
+    def solve(input: List[String]): (Int, Long) = Util.measuredTimeMillis {
       val instructions = parseInput(input)
       val registers = buildRegisters(instructions)
       val allRegisterStates = runProgram(instructions, registers)

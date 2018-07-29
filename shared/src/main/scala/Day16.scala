@@ -112,13 +112,13 @@ object Day16 {
   }
 
   object Part1 {
-    def solve(input: List[String]): String = {
+    def solve(input: List[String]): (String, Long) = Util.measuredTimeMillis {
       executeMoves(initial, parseInput(input)).mkString
     }
   }
 
   object Part2 {
-    def solve(input: List[String]): String = {
+    def solve(input: List[String]): (String, Long) = Util.measuredTimeMillis {
       val moves = parseInput(input)
       val loopTimes = findLoop(executeMoves(initial, moves), moves,1)
       executeDance(initial, moves, times % loopTimes).mkString

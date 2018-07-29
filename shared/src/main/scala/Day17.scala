@@ -63,14 +63,14 @@ object Day17 {
   }
 
   object Part1 {
-    def solve(steps: Int, times: Int): Int = {
+    def solve(steps: Int, times: Int): (Int, Long) = Util.measuredTimeMillis {
       val (position, buffer) = buildBuffer(mutable.ListBuffer(0), steps, times)
       buffer(position + 1)
     }
   }
 
   object Part2 {
-    def solve(steps: Int, times: Int): Int = {
+    def solve(steps: Int, times: Int): (Int, Long) = Util.measuredTimeMillis {
       val (finalPosition, finalValue) = (1.to(times)).foldLeft(0, 0) { (current, size) => {
         val (currentPosition, currentValue) = current
         val nextPosition = moveForward(currentPosition, size, steps)

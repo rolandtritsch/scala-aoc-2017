@@ -158,13 +158,13 @@ object Day22 {
   }
 
   object Part1 {
-    def solve(input: List[String]): Int = {
+    def solve(input: List[String]): (Int, Long) = Util.measuredTimeMillis {
       run(Day22.SimpleGrid(1001).mapInput(parseInput(input)), Default.ticks1).numOfInfections
     }
   }
 
   object Part2 {
-    def solve(input: List[String]): Int = {
+    def solve(input: List[String]): (Int, Long) = Util.measuredTimeMillis {
       run(Day22.AdvancedGrid(1001).mapInput(parseInput(input)), Default.ticks2).numOfInfections
     }
   }

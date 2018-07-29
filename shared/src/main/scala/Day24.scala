@@ -80,14 +80,14 @@ package aoc
   } ensuring(_._2 >= 0, "_._2 >= 0 failed")
 
   object Part1 {
-    def solve(input: List[String]): Int = {
+    def solve(input: List[String]): (Int, Long) = Util.measuredTimeMillis {
       val (maxStrength, _) = findStrongestPath(findPaths(parseInput(input)))
       maxStrength
     }
   }
 
   object Part2 {
-    def solve(input: List[String]): Int = {
+    def solve(input: List[String]): (Int, Long) = Util.measuredTimeMillis {
       val (_, maxLength, _) = findLongestPath(findPaths(parseInput(input)))
       maxLength
     }

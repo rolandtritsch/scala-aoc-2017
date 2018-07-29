@@ -40,10 +40,14 @@ object Day04 {
   } ensuring(_ >= 0, s"_ >= 0 failed")
 
   object Part1 {
-    def solve(passPhrases: List[PassPhrase]): Int = countValid(passPhrases)
+    def solve(passPhrases: List[PassPhrase]): (Int, Long) = Util.measuredTimeMillis {
+      countValid(passPhrases)
+    }
   }
 
   object Part2 {
-    def solve(passPhrases: List[PassPhrase]): Int = countValid(passPhrases.map(_.map(_.sorted)))
+    def solve(passPhrases: List[PassPhrase]): (Int, Long) = Util.measuredTimeMillis {
+      countValid(passPhrases.map(_.map(_.sorted)))
+    }
   }
 }

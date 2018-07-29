@@ -13,14 +13,14 @@ object Day25 {
   val input = List.empty[String]
 
   object Part1 {
-    def solve(input: List[String]): Int = {
-      0
+    def solve(input: List[String]): (Int, Long) = {
+      (0, 0L)
     }
   }
 
   object Part2 {
-    def solve(input: List[String]): Int = {
-      0
+    def solve(input: List[String]): (Int, Long) = {
+      (0, 0L)
     }
   }
 }

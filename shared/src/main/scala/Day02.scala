@@ -29,7 +29,7 @@ object Day02 {
       s.map(row => row.max - row.min)
     }
 
-    def solve(spreadSheet: List[List[Int]]): Int = {
+    def solve(spreadSheet: List[List[Int]]): (Int, Long) = Util.measuredTimeMillis {
       Day02.checksum(spreadSheet, processRow)
     }
   }
@@ -45,7 +45,7 @@ object Day02 {
       }}
     }
 
-    def solve(spreadSheet: List[List[Int]]): Int = {
+    def solve(spreadSheet: List[List[Int]]): (Int, Long) = Util.measuredTimeMillis {
       Day02.checksum(spreadSheet, processRow)
     }
   }

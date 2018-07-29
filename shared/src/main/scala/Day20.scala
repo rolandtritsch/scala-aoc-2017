@@ -77,13 +77,13 @@ object Day20 {
   }
 
   object Part1 {
-    def solve(input: List[String]): Int = {
+    def solve(input: List[String]): (Int, Long) = Util.measuredTimeMillis {
       findClosest(run(parseInput(input)))
     }
   }
 
   object Part2 {
-    def solve(input: List[String]): Int = {
+    def solve(input: List[String]): (Int, Long) = Util.measuredTimeMillis {
       runWithCollisionDetection(parseInput(input)).size
     }
   }

@@ -60,7 +60,7 @@ object Day10 {
   }
 
   object Part1 {
-    def solve(input: String): Int = {
+    def solve(input: String): (Int, Long) = Util.measuredTimeMillis {
       val hash = knot(input2Lengths(input), seed).hash
       hash(0) * hash(1)
     }
@@ -97,7 +97,7 @@ object Day10 {
   }
 
   object Part2 {
-    def solve(input: String): String = {
+    def solve(input: String): (String, Long) = Util.measuredTimeMillis {
       dense2hex(dense(sparse(encode(input, suffix), seed, rounds).hash))
     }
   }

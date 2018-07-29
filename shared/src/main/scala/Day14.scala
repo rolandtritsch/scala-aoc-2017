@@ -36,7 +36,7 @@ object Day14 {
   } ensuring(result => result.size == hex.size * 4)
 
   object Part1 {
-    def solve(input: String): Int = {
+    def solve(input: String): (Int, Long) = Util.measuredTimeMillis {
       buildGrid(input).foldLeft(0)((sum, hash) => sum + hash.count(identity))
     }
   }
@@ -67,7 +67,11 @@ object Day14 {
     require(row >= 0 && row <= size, s"row >= 0 && row <= size failed; with >${row}<")
     require(col >= 0 && col <= size, s"col >= 0 && col <= size failed; with >${col}<")
 
-    List((0, 1), (0, -1), (1, 0), (-1, 0)).map {case(rOffset, cOffset) => (row + rOffset, col + cOffset)}.filterNot {case(row, col) => row < 0 || col < 0 || row >= size || col >= size}
+    List((0, 1), (0, -1), (1, 0), (-1, 0)).map {
+      case(rOffset, cOffset) => (row + rOffset, col + cOffset)
+    }.filterNot {
+      case(row, col) => row < 0 || col < 0 || row >= size || col >= size
+    }
   }
 
   def findRegion(row: Int, col: Int, grid: List[List[Boolean]]): List[(Int, Int)] = {
@@ -88,7 +92,7 @@ object Day14 {
   } ensuring(result => result.nonEmpty && result.contains(row, col))
 
   object Part2 {
-    def solve(input: String): Int = {
+    def solve(input: String): (Int, Long) = Util.measuredTimeMillis {
       findRegions(buildGrid(input)).size
     }
   }

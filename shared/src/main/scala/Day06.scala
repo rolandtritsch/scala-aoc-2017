@@ -52,14 +52,14 @@ object Day06 {
   }
 
   object Part1 {
-    def solve(banks: MemoryBanks): Int = {
+    def solve(banks: MemoryBanks): (Int, Long) = Util.measuredTimeMillis {
       val (lambda, mu) = floyd(banks, cycle)
       lambda + mu
     }
   }
 
   object Part2 {
-    def solve(banks: MemoryBanks): Int = {
+    def solve(banks: MemoryBanks): (Int, Long) = Util.measuredTimeMillis {
       val (lambda, mu) = floyd(banks, cycle)
       lambda
     }

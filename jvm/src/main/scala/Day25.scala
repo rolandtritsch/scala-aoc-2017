@@ -90,7 +90,7 @@ object Day25 {
   }
 
   object Part1 {
-    def solve(input: Int): Int = {
+    def solve(input: Int): (Int, Long) = Util.measuredTimeMillis {
       val tape = Tape(mutable.ArrayBuffer.fill(100001)(0))
       run(StateA(tape.size / 2, tape), input).checkSum
     }

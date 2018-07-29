@@ -143,13 +143,13 @@ object Day21 {
   }
 
   object Part1 {
-    def solve(input: List[String]): Int = {
+    def solve(input: List[String]): (Int, Long) = Util.measuredTimeMillis {
       run(start, parseInput(input), 5).flatten.count(_ == '#')
     }
   }
 
   object Part2 {
-    def solve(input: List[String]): Int = {
+    def solve(input: List[String]): (Int, Long) = Util.measuredTimeMillis {
       run(start, parseInput(input), 18).flatten.count(_ == '#')
     }
   }

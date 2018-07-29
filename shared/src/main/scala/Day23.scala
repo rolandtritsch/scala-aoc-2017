@@ -209,7 +209,7 @@ object Day23 {
 
     val program = Program(0, parseInput(input), Map.empty[Char, Long].withDefaultValue(0), Map.empty[String, Long].withDefaultValue(0))
 
-    def solve(input: List[String]): Long = {
+    def solve(input: List[String]): (Long, Long) = Util.measuredTimeMillis {
       run(program, done, exit)
     }
   }
@@ -222,7 +222,7 @@ object Day23 {
     val end = start + 17000
     val stepsize = 17
 
-    def solve(input: List[String]): Long = {
+    def solve(input: List[String]): (Long, Long) = Util.measuredTimeMillis {
       (start to end by stepsize).count(!findPrime(_))
     }
   }

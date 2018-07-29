@@ -27,7 +27,7 @@ object Day01 {
   } ensuring(_ >= 0, s"_ >= 0 failed")
 
   object Part1 {
-    def solve(input: String): Int = {
+    def solve(input: String): (Int, Long) = Util.measuredTimeMillis {
       require(input.nonEmpty, "input.nonEmpty failed")
       require(input.forall(_.isDigit), "input.forall(_.isDigit) failed")
 
@@ -36,7 +36,7 @@ object Day01 {
   }
 
   object Part2 {
-    def solve(input: String): Int = {
+    def solve(input: String): (Int, Long) = Util.measuredTimeMillis {
       require(input.nonEmpty, "input.nonEmpty failed")
       require(input.forall(_.isDigit), "input.forall(_.isDigit) failed")
       require(input.size % 2 == 0, "input.size % 2 == 0 failed")
