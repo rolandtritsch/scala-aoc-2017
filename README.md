@@ -20,4 +20,6 @@ To make this work you need to ...
 
 Note: To [make Scala Native work](http://www.scala-native.org/en/latest/user/setup.html) you probably need to install a couple more packages.
 
+Note: I also [ported the solutions to Kotlin](https://github.com/rolandtritsch/kotlin-aoc-2017) and (benchmarked)(https://docs.google.com/spreadsheets/d/1kHugZ-8mJczlmQRcda23YGvAgeqlJLt1I7cYlDD3Tws/edit?usp=sharing) the solutions [against each other](https://github.com/rolandtritsch/scala-aoc-2017/tree/master/results).
+
 Have fun!!!
