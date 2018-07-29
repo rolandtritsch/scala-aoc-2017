@@ -11,13 +11,13 @@ class Day09Spec extends FlatSpec with Matchers {
 
   behavior of "solve() - Part1"
   it should "be able to process garbage" in {
-    Day09.Part1.solve("{<>}".toList) shouldBe 1
-    Day09.Part1.solve("{<endanbca{dhbch}{{{{{!!!dndcn}}}}}}}}}<<<<<>}".toList) shouldBe 1
-    Day09.Part1.solve("{<<<<>}".toList) shouldBe 1
-    Day09.Part1.solve("{<{!>}>}".toList) shouldBe 1
-    Day09.Part1.solve("{<!!>}".toList) shouldBe 1
-    Day09.Part1.solve("{<!!!>>}".toList) shouldBe 1
-    Day09.Part1.solve("{<{o\"i!a,<{i<a>}".toList) shouldBe 1
+    Day09.Part1.solve("{<>}".toList)._1 shouldBe 1
+    Day09.Part1.solve("{<endanbca{dhbch}{{{{{!!!dndcn}}}}}}}}}<<<<<>}".toList)._1 shouldBe 1
+    Day09.Part1.solve("{<<<<>}".toList)._1 shouldBe 1
+    Day09.Part1.solve("{<{!>}>}".toList)._1 shouldBe 1
+    Day09.Part1.solve("{<!!>}".toList)._1 shouldBe 1
+    Day09.Part1.solve("{<!!!>>}".toList)._1 shouldBe 1
+    Day09.Part1.solve("{<{o\"i!a,<{i<a>}".toList)._1 shouldBe 1
   }
 
   it should "solve the testcase(s)" in {
@@ -42,11 +42,11 @@ class Day09Spec extends FlatSpec with Matchers {
   }
 
   it should "solve the puzzle" taggedAs (SolutionTest, BuildTest) in {
-    Day09.Part1.solve(Day09.input) shouldBe 10800
+    Day09.Part1.solve(Day09.input)._1 shouldBe 10800
   }
 
   behavior of "solve() - Part2"
   it should "solve the puzzle" taggedAs (SolutionTest, BuildTest) in {
-    Day09.Part2.solve(Day09.input) shouldBe 4522
+    Day09.Part2.solve(Day09.input)._1 shouldBe 4522
   }
 }

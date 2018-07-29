@@ -25,11 +25,11 @@ class Day19Spec extends FlatSpec with Matchers {
 
   behavior of "solve() - Part1"
   it should "solve the puzzle" taggedAs(SolutionTest) in {
-    Day19.Part1.solve(Day19.input) shouldBe "PVBSCMEQHY"
+    Day19.Part1.solve(Day19.input)._1 shouldBe "PVBSCMEQHY"
   }
 
   behavior of "solve() - Part2"
   it should "solve the puzzle" taggedAs(SolutionTest) in {
-    Day19.Part2.solve(Day19.input) shouldBe 17736
+    Day19.Part2.solve(Day19.input)._1 shouldBe 17736
   }
 }

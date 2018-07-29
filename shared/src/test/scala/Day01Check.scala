@@ -14,8 +14,8 @@ class Day01Check extends PropSpec with GeneratorDrivenPropertyChecks with Matche
   property("Any string of equal numbers should be <number>*<length of the string") {
     forAll(equalStrings) {input =>
       val expectedResult = input.head.asDigit * input.length
-      Day01.Part1.solve(input) shouldBe expectedResult
-      Day01.Part2.solve(input) shouldBe expectedResult
+      Day01.Part1.solve(input)._1 shouldBe expectedResult
+      Day01.Part2.solve(input)._1 shouldBe expectedResult
     }
   }
 }

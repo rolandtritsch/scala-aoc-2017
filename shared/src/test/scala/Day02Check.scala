@@ -29,7 +29,7 @@ class Day02Check extends PropSpec with GeneratorDrivenPropertyChecks with Matche
 
   property("Any testsheet should return the expected result") {
     forAll(sheetGen) {case(sheet, result) => {
-      Day02.Part1.solve(sheet) shouldBe result
+      Day02.Part1.solve(sheet)._1 shouldBe result
     }}
   }
 }

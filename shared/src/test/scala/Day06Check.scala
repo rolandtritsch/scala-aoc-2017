@@ -18,8 +18,8 @@ class Day06Check extends PropSpec with GeneratorDrivenPropertyChecks with Matche
 
   property("Dummy - was not able to find a good property") {
     forAll(membankGen) {bank => {
-      Day06.Part1.solve(bank) shouldBe 1465
-      Day06.Part2.solve(bank) shouldBe bank.size
+      Day06.Part1.solve(bank)._1 shouldBe 1465
+      Day06.Part2.solve(bank)._1 shouldBe bank.size
     }}
   }
 }

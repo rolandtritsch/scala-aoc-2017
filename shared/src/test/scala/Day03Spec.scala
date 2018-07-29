@@ -25,15 +25,15 @@ class Day03Spec extends FlatSpec with Matchers {
 
   behavior of "solve() - Part1"
   it should "solve the testcases" taggedAs(BuildTest) in {
-    Day03.Part1.solve(1) shouldBe 0
-    Day03.Part1.solve(12) shouldBe 3
-    Day03.Part1.solve(23) shouldBe 2
-    Day03.Part1.solve(1024) shouldBe 31
-    Day03.Part1.solve(1000000) shouldBe 999
+    Day03.Part1.solve(1)._1 shouldBe 0
+    Day03.Part1.solve(12)._1 shouldBe 3
+    Day03.Part1.solve(23)._1 shouldBe 2
+    Day03.Part1.solve(1024)._1 shouldBe 31
+    Day03.Part1.solve(1000000)._1 shouldBe 999
   }
 
   it should "solve the puzzle" taggedAs(SolutionTest) in {
-    Day03.Part1.solve(Day03.input) shouldBe 371
+    Day03.Part1.solve(Day03.input)._1 shouldBe 371
   }
 
   behavior of "solve() - Part2"
@@ -44,10 +44,10 @@ class Day03Spec extends FlatSpec with Matchers {
   }
 
   it should "solve the testcases" taggedAs(BuildTest) in {
-    Day03.Part2.solve(750) shouldBe 806
+    Day03.Part2.solve(750)._1 shouldBe 806
   }
 
   it should "solve the puzzle" taggedAs(SolutionTest) in {
-    Day03.Part2.solve(Day03.input) shouldBe 369601
+    Day03.Part2.solve(Day03.input)._1 shouldBe 369601
   }
 }

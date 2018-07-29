@@ -38,19 +38,19 @@ class Day08Spec extends FlatSpec with Matchers {
 
   behavior of "solve() - Part1"
   it should "solve the testcase(s)" taggedAs(BuildTest) in {
-    Day08.Part1.solve(testInput) shouldBe 1
+    Day08.Part1.solve(testInput)._1 shouldBe 1
   }
 
   it should "solve the puzzle" taggedAs(SolutionTest) in {
-    Day08.Part1.solve(Day08.input) shouldBe 4163
+    Day08.Part1.solve(Day08.input)._1 shouldBe 4163
   }
 
   behavior of "solve() - Part2"
   it should "solve the testcase(s)" taggedAs(BuildTest) in {
-    Day08.Part2.solve(testInput) shouldBe 10
+    Day08.Part2.solve(testInput)._1 shouldBe 10
   }
 
   it should "should solve the puzzle" taggedAs(SolutionTest) in {
-    Day08.Part2.solve(Day08.input) shouldBe 5347
+    Day08.Part2.solve(Day08.input)._1 shouldBe 5347
   }
 }

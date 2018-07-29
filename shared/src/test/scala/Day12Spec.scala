@@ -36,7 +36,7 @@ class Day12Spec extends FlatSpec with Matchers {
 
   behavior of "solve() - Part1"
   it should "solve the puzzle" taggedAs(SolutionTest) in {
-    Day12.Part1.solve(Day12.input) shouldBe 152
+    Day12.Part1.solve(Day12.input)._1 shouldBe 152
   }
 
   behavior of "findGroups()"
@@ -46,6 +46,6 @@ class Day12Spec extends FlatSpec with Matchers {
 
   behavior of "solve() - Part2"
   it should "solve the puzzle" taggedAs(SolutionTest) in {
-    Day12.Part2.solve(Day12.input) shouldBe 186
+    Day12.Part2.solve(Day12.input)._1 shouldBe 186
   }
 }

@@ -17,11 +17,11 @@ class Day02Spec extends FlatSpec with Matchers {
 
   behavior of "solve() - Part1"
   it should "solve the testcases" taggedAs(BuildTest) in {
-    Day02.Part1.solve(testSheet) shouldBe 18
+    Day02.Part1.solve(testSheet)._1 shouldBe 18
   }
 
   it should "solve the puzzle" taggedAs(SolutionTest) in {
-    Day02.Part1.solve(Day02.input) shouldBe 34925
+    Day02.Part1.solve(Day02.input)._1 shouldBe 34925
   }
 
   it should "throw an exception, if the sheet is malformed" in {
@@ -39,10 +39,10 @@ class Day02Spec extends FlatSpec with Matchers {
 
   behavior of "solve() - Part2"
   it should "solve the testcases" taggedAs(BuildTest) in {
-    Day02.Part2.solve(testSheet2) shouldBe 9
+    Day02.Part2.solve(testSheet2)._1 shouldBe 9
   }
 
   it should "solve the puzzle" taggedAs(SolutionTest) in {
-    Day02.Part2.solve(Day02.input) shouldBe 221
+    Day02.Part2.solve(Day02.input)._1 shouldBe 221
   }
 }

@@ -21,8 +21,8 @@ class Day12Check extends PropSpec with GeneratorDrivenPropertyChecks with Matche
 
   property("Any testpipe should return n") {
     forAll(pipeGen) {case (input, n) => {
-      Day12.Part1.solve(input) shouldBe (n + 1)
-      Day12.Part2.solve(input) shouldBe 1
+      Day12.Part1.solve(input)._1 shouldBe (n + 1)
+      Day12.Part2.solve(input)._1 shouldBe 1
     }}
   }
 }

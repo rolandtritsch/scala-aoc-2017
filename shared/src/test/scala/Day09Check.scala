@@ -33,19 +33,19 @@ class Day09Check extends PropSpec with GeneratorDrivenPropertyChecks with Matche
 
   property("Any teststream should return respect result") {
     forAll(streamGen) {s => {
-      Day09.Part1.solve(s) shouldBe (1 to (s.size/2)).sum
+      Day09.Part1.solve(s)._1 shouldBe (1 to (s.size/2)).sum
     }}
   }
 
   property("Any teststream2 should return respect result") {
     forAll(streamGen2) {s => {
-      Day09.Part1.solve(s) shouldBe (s.size/2)
+      Day09.Part1.solve(s)._1 shouldBe (s.size/2)
     }}
   }
 
   property("Any teststream3 should return respect result") {
     forAll(streamGen3) {case (s, n) => {
-      Day09.Part2.solve(s) shouldBe n
+      Day09.Part2.solve(s)._1 shouldBe n
     }}
   }
 }

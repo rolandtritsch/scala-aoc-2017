@@ -26,7 +26,7 @@ class Day08Check extends PropSpec with GeneratorDrivenPropertyChecks with Matche
 
   property("Every program will end") {
     forAll(programGen) {p => {
-      Day08.Part1.solve(p) should be >= 0
+      Day08.Part1.solve(p)._1 should be >= 0
     }}
   }
 }

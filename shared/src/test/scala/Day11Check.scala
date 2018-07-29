@@ -26,20 +26,20 @@ class Day11Check extends PropSpec with GeneratorDrivenPropertyChecks with Matche
 
   property("Any star path should end up in the center again") {
     forAll(starPathGen) { p => {
-      Day11.Part1.solve(p) shouldBe 0
+      Day11.Part1.solve(p)._1 shouldBe 0
     }}
   }
 
   property("For any star path the max distance is 1") {
     forAll(starPathGen) { p => {
-      Day11.Part2.solve(p) shouldBe 1
+      Day11.Part2.solve(p)._1 shouldBe 1
     }}
   }
 
   property("For any random stream max should be >= distance") {
     forAll(randomPathGen) { p => {
-      val distance = Day11.Part1.solve(p)
-      val max = Day11.Part2.solve(p)
+      val distance = Day11.Part1.solve(p)._1
+      val max = Day11.Part2.solve(p)._1
       max should be >= distance
     }}
   }

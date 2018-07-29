@@ -12,8 +12,8 @@ class Day03Check extends PropSpec with GeneratorDrivenPropertyChecks with Matche
 
   property("For any given number the result needs to be positive") {
     forAll(Gen.posNum[Int]) {n => {
-      Day03.Part1.solve(n) should be >= 0
-      Day03.Part2.solve(n) should be > n
+      Day03.Part1.solve(n)._1 should be >= 0
+      Day03.Part2.solve(n)._1 should be > n
     }}
   }
 }

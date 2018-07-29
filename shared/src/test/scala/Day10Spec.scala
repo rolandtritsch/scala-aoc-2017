@@ -50,7 +50,7 @@ class Day10Spec extends FlatSpec with Matchers {
 
   behavior of "solve() - Part1"
   it should "solve the puzzle" taggedAs(SolutionTest) in {
-    Day10.Part1.solve(Day10.input) shouldBe 4114
+    Day10.Part1.solve(Day10.input)._1 shouldBe 4114
   }
 
   behavior of "encode()"
@@ -84,13 +84,13 @@ class Day10Spec extends FlatSpec with Matchers {
 
   behavior of "solve() - Part2"
   it should "solve the testcase(s)" taggedAs(BuildTest) in {
-    Day10.Part2.solve("") shouldBe "a2582a3a0e66e6e86e3812dcb672a272"
-    Day10.Part2.solve("AoC 2017") shouldBe "33efeb34ea91902bb2f59c9920caa6cd"
-    Day10.Part2.solve("1,2,3") shouldBe "3efbe78a8d82f29979031a4aa0b16a9d"
-    Day10.Part2.solve("1,2,4") shouldBe "63960835bcdc130f0b66d7ff4f6a5a8e"
+    Day10.Part2.solve("")._1 shouldBe "a2582a3a0e66e6e86e3812dcb672a272"
+    Day10.Part2.solve("AoC 2017")._1 shouldBe "33efeb34ea91902bb2f59c9920caa6cd"
+    Day10.Part2.solve("1,2,3")._1 shouldBe "3efbe78a8d82f29979031a4aa0b16a9d"
+    Day10.Part2.solve("1,2,4")._1 shouldBe "63960835bcdc130f0b66d7ff4f6a5a8e"
   }
 
   it should "solve the puzzle" taggedAs(SolutionTest) in {
-    Day10.Part2.solve(Day10.input) shouldBe "2f8c3d2100fdd57cec130d928b0fd2dd"
+    Day10.Part2.solve(Day10.input)._1 shouldBe "2f8c3d2100fdd57cec130d928b0fd2dd"
   }
 }

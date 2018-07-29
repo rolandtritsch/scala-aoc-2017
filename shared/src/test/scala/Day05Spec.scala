@@ -14,21 +14,21 @@ class Day05Spec extends FlatSpec with Matchers {
 
   behavior of "solve() - Part1"
   it should "solve the testcase(s)" taggedAs(BuildTest) in {
-    Day05.Part1.solve(testStack) shouldBe 5
-    Day05.Part1.solve(testStack2) shouldBe testStack2.size
+    Day05.Part1.solve(testStack)._1 shouldBe 5
+    Day05.Part1.solve(testStack2)._1 shouldBe testStack2.size
   }
 
   it should "solve the puzzle" taggedAs(SolutionTest) in {
-    Day05.Part1.solve(Day05.input) shouldBe 372139
+    Day05.Part1.solve(Day05.input)._1 shouldBe 372139
   }
 
   behavior of "solve() - Part2"
   it should "solve the testcase(s)" taggedAs(BuildTest) in {
-    Day05.Part2.solve(testStack) shouldBe 10
-    Day05.Part2.solve(testStack2) shouldBe testStack2.size
+    Day05.Part2.solve(testStack)._1 shouldBe 10
+    Day05.Part2.solve(testStack2)._1 shouldBe testStack2.size
   }
 
   it should "solve the puzzle" taggedAs(SolutionTest, SlowTest) in {
-    Day05.Part2.solve(Day05.input) shouldBe 29629538
+    Day05.Part2.solve(Day05.input)._1 shouldBe 29629538
   }
 }

@@ -29,8 +29,8 @@ class Day04Check extends PropSpec with GeneratorDrivenPropertyChecks with Matche
 
   property("All passphrases are valid") {
     forAll(passPhraseGen) {passPhrases => {
-      Day04.Part1.solve(passPhrases) shouldBe passPhrases.size
-      Day04.Part2.solve(passPhrases) shouldBe passPhrases.size
+      Day04.Part1.solve(passPhrases)._1 shouldBe passPhrases.size
+      Day04.Part2.solve(passPhrases)._1 shouldBe passPhrases.size
     }}
   }
 }

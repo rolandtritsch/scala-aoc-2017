@@ -123,7 +123,7 @@ class Day22Spec extends FlatSpec with Matchers {
 
   behavior of "solve() - Part1"
   it should "solve the puzzle" taggedAs(SolutionTest) in {
-    Day22.Part1.solve(Day22.input) shouldBe 5305
+    Day22.Part1.solve(Day22.input)._1 shouldBe 5305
   }
 
   behavior of "moving through the AdvancdedGrid"
@@ -134,6 +134,6 @@ class Day22Spec extends FlatSpec with Matchers {
 
   behavior of "solve() - Part2"
   it should "solve the puzzle" taggedAs(SolutionTest) in {
-    Day22.Part2.solve(Day22.input) shouldBe 2511424
+    Day22.Part2.solve(Day22.input)._1 shouldBe 2511424
   }
 }

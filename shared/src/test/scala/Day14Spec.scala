@@ -47,11 +47,11 @@ class Day14Spec extends FlatSpec with Matchers {
 
   behavior of "solve() - Part1"
   it should "solve the testcase(s)" taggedAs(SlowTest) in {
-    Day14.Part1.solve(testInput) shouldBe 8108
+    Day14.Part1.solve(testInput)._1 shouldBe 8108
   }
 
   it should "solve the puzzle" taggedAs(SolutionTest) in {
-    Day14.Part1.solve(Day14.input) shouldBe 8292
+    Day14.Part1.solve(Day14.input)._1 shouldBe 8292
   }
 
   behavior of "nextCoordinates()"
@@ -72,10 +72,10 @@ class Day14Spec extends FlatSpec with Matchers {
 
   behavior of "solve() - Part2"
   it should "solve the testcase(s)" taggedAs(SlowTest) in {
-    Day14.Part2.solve(testInput) shouldBe 1242
+    Day14.Part2.solve(testInput)._1 shouldBe 1242
   }
 
   it should "solve the puzzle" taggedAs(SolutionTest) in {
-    Day14.Part2.solve(Day14.input) shouldBe 1069
+    Day14.Part2.solve(Day14.input)._1 shouldBe 1069
   }
 }

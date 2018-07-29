@@ -55,7 +55,7 @@ class Day20Spec extends FlatSpec with Matchers {
 
   behavior of "solve() - Part1"
   it should "solve the puzzle" taggedAs(SolutionTest) in {
-    Day20.Part1.solve(Day20.input) shouldBe 243
+    Day20.Part1.solve(Day20.input)._1 shouldBe 243
   }
 
   behavior of "runWithCollisionDetection"
@@ -66,6 +66,6 @@ class Day20Spec extends FlatSpec with Matchers {
 
   behavior of "solve() - Part2"
   it should "solve() - Part2" taggedAs(SolutionTest) in {
-    Day20.Part2.solve(Day20.input) shouldBe 648
+    Day20.Part2.solve(Day20.input)._1 shouldBe 648
   }
 }

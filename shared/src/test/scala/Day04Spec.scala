@@ -24,11 +24,11 @@ class Day04Spec extends FlatSpec with Matchers {
 
   behavior of "solve() - Part1"
   it should "solve the puzzle" taggedAs(SolutionTest, BuildTest) in {
-    Day04.Part1.solve(Day04.input) shouldBe 383
+    Day04.Part1.solve(Day04.input)._1 shouldBe 383
   }
 
   behavior of "solve() - Part2"
   it should "solve the puzzle" taggedAs(SolutionTest, BuildTest) in {
-    Day04.Part2.solve(Day04.input) shouldBe 265
+    Day04.Part2.solve(Day04.input)._1 shouldBe 265
   }
 }

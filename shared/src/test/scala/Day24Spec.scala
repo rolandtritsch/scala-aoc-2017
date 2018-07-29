@@ -89,7 +89,7 @@ class Day24Spec extends FlatSpec with Matchers {
 
   behavior of "solve() - Part1"
   it should "solve the puzzle" taggedAs(SolutionTest, SlowTest) in {
-    Day24.Part1.solve(Day24.input) shouldBe 1695
+    Day24.Part1.solve(Day24.input)._1 shouldBe 1695
   }
 
   behavior of "findLongestPath()"
@@ -99,6 +99,6 @@ class Day24Spec extends FlatSpec with Matchers {
 
   behavior of "solve() - Part2"
   it should "solve the puzzle" taggedAs(SolutionTest, SlowTest) in {
-    Day24.Part2.solve(Day24.input) shouldBe 1673
+    Day24.Part2.solve(Day24.input)._1 shouldBe 1673
   }
 }

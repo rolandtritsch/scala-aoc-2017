@@ -16,7 +16,7 @@ class Day23Spec extends FlatSpec with Matchers {
 
   behavior of "solve() - Part1"
   it should "solve the puzzle" taggedAs(SolutionTest) in {
-    Day23.Part1.solve(Day23.input) shouldBe 6724
+    Day23.Part1.solve(Day23.input)._1 shouldBe 6724
   }
 
   behavior of "isPrime()"
@@ -27,6 +27,6 @@ class Day23Spec extends FlatSpec with Matchers {
 
   behavior of "solve() - Part2"
   it should "solve the puzzle" taggedAs(SolutionTest) in {
-    Day23.Part2.solve(Day23.input) shouldBe 903
+    Day23.Part2.solve(Day23.input)._1 shouldBe 903
   }
 }

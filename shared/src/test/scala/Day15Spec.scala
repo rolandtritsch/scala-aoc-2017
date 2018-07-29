@@ -61,11 +61,11 @@ class Day15Spec extends FlatSpec with Matchers {
 
   behavior of "solve() - Part1"
   it should "solve the puzzle" taggedAs(SolutionTest) in {
-    Day15.Part1.solve shouldBe 594
+    Day15.Part1.solve._1 shouldBe 594
   }
 
   behavior of "solve() - Part2"
   it should "solve the puzzle" taggedAs(SolutionTest) in {
-    Day15.Part2.solve shouldBe 328
+    Day15.Part2.solve._1 shouldBe 328
   }
 }

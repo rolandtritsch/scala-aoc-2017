@@ -18,8 +18,8 @@ class Day05Check extends PropSpec with GeneratorDrivenPropertyChecks with Matche
 
   property("Any teststack should return its size") {
     forAll(stackGen) {s => {
-      Day05.Part1.solve(s) shouldBe s.size
-      Day05.Part2.solve(s) shouldBe s.size
+      Day05.Part1.solve(s)._1 shouldBe s.size
+      Day05.Part2.solve(s)._1 shouldBe s.size
     }}
   }
 }

@@ -67,11 +67,11 @@ class Day07Spec extends FlatSpec with Matchers {
 
   behavior of "solve() - Part1"
   it should "solve the testcase(s)" taggedAs(BuildTest) in {
-    Day07.Part1.solve(testInput) shouldBe "tknk"
+    Day07.Part1.solve(testInput)._1 shouldBe "tknk"
   }
 
   it should "solve the puzzle" taggedAs(SolutionTest) in {
-    Day07.Part1.solve(Day07.input) shouldBe "uownj"
+    Day07.Part1.solve(Day07.input)._1 shouldBe "uownj"
   }
 
   behavior of "build()"
@@ -108,10 +108,10 @@ class Day07Spec extends FlatSpec with Matchers {
 
   behavior of "solve() - Part2"
   it should "solve the testcase(s)" taggedAs(BuildTest) in {
-    Day07.Part2.solve(testInput) shouldBe 60
+    Day07.Part2.solve(testInput)._1 shouldBe 60
   }
 
   it should "solve the puzzle" taggedAs(SolutionTest) in {
-    Day07.Part2.solve(Day07.input) shouldBe 596
+    Day07.Part2.solve(Day07.input)._1 shouldBe 596
   }
 }

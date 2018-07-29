@@ -68,20 +68,20 @@ class Day17Spec extends FlatSpec with Matchers {
   }
 
   it should "solve the puzzle" taggedAs(SolutionTest) in {
-    Day17.Part1.solve(Day17.steps, Day17.times) shouldBe 1311
+    Day17.Part1.solve(Day17.steps, Day17.times)._1 shouldBe 1311
   }
 
   behavior of "solve() - Part2"
   it should "solve the testcase(s)" taggedAs(BuildTest) in {
-    Day17.Part2.solve(3, 1) shouldBe 1
-    Day17.Part2.solve(3, 2) shouldBe 2
-    Day17.Part2.solve(3, 3) shouldBe 2
-    Day17.Part2.solve(3, 4) shouldBe 2
-    Day17.Part2.solve(3, 5) shouldBe 5
-    Day17.Part2.solve(3, 9) shouldBe 9
+    Day17.Part2.solve(3, 1)._1 shouldBe 1
+    Day17.Part2.solve(3, 2)._1 shouldBe 2
+    Day17.Part2.solve(3, 3)._1 shouldBe 2
+    Day17.Part2.solve(3, 4)._1 shouldBe 2
+    Day17.Part2.solve(3, 5)._1 shouldBe 5
+    Day17.Part2.solve(3, 9)._1 shouldBe 9
   }
 
   it should "solve the puzzle" taggedAs(SolutionTest, SlowTest) in {
-    Day17.Part2.solve(Day17.steps, Day17.times2) shouldBe 39170601
+    Day17.Part2.solve(Day17.steps, Day17.times2)._1 shouldBe 39170601
   }
 }
