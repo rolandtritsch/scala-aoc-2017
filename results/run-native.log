@@ -1,0 +1,60 @@
+[0m[[0minfo[0m] [0mLoading global plugins from /home/roland/.sbt/0.13/plugins[0m
+[0m[[0minfo[0m] [0mLoading project definition from /home/roland/Development/Home/scala-aoc-2017/project[0m
+[0m[[0minfo[0m] [0mSet current project to scala-aoc-2017 (in build file:/home/roland/Development/Home/scala-aoc-2017/)[0m
+[0m[[0minfo[0m] [0mLinking (4492 ms)[0m
+[0m[[0minfo[0m] [0mDiscovered 2000 classes and 13746 methods[0m
+[0m[[0minfo[0m] [0mOptimizing (5825 ms)[0m
+[0m[[0minfo[0m] [0mGenerating intermediate code (1634 ms)[0m
+[0m[[0minfo[0m] [0mProduced 43 files[0m
+[0m[[0minfo[0m] [0mCompiling to native code (3847 ms)[0m
+[0m[[0minfo[0m] [0mLinking native code (574 ms)[0m
+Day01: Part1: captcha -> (1223,39)
+Day01: Part2: captcha -> (1284,54)
+Day02: Part1: checksum -> (34925,0)
+Day02: Part2: checksum -> (221,1)
+Day03: Part1: distance -> (371,1192)
+Day03: Part2: number -> (369601,1)
+Day04: Part1: countvalid -> (383,12)
+Day04: Part2: countvalid -> (265,19)
+Day05: Part1: countsteps -> (372139,429)
+Day05: Part2: countsteps -> (29629538,23761)
+Day06: Part1: cycles -> (14029,3927)
+Day06: Part2: cycles -> (2765,4266)
+Day07: Part1: findroot -> (uownj,180)
+Day07: Part2: correctweight -> (596,550)
+Day08: Part1: maxregister -> (4163,135)
+Day08: Part2: maxregisters -> (5347,147)
+Day09: Part1: score -> (10800,1)
+Day09: Part2: chars -> (4522,10)
+Day10: Part1: knot -> (4114,165)
+Day10: Part2: hash -> (2f8c3d2100fdd57cec130d928b0fd2dd,40739)
+Day11: Part1: steps -> (810,3)
+Day11: Part2: max -> (1567,2)
+Day12: Part1: programs -> (152,205)
+Day12: Part2: groups -> (186,210)
+Day13: Part1: score -> (1632,3)
+Day13: Part2: pass -> (3834136,1781)
+Day14: Part1: used -> (8292,1475380)
+Day14: Part2: regions -> (1069,1440604)
+Day15: Part1: count -> (594,18873)
+Day15: Part2: count -> (328,4738)
+Day16: Part1: moves -> (bijankplfgmeodhc,92)
+Day16: Part2: dance -> (bpjahknliomefdgc,2484)
+Day17: Part1: next -> (1311,135)
+Day17: Part2: zero -> (39170601,2086804)
+Day18: Part1: frequency -> (0,0)
+Day18: Part2: deadlock -> (0,0)
+Day19: Part1: path -> (PVBSCMEQHY,16)
+Day19: Part2: steps -> (17736,1)
+Day20: Part1: findclosest -> (243,648)
+Day20: Part2: nocollisions -> (648,12935)
+Day21: Part1: after5 -> (0,0)
+Day21: Part2: after18 -> (0,0)
+Day22: Part1: simple -> (5305,62)
+Day22: Part2: advanced -> (2511424,4097)
+Day23: Part1: run -> (6724,145)
+Day23: Part2: run -> (903,975)
+Day24: Part1: strongest -> (1695,11115897)
+Day24: Part2: longest -> (1673,9780772)
+Day25: Part1: run -> (0,0)
+[0m[[32msuccess[0m] [0mTotal time: 26046 s, completed 30-Jul-2018 17:36:52[0m
