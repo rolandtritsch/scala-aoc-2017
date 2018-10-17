@@ -2,6 +2,8 @@ package aoc
 
 /** Problem: [[https://adventofcode.com/2017/day/18]]
   *
+  * Solution:
+  *
   * General - First we need to implement all of the operations. We then
   * execute the progrom by executing all instructions (the input). Running
   * the program can be parameterized by `when is the program done?` and
