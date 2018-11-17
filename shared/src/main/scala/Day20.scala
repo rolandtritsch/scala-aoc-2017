@@ -23,7 +23,7 @@ object Day20 {
     def add(v: Velocity): Position = {
       Position(x + v.x, y + v.y, z + v.z)
     }
-    def distance: Int = Math.abs(Math.abs(x) + Math.abs(y) + Math.abs(z))
+    def distance: Int = Math.abs(x) + Math.abs(y) + Math.abs(z)
   }
 
   case class Velocity(x: Int, y: Int, z: Int) {
