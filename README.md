@@ -24,6 +24,6 @@ Have fun!!!
 
 ## Benchmark
 
-I also ported the solutions to [Kotlin](https://github.com/rolandtritsch/kotlin-aoc-2017) and [benchmarked](https://docs.google.com/spreadsheets/d/1kHugZ-8mJczlmQRcda23YGvAgeqlJLt1I7cYlDD3Tws/edit?usp=sharing) the solutions [against each other](https://github.com/rolandtritsch/scala-aoc-2017/tree/master/results).
+I also [benchmarked](https://docs.google.com/spreadsheets/d/1kHugZ-8mJczlmQRcda23YGvAgeqlJLt1I7cYlDD3Tws/edit?usp=sharing) the solutions [against each other](https://github.com/rolandtritsch/scala-aoc-2017/tree/master/results) the solutions (Scala, Native, Kotlin, Haskell, Eta).
 
-![Benchmark](https://dl.dropboxusercontent.com/s/rdehnry29tdsnrr/benchmark.png)
+![Benchmark](https://www.dropbox.com/s/5sfnqgl9u57kekp/benchmark.png?dl=0)
