@@ -45,8 +45,6 @@ object Day21 {
     }
 
     def flips(fromGrid: Grid): List[Grid] = {
-      List(fromGrid) ++
-      List(flipHorizontal(fromGrid)) ++
       rotations(fromGrid) ++
       rotations(flipHorizontal(fromGrid))
     }

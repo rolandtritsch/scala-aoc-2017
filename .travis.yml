@@ -9,8 +9,19 @@ notifications:
     on_success: always
     on_failure: always
 
+cache:
+  directories:
+    - ~/rolandtritsch/scala-aoc-2017/project/target
+    - ~/rolandtritsch/scala-aoc-2017/jvm/target
+    - ~/.sbt
+    - ~/.ivy2
+
+addons:
+  apt:
+    update: true
+
 before_install:
-  - bash bin/travis_setup.sh
+  - ./bin/travis_setup.sh
 
 script:
   #- travis_wait 60 sbt "aocJVM/testOnly aoc.Day*Spec -- -n aoc.BuildTest"
@@ -20,9 +31,57 @@ script:
   #- travis_wait 60 sbt "aocJVM/testOnly aoc.Day*Meter"
   #- travis_wait 60 sbt "aocJVM/testOnly aoc.Day*Check"
   #- travis_wait 60 sbt aocJVM/test
-  - travis_wait 60 sbt aocJVM/run
+  #- travis_wait 60 sbt aocJVM/run
   #- travis_wait 60 sbt aocNative/run
+  - travis_wait 60 ./bin/run.sh
 
-addons:
-  apt:
-    update: true
+env:
+  - DAY=01 PART=1
+  - DAY=01 PART=2
+  - DAY=02 PART=1
+  - DAY=02 PART=2
+  - DAY=03 PART=1
+  - DAY=03 PART=2
+  - DAY=04 PART=1
+  - DAY=04 PART=2
+  - DAY=05 PART=1
+  - DAY=05 PART=2
+  - DAY=06 PART=1
+  - DAY=06 PART=2
+  - DAY=07 PART=1
+  - DAY=07 PART=2
+  - DAY=08 PART=1
+  - DAY=08 PART=2
+  - DAY=09 PART=1
+  - DAY=09 PART=2
+  - DAY=10 PART=1
+  - DAY=10 PART=2
+  - DAY=11 PART=1
+  - DAY=11 PART=2
+  - DAY=12 PART=1
+  - DAY=12 PART=2
+  - DAY=13 PART=1
+  - DAY=13 PART=2
+  - DAY=14 PART=1
+  - DAY=14 PART=2
+  - DAY=15 PART=1
+  - DAY=15 PART=2
+  - DAY=16 PART=1
+  - DAY=16 PART=2
+  - DAY=17 PART=1
+  - DAY=17 PART=2
+  - DAY=18 PART=1
+  - DAY=18 PART=2
+  - DAY=19 PART=1
+  - DAY=19 PART=2
+  - DAY=20 PART=1
+  - DAY=20 PART=2
+  - DAY=21 PART=1
+  - DAY=21 PART=2
+  - DAY=22 PART=1
+  - DAY=22 PART=2
+  - DAY=23 PART=1
+  - DAY=23 PART=2
+  - DAY=24 PART=1
+  - DAY=24 PART=2
+  - DAY=25 PART=1

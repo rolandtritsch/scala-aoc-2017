@@ -16,8 +16,8 @@ class Day21Spec extends FlatSpec with Matchers {
 
   behavior of "parseInput()"
   it should "produce the correct results" in {
-    Day21.parseInput(testInput).size shouldBe 20
-    Day21.parseInput(Day21.input).size shouldBe 1080
+    Day21.parseInput(testInput).size shouldBe 16
+    Day21.parseInput(Day21.input).size shouldBe 864
   }
 
   behavior of "flipHorizontal()"
