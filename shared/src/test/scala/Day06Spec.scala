@@ -1,8 +1,10 @@
 package aoc
 
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec._
+import org.scalatest.matchers._
 
-class Day06Spec extends FlatSpec with Matchers {
+class Day06Spec extends AnyFlatSpec with should.Matchers {
+
   val testBanks = List(0, 2, 7, 0)
 
   behavior of "readInput()"

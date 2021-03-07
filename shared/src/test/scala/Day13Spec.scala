@@ -1,8 +1,9 @@
 package aoc
 
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec._
+import org.scalatest.matchers._
 
-class Day13Spec extends FlatSpec with Matchers {
+class Day13Spec extends AnyFlatSpec with should.Matchers {
 
   val testInput = List(
     "0: 3",

@@ -1,10 +1,11 @@
 package aoc
 
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec._
+import org.scalatest.matchers._
 
 import scala.collection.mutable
 
-class Day25Spec extends FlatSpec with Matchers {
+class Day25Spec extends AnyFlatSpec with should.Matchers {
 
   behavior of "run()"
   it should "produce the right result(s)" taggedAs(BuildTest) in {

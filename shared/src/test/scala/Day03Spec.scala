@@ -1,9 +1,10 @@
 package aoc
 
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec._
+import org.scalatest.matchers._
 import org.scalatest.tagobjects.Slow
 
-class Day03Spec extends FlatSpec with Matchers {
+class Day03Spec extends AnyFlatSpec with should.Matchers {
 
   val testGrid = Array(
     Array(17, 16, 15, 14, 13),

@@ -1,8 +1,9 @@
 package aoc
 
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec._
+import org.scalatest.matchers._
 
-class Day01Spec extends FlatSpec with Matchers {
+class Day01Spec extends AnyFlatSpec with should.Matchers {
 
   behavior of "readInput()"
   it should "return the (the beginnig) of the correct input" in {
