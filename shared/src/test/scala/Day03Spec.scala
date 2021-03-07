@@ -40,7 +40,7 @@ class Day03Spec extends AnyFlatSpec with should.Matchers {
   behavior of "solve() - Part2"
   it should "produce the (first 23) correct cell values" in {
     val values = List(1, 1, 2, 4, 5, 10, 11, 23, 25, 26, 54, 57, 59, 122, 133, 142, 147, 304, 330, 351, 362, 747, 806)
-    val spiral = Day03.Part2.cells(Day03.moves(Day03.firstLevelMoves).toIterator)
+    val spiral = Day03.Part2.cells(Day03.moves(Day03.firstLevelMoves).iterator)
     spiral.take(values.size).map(_.value).toList should be (values)
   }
 
