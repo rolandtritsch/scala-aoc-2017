@@ -1,5 +1,7 @@
 import sbtcrossproject.{crossProject, CrossType}
 
+enablePlugins(ScalaNativePlugin)
+
 val sharedSettings = Seq(
   name := "advent-of-code",
   organization := "org.tritsch",
