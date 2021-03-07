@@ -10,7 +10,7 @@ This is a JVM/Native crossproject. To make this work you need to ...
 * install sbt (`brew install sbt`)
 * clone the repo (`git clone ...`)
 * run the tests (`sbt aocJVM/test`)
-  * this will run all tests (ScalaTest, ScalaCheck, ScalaMeter) and this might take a while (60 - 90 mins)
+  * this will run all tests and this might take a while
   * you can run specific tests with `sbt "aocJVM/testOnly aoc.Day01Spec"`
   * you can run `sbt "aocJVM/testOnly aoc.Day*Spec -- -l aoc.SlowTest"` to only run the *fast* tests (exclude the slow tests)
   * you can run `sbt "aocJVM/testOnly aoc.Day*Spec -- -n aoc.SolutionTest"` to only run the tests that will test for the correct solutions
@@ -22,8 +22,4 @@ Note: To [make Scala Native work](http://www.scala-native.org/en/latest/user/set
 
 Have fun!!!
 
-## Benchmark
-
-I also [benchmarked](https://docs.google.com/spreadsheets/d/1kHugZ-8mJczlmQRcda23YGvAgeqlJLt1I7cYlDD3Tws/edit?usp=sharing) the solutions [against each other](https://github.com/rolandtritsch/scala-aoc-2017/tree/master/results) (Scala, Native, Kotlin, Haskell, Eta).
-
-![Benchmark](https://www.dropbox.com/s/5sfnqgl9u57kekp/benchmark.png?dl=0&raw=1)
+Note: An older version also had ScalaCheck tests and ScalaMeter tests (that do not work anymore).

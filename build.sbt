@@ -13,19 +13,13 @@ val sharedSettings = Seq(
 val jvmSettings = Seq(
   libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.5",
   libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.5" % "test",
-  libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.15.3" % "test",
-  libraryDependencies += "com.storm-enroute" %% "scalameter" % "0.20" % "test",
-
-  testFrameworks += new TestFramework(
-    "org.scalameter.ScalaMeterFramework"
-  ),
 
   scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 )
 
 val nativeSettings = Seq(
   nativeMode := "debug",
-  nativeGC := "boehm"
+  nativeGC := "immix"
 )
 
 lazy val aoc = crossProject(JVMPlatform, NativePlatform)
