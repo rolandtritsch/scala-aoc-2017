@@ -113,7 +113,8 @@ object Day07 {
     }
 
     def toString(node: Node): String = {
-      node + " -> " + node.children.map(c => c.toString + s"/${calcWeight(c)}").mkString("-")
+      val children = node.children.map(c => c.toString + s"/${calcWeight(c)}").mkString("-")
+      s"${node} -> ${children}"
     }
   }
 
