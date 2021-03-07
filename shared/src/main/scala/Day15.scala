@@ -39,7 +39,7 @@ object Day15 {
   case class GeneratorConfig(start: Long, factor: Long, devider: Long, modolo: Long, next: (Long, Long, Long, Long) => Long)
 
   def generator(a: GeneratorConfig, b: GeneratorConfig): Iterator[(Long, Long)] = {
-    Iterator.iterate(a.start, b.start)(current => (a.next(current._1, a.factor, a.devider, a.modolo), b.next(current._2, b.factor, b.devider, b.modolo)))
+    Iterator.iterate((a.start, b.start))(current => (a.next(current._1, a.factor, a.devider, a.modolo), b.next(current._2, b.factor, b.devider, b.modolo)))
   }
 
   def matching(pair: (Long, Long)): Boolean = {

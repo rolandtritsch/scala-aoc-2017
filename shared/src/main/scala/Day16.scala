@@ -75,8 +75,8 @@ object Day16 {
       }
 
       case Exchange(thiz, thaz) => {
-        val thizProgram = programs.charAt(thiz)
-        val thazProgram = programs.charAt(thaz)
+        val thizProgram = programs(thiz)
+        val thazProgram = programs(thaz)
         programs.updated(thiz, thazProgram).updated(thaz, thizProgram)
       }
 
