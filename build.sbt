@@ -1,33 +1,31 @@
-import sbtcrossproject.{crossProject, CrossType}
-
-enablePlugins(ScalaNativePlugin)
-
-val sharedSettings = Seq(
+lazy val commonSettings = Seq(
   name := "advent-of-code",
   organization := "org.tritsch",
-  version := "0.2.0",
+  version := "0.3.0",
 
-  scalaVersion in ThisBuild:= "2.13.4"
+  scalaVersion := "3.0.0-RC3",
+
+  scalacOptions ++= Seq(
+    "-unchecked",
+    "-deprecation",
+    "-feature",
+    "-Xfatal-warnings"
+  )
 )
 
-val jvmSettings = Seq(
+lazy val libsLogging = Seq(
+  libraryDependencies += "org.codehaus.janino" % "janino" % "3.1.3",
+  libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.2.3",
+  libraryDependencies += "org.log4s" %% "log4s" % "1.10.0-M5"
+)
+
+val libsTesting = Seq(
   libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.5",
-  libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.5" % "test",
-
-  scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
+  libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.5" % "test"
 )
 
-val nativeSettings = Seq(
-  nativeMode := "debug",
-  nativeGC := "immix"
-)
-
-lazy val aoc = crossProject(JVMPlatform, NativePlatform)
-  .crossType(CrossType.Full)
+lazy val root = project
   .in(file("."))
-  .settings(sharedSettings)
-  .jvmSettings(jvmSettings)
-  .nativeSettings(nativeSettings)
-
-lazy val aocJVM = aoc.jvm
-lazy val aocNative = aoc.native
+  .settings(commonSettings)
+  .settings(libsLogging)
+  .settings(libsTesting)

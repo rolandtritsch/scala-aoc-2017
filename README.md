@@ -1,25 +1,17 @@
-![Build Status](https://travis-ci.org/rolandtritsch/scala-aoc-2017.svg?branch=master) [![GitHub issues](https://img.shields.io/github/issues/rolandtritsch/scala-aoc-2017.svg)](https://github.com/rolandtritsch/scala-aoc-2017/issues)
+# [Advent of Code](https://adventofcode.com) - 2017 (Scala3 Edition)
 
-# [Advent of Code](https://adventofcode.com) - 2017 (Scala Edition)
+This is a port/migration of the original scala2 implementation to scala3. The main purpose is to run a quick benchmark between scala2 and scala3.
 
-Note: There are implementations of this in [Scala](https://github.com/rolandtritsch/scala-aoc-2017) (JVM and native), [Kotlin](https://github.com/rolandtritsch/kotlin-aoc-2017), [Haskell](https://github.com/rolandtritsch/haskell-aoc-2017) and [Eta](https://github.com/rolandtritsch/eta-aoc-2017). If you like any of these ... star it :).
+Note: (As of May 2021) ScalaNative is not available for scala3 yet. Means this port is jvm only.
 
-This is a JVM/Native crossproject. To make this work you need to ...
+To make this work you need to ...
 
 * install git (`brew install git`)
 * install sbt (`brew install sbt`)
 * clone the repo (`git clone ...`)
-* run the tests (`sbt aocJVM/test`)
+* run the tests (`sbt test`)
   * this will run all tests and this might take a while
-  * you can run specific tests with `sbt "aocJVM/testOnly aoc.Day01Spec"`
-  * you can run `sbt "aocJVM/testOnly aoc.Day*Spec -- -l aoc.SlowTest"` to only run the *fast* tests (exclude the slow tests)
-  * you can run `sbt "aocJVM/testOnly aoc.Day*Spec -- -n aoc.SolutionTest"` to only run the tests that will test for the correct solutions
-* run the JVM main (`sbt aocJVM/run`)
-* run the Native main (`sbt aocNative/run`)
-* generate the [doc](http://www.tritsch.org/scala-aoc-2017) (`sbt doc`) and look at it (`open target/scala-2.10/api/index.html`)
-
-Note: To [make Scala Native work](http://www.scala-native.org/en/latest/user/setup.html) you probably need to install a couple more packages.
-
-Have fun!!!
-
-Note: An older version also had ScalaCheck tests and ScalaMeter tests (that do not work anymore).
+  * you can run specific tests with `sbt "testOnly aoc.Day01Spec"`
+  * you can run `sbt "testOnly aoc.Day*Spec -- -l aoc.SlowTest"` to only run the *fast* tests (exclude the slow tests)
+  * you can run `sbt "testOnly aoc.Day*Spec -- -n aoc.SolutionTest"` to only run the tests that will test for the correct solutions
+* run the JVM main (`sbt run`)
