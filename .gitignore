@@ -1,9 +1,5 @@
 **/#*
 
-**/.ensime
-**/.ensime_cache
-
-**/.idea/
-
-**/target/
-**/project/project/
+target/
+project/target/
+project/project/
