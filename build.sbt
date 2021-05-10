@@ -16,12 +16,12 @@ lazy val commonSettings = Seq(
 lazy val libsLogging = Seq(
   libraryDependencies += "org.codehaus.janino" % "janino" % "3.1.3",
   libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.2.3",
-  libraryDependencies += "org.log4s" %% "log4s" % "1.10.0-M5"
+  libraryDependencies += "org.log4s" %% "log4s" % "1.10.0-M7"
 )
 
 val libsTesting = Seq(
-  libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.5",
-  libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.5" % "test"
+  libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.8",
+  libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.8" % "test"
 )
 
 lazy val root = project
