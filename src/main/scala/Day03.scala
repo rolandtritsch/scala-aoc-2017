@@ -93,7 +93,7 @@ object Day03 {
     }
 
     def solve(cellValueToFind: Int): (Int, Long) = Util.measuredTimeMillis {
-      val spiral = cells(moves(firstLevelMoves).toIterator)
+      val spiral = cells(moves(firstLevelMoves).iterator)
       val coordinates = spiral.find(c => c.value == cellValueToFind).get.coordinates
       calcManhattenDistance(coordinates)
     }
@@ -138,7 +138,7 @@ object Day03 {
     }
 
     def solve(cellValueToFind: Int): (Int, Long) = Util.measuredTimeMillis {
-      val spiral = cells(moves(firstLevelMoves).toIterator)
+      val spiral = cells(moves(firstLevelMoves).iterator)
       spiral.find(c => c.value > cellValueToFind).get.value
     }
 
