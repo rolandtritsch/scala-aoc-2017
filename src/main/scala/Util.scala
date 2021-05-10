@@ -2,8 +2,7 @@ package aoc
 
 object Util {
   def readInput(fileName: String): List[String] = {
-    val path = scala.util.Properties.envOrElse("PWD", ".") + "/shared/src/main/resources/"
-    scala.io.Source.fromFile(path + fileName).getLines().toList
+    scala.io.Source.fromResource(fileName).getLines.toList
   }
 
   def measuredTimeMillis[R](block: => R): (R, Long) = {
