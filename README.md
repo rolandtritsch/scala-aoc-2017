@@ -16,6 +16,7 @@ This is a JVM/Native crossproject. To make this work you need to ...
   * you can run `sbt "aocJVM/testOnly aoc.Day*Spec -- -n aoc.SolutionTest"` to only run the tests that will test for the correct solutions
 * run the JVM main (`sbt aocJVM/run`)
 * run the Native main (`sbt aocNative/run`)
+* run a subset of the days (`sbt "aocJVM/run 1/1 5/2 18/1"`)
 * generate the [doc](http://www.tritsch.org/scala-aoc-2017) (`sbt doc`) and look at it (`open target/scala-2.10/api/index.html`)
 
 Note: To [make Scala Native work](http://www.scala-native.org/en/latest/user/setup.html) you probably need to install a couple more packages.
