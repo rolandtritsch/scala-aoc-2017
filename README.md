@@ -15,3 +15,4 @@ To make this work you need to ...
   * you can run `sbt "testOnly aoc.Day*Spec -- -l aoc.SlowTest"` to only run the *fast* tests (exclude the slow tests)
   * you can run `sbt "testOnly aoc.Day*Spec -- -n aoc.SolutionTest"` to only run the tests that will test for the correct solutions
 * run the JVM main (`sbt run`)
+* run a subset of the days (`sbt "run 1/1 5/2 18/1"`)
